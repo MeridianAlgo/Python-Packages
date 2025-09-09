@@ -125,8 +125,17 @@ def get_market_data(tickers: List[str], start_date: str = '2020-01-01',
     if end_date is None:
         end_date = datetime.now().strftime('%Y-%m-%d')
     
-    data = yf.download(tickers, start=start_date, end=end_date)['Adj Close']
-    return data
+    data = yf.download(tickers, start=start_date, end=end_date)
+    
+    # Handle different data structures from yfinance
+    if 'Adj Close' in data.columns:
+        return data['Adj Close']
+    elif hasattr(data, 'columns') and len(data.columns.levels) > 1:
+        # Multi-level columns (multiple tickers)
+        return data['Adj Close'] if 'Adj Close' in data.columns.levels[0] else data['Close']
+    else:
+        # Single ticker case
+        return data['Adj Close'] if 'Adj Close' in data.columns else data['Close']
 
 
 def calculate_metrics(returns: pd.Series, risk_free_rate: float = 0.0) -> Dict[str, float]:

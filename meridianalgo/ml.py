@@ -11,6 +11,21 @@ from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import warnings
 
+# Try to import torch, but don't fail if it's not available
+try:
+    import torch
+    import torch.nn as nn
+    import torch.optim as optim
+    from torch.utils.data import DataLoader, TensorDataset
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+    torch = None
+    nn = None
+    optim = None
+    DataLoader = None
+    TensorDataset = None
+
 class FeatureEngineer:
     """Feature engineering for financial time series data."""
     
@@ -95,6 +110,9 @@ class LSTMPredictor:
             learning_rate: Learning rate for optimizer
             dropout: Dropout rate for regularization
         """
+        if not TORCH_AVAILABLE:
+            raise ImportError("PyTorch is required for LSTMPredictor. Please install it with: pip install torch")
+            
         self.sequence_length = sequence_length
         self.hidden_size = hidden_size
         self.num_layers = num_layers
@@ -114,10 +132,6 @@ class LSTMPredictor:
             X: Input features (n_samples, n_features)
             y: Target values (n_samples,)
         """
-        import torch
-        import torch.nn as nn
-        import torch.optim as optim
-        from torch.utils.data import DataLoader, TensorDataset
         
         # Scale features
         X_scaled = self.scaler.fit_transform(X)
@@ -184,8 +198,6 @@ class LSTMPredictor:
         """
         if self.model is None:
             raise ValueError("Model not trained. Call fit() first.")
-            
-        import torch
         
         X_scaled = self.scaler.transform(X)
         X_seq = self._create_sequences(X_scaled, np.zeros(len(X)))[0]  # Dummy y
@@ -209,7 +221,7 @@ class LSTMPredictor:
         return np.array(Xs), np.array(ys)
 
 
-class LSTMModel:
+class LSTMModel(nn.Module):
     """PyTorch LSTM model for time series prediction."""
     
     def __init__(self, input_size: int, hidden_size: int, 
@@ -223,9 +235,6 @@ class LSTMModel:
             num_layers: Number of LSTM layers
             dropout: Dropout rate (applied between LSTM layers if num_layers > 1)
         """
-        import torch
-        import torch.nn as nn
-        
         super(LSTMModel, self).__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
@@ -252,21 +261,10 @@ class LSTMModel:
     
     def forward(self, x):
         """Forward pass through the network."""
-        import torch
         
         # Initialize hidden state with zeros
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(self.device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(self.device)
-        
-        # Forward propagate LSTM
-        out, _ = self.lstm(x, (h0, c0))
-        
-        # Decode the hidden state of the last time step
-        out = self.dropout(out[:, -1, :])
-        out = self.fc(out)
-        return out
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
         
         # Forward propagate LSTM
         out, _ = self.lstm(x, (h0, c0))

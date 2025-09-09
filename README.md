@@ -1,160 +1,257 @@
-<div align="center">
-  <h1>🚀 MeridianAlgo Financial Analysis Platform</h1>
-  <h3>Advanced Financial Analysis Suite with ML Predictions, Technical Analysis & Portfolio Management</h3>
-  
-  [![PyPI](https://img.shields.io/pypi/v/meridianalgo?color=blue&label=PyPI%20Package)](https://pypi.org/project/meridianalgo/)
-  [![Python](https://img.shields.io/pypi/pyversions/meridianalgo?color=blue)](https://www.python.org/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Documentation](https://img.shields.io/badge/Documentation-Read%20The%20Docs-blue)](https://meridianalgo.org/docs)
-  [![Tests](https://github.com/MeridianAlgo/Python-Packages/actions/workflows/tests.yml/badge.svg)](https://github.com/MeridianAlgo/Python-Packages/actions)
-  
-  Professional-grade financial analysis platform combining ML predictions, technical indicators, portfolio optimization, and comprehensive market intelligence.
-</div>
+# MeridianAlgo - Advanced Algorithmic Trading Library
 
-## 📦 Installation
+[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
+[![PyPI Version](https://img.shields.io/badge/pypi-3.1.0-orange.svg)](https://pypi.org/project/meridianalgo/)
 
+A comprehensive Python library for algorithmic trading, featuring advanced statistical analysis, machine learning integration, technical indicators, portfolio optimization, and financial modeling tools for quantitative finance.
+
+## 🚀 Quick Installation
+
+### Full Package Installation
 ```bash
 pip install meridianalgo
 ```
 
-## 🚀 Quick Start
-
-```python
-from meridianalgo import quick_predict, analyze_accuracy
-
-# Get quick prediction
-result = quick_predict('AAPL', days=5)
-print(f"AAPL predictions: {result}")
-
-# Analyze model accuracy
-accuracy = analyze_accuracy('AAPL')
-print(f"Accuracy: {accuracy['accuracy_rate']:.1f}%")
-```
-
-## 🔍 Overview
-
-MeridianAlgo is an advanced financial analysis platform that combines machine learning, statistical analysis, and quantitative finance techniques to provide comprehensive market insights. The platform is designed for both retail and institutional investors seeking to enhance their trading strategies with data-driven decision making.
-
-## ✨ Key Features
-
-### 🤖 Advanced Machine Learning
-- **Ensemble Models**: Combines Random Forest, Gradient Boosting, and LSTM Neural Networks
-- **Technical Indicators**: 50+ indicators including RSI, MACD, Bollinger Bands, Stochastic
-- **Feature Engineering**: Advanced price patterns, volume analysis, volatility metrics
-- **GPU Acceleration**: Support for NVIDIA CUDA, AMD ROCm, Intel XPU, Apple MPS
-
-### 📊 Market Analysis
-- **Real-time Data**: Yahoo Finance integration with smart caching
-- **Technical Analysis**: Comprehensive set of technical indicators
-- **Market Regime Detection**: Identify bull/bear markets and volatility regimes
-- **Sector Analysis**: Performance comparison across market sectors
-
-### 🎯 Portfolio Management
-- **Portfolio Optimization**: Modern portfolio theory implementation
-- **Risk Management**: Value at Risk (VaR), Expected Shortfall (CVaR), Maximum Drawdown
-- **Performance Tracking**: Detailed performance metrics and attribution analysis
-- **Backtesting**: Historical strategy validation
-
-### 📈 Prediction System
-- **Multi-day Forecasting**: 1-7 day price predictions
-- **Confidence Scoring**: Model confidence with risk assessment
-- **Automated Validation**: Daily accuracy tracking
-- **Learning System**: Continuous model improvement
-
-## Installation
-
+### Modular Installation (Coming Soon)
 ```bash
-pip install meridianalgo
+# Core functionality only
+pip install meridianalgo[core]
+
+# Technical indicators only
+pip install meridianalgo[indicators]
+
+# Portfolio management only
+pip install meridianalgo[portfolio]
+
+# Risk analysis only
+pip install meridianalgo[risk]
+
+# Machine learning only
+pip install meridianalgo[ml]
+
+# All modules
+pip install meridianalgo[all]
 ```
 
-## Quick Start
+## 📦 Package Structure
+
+MeridianAlgo is organized into specialized modules for different aspects of quantitative finance:
+
+```
+meridianalgo/
+├── core/                    # Core functionality
+│   ├── portfolio_optimizer.py
+│   ├── time_series_analyzer.py
+│   └── market_data.py
+├── technical_indicators/    # Technical analysis
+│   ├── momentum.py         # RSI, Stochastic, Williams %R
+│   ├── trend.py           # Moving averages, MACD, ADX
+│   ├── volatility.py      # Bollinger Bands, ATR
+│   ├── volume.py          # OBV, Money Flow Index
+│   └── overlay.py         # Pivot Points, Fibonacci
+├── portfolio_management/   # Portfolio optimization
+│   ├── optimization.py    # MPT, Black-Litterman
+│   ├── risk_management.py # Risk controls
+│   └── performance.py     # Performance analysis
+├── risk_analysis/         # Risk metrics
+│   ├── var_es.py         # Value at Risk, Expected Shortfall
+│   ├── stress_testing.py  # Stress tests
+│   └── regime_analysis.py # Market regime detection
+├── data_processing/       # Data utilities
+│   ├── data_cleaner.py   # Data cleaning
+│   ├── feature_engineering.py
+│   └── market_data.py    # Data providers
+├── statistics/            # Statistical analysis
+│   ├── arbitrage.py      # Statistical arbitrage
+│   └── correlation.py    # Correlation analysis
+└── ml/                   # Machine learning
+    ├── feature_engineering.py
+    ├── lstm_predictor.py
+    └── model_evaluation.py
+```
+
+## 🎯 Key Features
+
+### 📊 Technical Analysis (50+ Indicators)
+
+**Momentum Indicators:**
+- RSI (Relative Strength Index)
+- Stochastic Oscillator
+- Williams %R
+- Rate of Change (ROC)
+- Momentum
+
+**Trend Indicators:**
+- Simple Moving Average (SMA)
+- Exponential Moving Average (EMA)
+- MACD (Moving Average Convergence Divergence)
+- ADX (Average Directional Index)
+- Aroon Indicator
+- Parabolic SAR
+- Ichimoku Cloud
+
+**Volatility Indicators:**
+- Bollinger Bands
+- Average True Range (ATR)
+- Keltner Channels
+- Donchian Channels
+
+**Volume Indicators:**
+- On-Balance Volume (OBV)
+- Accumulation/Distribution Line
+- Chaikin Oscillator
+- Money Flow Index (MFI)
+- Ease of Movement
+
+**Overlay Indicators:**
+- Pivot Points
+- Fibonacci Retracement
+- Support and Resistance Levels
+
+### 🏦 Portfolio Management
+
+**Optimization Strategies:**
+- Modern Portfolio Theory (MPT)
+- Black-Litterman Model
+- Risk Parity
+- Efficient Frontier Calculation
+
+**Risk Management:**
+- Value at Risk (VaR) - Historical, Parametric, Monte Carlo
+- Expected Shortfall (CVaR)
+- Maximum Drawdown
+- Stress Testing
+- Scenario Analysis
+
+**Performance Analysis:**
+- Attribution Analysis
+- Benchmark Comparison
+- Risk-Adjusted Returns
+- Sharpe Ratio, Sortino Ratio, Calmar Ratio
+
+### 🤖 Machine Learning
+
+**Feature Engineering:**
+- Technical indicator creation
+- Price pattern recognition
+- Volume analysis
+- Volatility features
+
+**Prediction Models:**
+- LSTM Neural Networks
+- Ensemble Methods
+- Time Series Cross-Validation
+
+**Model Evaluation:**
+- Comprehensive metrics
+- Backtesting framework
+- Performance tracking
+
+### 📈 Statistical Analysis
+
+**Risk Metrics:**
+- Value at Risk (VaR)
+- Expected Shortfall
+- Tail Risk Analysis
+- Correlation Analysis
+
+**Market Analysis:**
+- Statistical Arbitrage
+- Cointegration Testing
+- Hurst Exponent
+- Autocorrelation Analysis
+
+**Regime Detection:**
+- Market Regime Identification
+- Volatility Regime Analysis
+- Trend Detection
+
+## 🚀 Quick Start Examples
+
+### Basic Usage
 
 ```python
 import meridianalgo as ma
-import yfinance as yf
+import pandas as pd
 
-# Fetch market data
-data = yf.download(['AAPL', 'MSFT', 'GOOGL'], start='2020-01-01')['Adj Close']
+# Get market data
+data = ma.get_market_data(['AAPL', 'MSFT', 'GOOGL'], start_date='2023-01-01')
 
-# Calculate returns
+# Technical Analysis
+rsi = ma.RSI(data['AAPL'], period=14)
+bb_upper, bb_middle, bb_lower = ma.BollingerBands(data['AAPL'])
+macd_line, signal_line, histogram = ma.MACD(data['AAPL'])
+
+# Portfolio Optimization
 returns = data.pct_change().dropna()
-
-# Portfolio optimization
 optimizer = ma.PortfolioOptimizer(returns)
-efficient_frontier = optimizer.calculate_efficient_frontier()
+optimal_portfolio = optimizer.optimize_portfolio(objective='sharpe')
 
-# Statistical analysis
-analyzer = ma.StatisticalArbitrage(data)
-correlation = analyzer.calculate_rolling_correlation(window=21)
-
-# Calculate risk metrics
-var = ma.calculate_value_at_risk(returns['AAPL'])
-es = ma.calculate_expected_shortfall(returns['AAPL'])
+# Risk Analysis
+var_95 = ma.calculate_value_at_risk(returns['AAPL'], confidence_level=0.95)
+es_95 = ma.calculate_expected_shortfall(returns['AAPL'], confidence_level=0.95)
 ```
 
-## 📚 Documentation
-
-### Core Modules
-
-#### Stock Prediction
-```python
-from meridianalgo import StockPredictor
-
-# Initialize predictor
-predictor = StockPredictor()
-
-# Train model
-predictor.train('AAPL')
-
-# Get predictions
-predictions = predictor.predict(days=5)
-```
-
-#### Portfolio Optimization
-```python
-from meridianalgo import PortfolioOptimizer
-import yfinance as yf
-
-# Fetch data
-data = yf.download(['AAPL', 'MSFT', 'GOOGL'], start='2020-01-01')['Adj Close']
-returns = data.pct_change().dropna()
-
-# Optimize portfolio
-optimizer = PortfolioOptimizer(returns)
-efficient_frontier = optimizer.calculate_efficient_frontier()
-optimal_weights = optimizer.optimize_portfolio()
-```
-
-#### Statistical Arbitrage
-```python
-from meridianalgo import StatisticalArbitrage
-
-# Initialize arbitrage model
-arbitrage = StatisticalArbitrage()
-
-# Find cointegrated pairs
-pairs = arbitrage.find_cointegrated_pairs(returns)
-
-# Calculate spread
-spread = arbitrage.calculate_spread(returns['AAPL'], returns['MSFT'])
-```
-
-### 📊 Technical Indicators
+### Advanced Portfolio Management
 
 ```python
-from meridianalgo import TechnicalIndicators
+# Efficient Frontier
+frontier = ma.EfficientFrontier(returns)
+frontier_data = frontier.calculate_frontier(target_returns=np.linspace(0.05, 0.25, 20))
 
-# Calculate RSI
-rsi = TechnicalIndicators.rsi(data['Close'], period=14)
+# Black-Litterman Model
+bl_model = ma.BlackLitterman(returns, market_caps=market_cap_weights)
+bl_portfolio = bl_model.optimize_with_views(views=my_views)
 
-# Calculate MACD
-macd, signal, hist = TechnicalIndicators.macd(data['Close'])
-
-# Calculate Bollinger Bands
-upper, middle, lower = TechnicalIndicators.bollinger_bands(data['Close'])
+# Risk Parity
+rp_optimizer = ma.RiskParity(returns)
+rp_portfolio = rp_optimizer.optimize()
 ```
 
-## 📈 Performance Metrics
+### Technical Analysis Suite
+
+```python
+# Comprehensive technical analysis
+high, low, close = data['AAPL'], data['MSFT'], data['GOOGL']
+
+# Momentum analysis
+rsi_aapl = ma.RSI(close['AAPL'])
+stoch_k, stoch_d = ma.Stochastic(high['AAPL'], low['AAPL'], close['AAPL'])
+
+# Trend analysis
+sma_20 = ma.SMA(close['AAPL'], 20)
+ema_12 = ma.EMA(close['AAPL'], 12)
+macd, signal, hist = ma.MACD(close['AAPL'])
+
+# Volatility analysis
+bb_upper, bb_middle, bb_lower = ma.BollingerBands(close['AAPL'])
+atr = ma.ATR(high['AAPL'], low['AAPL'], close['AAPL'])
+
+# Volume analysis
+obv = ma.OBV(close['AAPL'], volume['AAPL'])
+mfi = ma.MoneyFlowIndex(high['AAPL'], low['AAPL'], close['AAPL'], volume['AAPL'])
+```
+
+### Machine Learning Integration
+
+```python
+# Feature Engineering
+engineer = ma.FeatureEngineer()
+features = engineer.create_features(close['AAPL'])
+
+# LSTM Prediction
+predictor = ma.LSTMPredictor(sequence_length=10, epochs=50)
+predictor.fit(features.values, target.values)
+predictions = predictor.predict(test_features)
+
+# Model Evaluation
+from meridianalgo.ml import ModelEvaluator
+metrics = ModelEvaluator.calculate_metrics(y_true, y_pred)
+```
+
+## 📊 Performance Metrics
 
 ### Prediction Accuracy
 - **Overall Accuracy**: 78-85% (within 3% of actual price)
@@ -163,78 +260,146 @@ upper, middle, lower = TechnicalIndicators.bollinger_bands(data['Close'])
 - **Average Error**: 1.8-2.4%
 
 ### Risk Metrics
-- **Value at Risk (VaR)**: 95% confidence level
+- **Value at Risk (VaR)**: 95% and 99% confidence levels
 - **Expected Shortfall (CVaR)**: Average loss beyond VaR
 - **Maximum Drawdown**: Worst historical loss from peak to trough
 - **Sharpe Ratio**: Risk-adjusted returns
+- **Sortino Ratio**: Downside risk-adjusted returns
+- **Calmar Ratio**: Return to max drawdown ratio
 
 ## 🛠️ System Requirements
 
 ### Dependencies
-- Python 3.8+
+- Python 3.7+
 - NumPy >= 1.21.0
-- pandas >= 1.5.0
-- scikit-learn >= 1.0.0
-- PyTorch >= 1.12.0
-- yfinance >= 0.1.87
+- Pandas >= 1.5.0
+- SciPy >= 1.7.0
+- Scikit-learn >= 1.0.0
+- PyTorch >= 2.0.0 (for ML features)
+- yfinance >= 0.2.0
+- Matplotlib >= 3.5.0
+- Seaborn >= 0.11.0
 
 ### Hardware
 - **CPU**: 2+ cores recommended
 - **RAM**: 4GB+ recommended
-- **GPU**: Optional but recommended for faster training (NVIDIA CUDA, AMD ROCm, or Apple MPS supported)
+- **GPU**: Optional but recommended for faster ML training (NVIDIA CUDA, AMD ROCm, or Apple MPS supported)
+
+## 📚 Documentation
+
+### API Reference
+- [Core Module](docs/core.md) - Portfolio optimization, time series analysis
+- [Technical Indicators](docs/indicators.md) - Complete technical analysis suite
+- [Portfolio Management](docs/portfolio.md) - Advanced portfolio strategies
+- [Risk Analysis](docs/risk.md) - Risk metrics and stress testing
+- [Machine Learning](docs/ml.md) - ML models and feature engineering
+- [Data Processing](docs/data.md) - Data cleaning and validation
+
+### Examples
+- [Basic Usage](examples/basic_usage.py) - Getting started examples
+- [Advanced Strategies](examples/advanced_trading_strategy.py) - Complex trading strategies
+- [Portfolio Optimization](examples/portfolio_optimization.py) - Portfolio management examples
+- [Risk Management](examples/risk_management.py) - Risk analysis examples
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+pytest tests/
+
+# Run specific module tests
+pytest tests/test_technical_indicators.py
+pytest tests/test_portfolio_management.py
+pytest tests/test_risk_analysis.py
+
+# Run with coverage
+pytest tests/ --cov=meridianalgo --cov-report=html
+```
 
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Development Setup
+
+```bash
+# Clone repository
+git clone https://github.com/MeridianAlgo/Python-Packages.git
+cd Python-Packages
+
+# Install in development mode
+pip install -e .
+
+# Install development dependencies
+pip install -r dev-requirements.txt
+
+# Run tests
+pytest tests/
+```
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🙏 Acknowledgments
+
+### Credits and Attributions
+
+**Quant Analytics Package Integration:**
+- Portions of this library integrate concepts and methodologies from the [quant-analytics](https://pypi.org/project/quant-analytics/) package by Anthony Baxter
+- Statistical arbitrage algorithms and risk management frameworks inspired by quant-analytics
+- Credit: Anthony Baxter for foundational quantitative finance methodologies
+
+**Open Source Libraries:**
+- Built on NumPy, Pandas, SciPy, and Scikit-learn
+- PyTorch integration for deep learning capabilities
+- yfinance for market data access
+- Matplotlib and Seaborn for visualization
+
+**Community Contributions:**
+- Inspired by quantitative finance best practices
+- Community feedback and feature requests
+- Open source financial analysis tools
+
 ## 📞 Support
 
-For support, please open an issue on our [GitHub repository](https://github.com/MeridianAlgo/Python-Packages) or contact us at support@meridianalgo.com.
+- **Documentation**: [docs.meridianalgo.com](https://docs.meridianalgo.com)
+- **Issues**: [GitHub Issues](https://github.com/MeridianAlgo/Python-Packages/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/MeridianAlgo/Python-Packages/discussions)
+- **Email**: support@meridianalgo.com
 
 ## 📝 Disclaimer
 
 This software is for educational and research purposes only. Stock market predictions are inherently uncertain, and past performance does not guarantee future results. Always conduct your own research and consider consulting with financial professionals before making investment decisions. The authors are not responsible for any financial losses incurred from using this software.
 
-## Examples
+## 🔄 Changelog
 
-See the `examples/` directory for complete usage examples:
+### Version 3.1.0 (Latest)
+- ✨ Added comprehensive technical indicators module (50+ indicators)
+- ✨ Added advanced portfolio management tools
+- ✨ Added risk analysis and stress testing capabilities
+- ✨ Added data processing and validation utilities
+- ✨ Improved modular package structure
+- ✨ Enhanced documentation and examples
+- 🔧 Fixed market data fetching compatibility issues
+- 🔧 Improved error handling and validation
+- 📚 Added comprehensive API documentation
 
-1. [Portfolio Optimization](examples/portfolio_optimization.py)
-2. [Statistical Arbitrage](examples/statistical_arbitrage.py)
-3. [Time Series Prediction](examples/time_series_prediction.py)
-
-## Requirements
-
-- Python 3.7+
-- numpy
-- pandas
-- scipy
-- scikit-learn
-- yfinance
-- torch (for deep learning features)
-
-## Contributing
-
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, or suggest features.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For support, please open an issue on GitHub or contact support@meridianalgo.com
+### Version 3.0.0
+- 🎉 Initial release with core functionality
+- 📊 Basic portfolio optimization
+- 📈 Time series analysis
+- 🤖 Machine learning integration
+- 📊 Statistical analysis tools
 
 ---
 
-*MeridianAlgo is developed and maintained by the Meridian Algorithmic Research Team.*
+**MeridianAlgo** - Empowering quantitative finance with advanced algorithmic trading tools.
+
+*Built with ❤️ by the Meridian Algorithmic Research Team*

@@ -35,7 +35,10 @@ class TestCoreModule(unittest.TestCase):
         self.assertEqual(len(returns), len(self.prices) - 1)
         
         volatility = analyzer.calculate_volatility(window=21)
-        self.assertEqual(len(volatility), len(self.prices) - 21)
+        # Rolling volatility should have NaN values for the first window-1 periods
+        # Note: calculate_volatility calls calculate_returns() which drops NaN, so length is reduced by 1
+        self.assertEqual(len(volatility), len(self.prices) - 1)  # Same length as returns
+        self.assertEqual(volatility.notna().sum(), len(self.prices) - 1 - 20)  # 21-period window
     
     def test_market_data(self):
         """Test get_market_data function"""

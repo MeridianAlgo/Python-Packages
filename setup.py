@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="meridianalgo",
-    version="3.0.0",
+    version="3.1.0",
     author="Meridian Algorithmic Research Team",
     author_email="support@meridianalgo.com",
     description="Advanced Algorithmic Trading and Statistical Analysis Library",
@@ -40,9 +40,6 @@ setup(
         "pytz>=2021.3",
         "lxml>=4.6.0",
         "beautifulsoup4>=4.10.0",
-        "pytest>=6.2.5",
-        "python-dateutil>=2.8.2",
-        "torch>=1.12.0",
     ],
     extras_require={
         "dev": [
