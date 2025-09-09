@@ -5,7 +5,7 @@ def run_test():
     try:
         # Run the test script and capture output
         result = subprocess.run(
-            [sys.executable, "test_meridianalgo_simple.py", "-v"],
+            [sys.executable, "-m", "tests.test_meridianalgo_simple", "-v"],
             capture_output=True,
             text=True
         )

@@ -38,4 +38,4 @@ print("\nInstalling meridianalgo in development mode...")
 subprocess.check_call([sys.executable, "-m", "pip", "install", "-e", "."])
 
 print("\n=== Dependencies setup complete ===\n")
-print("You can now run the test script with: python test_package.py")
+print("You can now run the test script with: python -m tests.test_package")

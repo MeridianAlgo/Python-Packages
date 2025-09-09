@@ -5,20 +5,26 @@ echo Creating virtual environment...
 python -m venv venv
 
 if exist "venv\Scripts\activate" (
-    echo Activating virtual environment...
-    call venv\Scripts\activate
-    
-    echo Upgrading pip...
-    python -m pip install --upgrade pip
-    
-    echo Installing dependencies...
-    pip install numpy pandas scipy scikit-learn yfinance torch
-    
-    echo Installing meridianalgo in development mode...
-    pip install -e .
-    
-    echo.
-    echo Setup complete! Run 'venv\Scripts\activate' to activate the environment.
+    @echo off
+echo Setting up Python environment...
+
+REM Create virtual environment
+python -m venv venv
+
+REM Activate the virtual environment
+call venv\Scripts\activate
+
+REM Install dependencies
+echo Installing dependencies...
+pip install -r requirements.txt
+
+REM Install the package in development mode
+echo Installing MeridianAlgo in development mode...
+pip install -e .
+
+echo Environment setup complete!
+pause
+echo Run 'venv\Scripts\activate' to activate the environment.
 ) else (
     echo Failed to create virtual environment.
     exit /b 1

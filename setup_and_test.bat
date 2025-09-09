@@ -1,4 +1,6 @@
 @echo off
+echo Setting up MeridianAlgo development environment...
+
 REM Create and activate virtual environment
 echo Creating virtual environment...
 python -m venv venv
@@ -15,6 +17,6 @@ pip install -e .
 
 REM Run tests
 echo Running tests...
-python test_all.py
+python -m tests.test_all
 
 pause
