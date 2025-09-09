@@ -402,4 +402,4 @@ This software is for educational and research purposes only. Stock market predic
 
 **MeridianAlgo** - Empowering quantitative finance with advanced algorithmic trading tools.
 
-*Built with ❤️ by the Meridian Algorithmic Research Team (Quantam Meridian)*
+*Built with ❤️ by the Meridian Algorithmic Research Team (Quantum Meridian)*
