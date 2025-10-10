@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="meridianalgo",
-    version="3.1.0",
+    version="4.0.0-quantum",
     author="Meridian Algorithmic Research Team",
     author_email="support@meridianalgo.com",
-    description="Advanced Algorithmic Trading and Statistical Analysis Library",
+    description="Meridian Quant - The Ultimate Quantitative Development Platform",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/MeridianAlgo/Python-Packages",

@@ -25,6 +25,21 @@ from .overlay import (
     PivotPoints, FibonacciRetracement, SupportResistance
 )
 
+# Import TA library integration
+try:
+    from ..technical_analysis.ta_integration import (
+        TAIntegration,
+        add_all_ta_features,
+        get_ta_volume_indicators,
+        get_ta_volatility_indicators,
+        get_ta_trend_indicators,
+        get_ta_momentum_indicators,
+        get_all_ta_indicators
+    )
+    TA_INTEGRATION_AVAILABLE = True
+except ImportError:
+    TA_INTEGRATION_AVAILABLE = False
+
 __all__ = [
     # Momentum indicators
     'RSI', 'Stochastic', 'WilliamsR', 'ROC', 'Momentum',
@@ -41,3 +56,15 @@ __all__ = [
     # Overlay indicators
     'PivotPoints', 'FibonacciRetracement', 'SupportResistance'
 ]
+
+# Add TA integration to exports if available
+if TA_INTEGRATION_AVAILABLE:
+    __all__.extend([
+        'TAIntegration',
+        'add_all_ta_features',
+        'get_ta_volume_indicators',
+        'get_ta_volatility_indicators',
+        'get_ta_trend_indicators',
+        'get_ta_momentum_indicators',
+        'get_all_ta_indicators'
+    ])

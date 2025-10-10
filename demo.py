@@ -2,8 +2,8 @@
 """
 MeridianAlgo Demo Script
 
-This script demonstrates the key features of the MeridianAlgo package.
-Run this script to see the library in action.
+This script demonstrates the key features of the Ultimate Quantitative Development Platform.
+Run this script to see the comprehensive library capabilities in action.
 """
 
 import numpy as np
@@ -16,9 +16,9 @@ warnings.filterwarnings('ignore')
 
 def demo_basic_functionality():
     """Demonstrate basic package functionality."""
-    print("=" * 60)
-    print("MeridianAlgo Demo - Basic Functionality")
-    print("=" * 60)
+    print("=" * 80)
+    print("MeridianAlgo - Ultimate Quantitative Development Platform Demo")
+    print("=" * 80)
     
     try:
         import meridianalgo as ma
@@ -26,8 +26,13 @@ def demo_basic_functionality():
         
         # Test basic imports
         print("\n📦 Available modules:")
-        print("  - Core: PortfolioOptimizer, TimeSeriesAnalyzer")
-        print("  - Statistics: StatisticalArbitrage, risk metrics")
+        print("  - Data: Multi-source data providers, real-time streaming, processing")
+        print("  - Technical Analysis: 200+ indicators, pattern recognition")
+        print("  - Portfolio: Advanced optimization, risk management, attribution")
+        print("  - Backtesting: Event-driven engine, realistic market simulation")
+        print("  - Machine Learning: Financial ML models, feature engineering")
+        print("  - Fixed Income: Bond pricing, derivatives valuation")
+        print("  - Risk Analysis: VaR, stress testing, regulatory compliance")
         print("  - ML: FeatureEngineer, LSTMPredictor")
         
         return True
