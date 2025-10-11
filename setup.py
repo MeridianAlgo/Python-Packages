@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="meridianalgo",
-    version="4.0.3",
+    version="4.0.4",
     author="Meridian Algorithmic Research Team",
     author_email="support@meridianalgo.com",
     description="Meridian Quant - The Ultimate Quantitative Development Platform",

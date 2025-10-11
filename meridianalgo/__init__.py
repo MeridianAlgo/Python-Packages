@@ -7,16 +7,32 @@ The most advanced Python platform for quantitative finance, integrating cutting-
 machine learning, institutional-grade portfolio management, and high-performance computing.
 Built for quantitative analysts, portfolio managers, algorithmic traders, and financial researchers.
 
-Version: 4.0.3
+Version: 4.0.4
 """
 
-__version__ = '4.0.3'
+__version__ = '4.0.4'
 
 import warnings
 import sys
 
 # Suppress warnings for cleaner output
 warnings.filterwarnings('ignore')
+
+# Import unified API
+try:
+    from .api import (
+        MeridianAlgoAPI,
+        get_api,
+        get_market_data as api_get_market_data,
+        optimize_portfolio as api_optimize_portfolio,
+        calculate_risk_metrics as api_calculate_risk_metrics,
+        calculate_rsi as api_calculate_rsi,
+        calculate_macd as api_calculate_macd,
+        price_option
+    )
+    API_AVAILABLE = True
+except ImportError:
+    API_AVAILABLE = False
 
 # Core functionality that always works
 def get_system_info():
@@ -170,6 +186,17 @@ def get_api():
 __all__ = ['__version__', 'get_api', 'MeridianAlgoAPI', 'get_system_info', 
            'config', 'set_config', 'get_config', 'enable_gpu_acceleration', 
            'enable_distributed_computing']
+
+# Add API functions if available
+if API_AVAILABLE:
+    __all__.extend([
+        'api_get_market_data',
+        'api_optimize_portfolio', 
+        'api_calculate_risk_metrics',
+        'api_calculate_rsi',
+        'api_calculate_macd',
+        'price_option'
+    ])
 
 if STATISTICS_AVAILABLE:
     __all__.extend(['StatisticalArbitrage', 'calculate_value_at_risk', 
