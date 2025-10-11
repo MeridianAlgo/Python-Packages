@@ -7,10 +7,10 @@ The most advanced Python platform for quantitative finance, integrating cutting-
 machine learning, institutional-grade portfolio management, and high-performance computing.
 Built for quantitative analysts, portfolio managers, algorithmic traders, and financial researchers.
 
-Version: 4.0.4
+Version: 4.1.0
 """
 
-__version__ = '4.0.4'
+__version__ = '4.1.0'
 
 import warnings
 import sys

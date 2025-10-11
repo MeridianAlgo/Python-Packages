@@ -1,8 +1,8 @@
-# MeridianAlgo v4.0.4 - Quantum Edition 🚀
+# MeridianAlgo v4.1.0 - Quantum Edition 🚀
 
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![PyPI Version](https://img.shields.io/badge/pypi-4.0.4-orange.svg)](https://pypi.org/project/meridianalgo/)
+[![PyPI Version](https://img.shields.io/badge/pypi-4.1.0-orange.svg)](https://pypi.org/project/meridianalgo/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
 
 **Meridian Quant: The Ultimate Quantitative Development Platform**
@@ -64,8 +64,8 @@ pip install meridianalgo[all]
 
 # Development installation
 pip install meridianalgo[dev]
-```## 🚀 C
-omprehensive Examples
+```
+## 🚀 Comprehensive Examples
 
 ### 📈 **Basic Usage & Market Data**
 
@@ -87,7 +87,7 @@ print(f"Current AAPL RSI: {rsi.iloc[-1]:.1f}")
 print(f"AAPL above upper Bollinger Band: {data['AAPL'].iloc[-1] > bb_upper.iloc[-1]}")
 ```
 
-### 📊 **Complete Technical Analysis Suite**
+ 📊 **Complete Technical Analysis Suite**
 
 ```python
 # === MOMENTUM INDICATORS ===
@@ -195,8 +195,8 @@ print(f"Fibonacci 38.2%: ${fib_levels[0.382]:.2f}")
 support_resistance = ma.SupportResistance(data['AAPL'])
 print(f"Key Support: ${support_resistance['support'][0]:.2f}")
 print(f"Key Resistance: ${support_resistance['resistance'][0]:.2f}")
-```##
-# 🏦 **Advanced Portfolio Management**
+```
+ 🏦 **Advanced Portfolio Management**
 
 ```python
 # === PORTFOLIO OPTIMIZATION ===
@@ -325,8 +325,8 @@ print(f"Portfolio Volatility: {portfolio_vol:.2%}")
 print(f"Risk Contributions:")
 for i, symbol in enumerate(symbols):
     print(f"  {symbol}: {risk_contrib[i]:.1%} (Weight: {weights_array[i]:.1%})")
-```###
- ⚠️ **Comprehensive Risk Analysis**
+```
+⚠️ **Comprehensive Risk Analysis**
 
 ```python
 # === RISK METRICS CALCULATION ===
@@ -507,8 +507,8 @@ print(f"  Uptrend periods: {len(uptrend_periods)} ({len(uptrend_periods)/len(ret
 print(f"  Downtrend periods: {len(downtrend_periods)} ({len(downtrend_periods)/len(returns):.1%})")
 print(f"  Average uptrend return: {uptrend_periods.mean():.2%}")
 print(f"  Average downtrend return: {downtrend_periods.mean():.2%}")
-```###
- 🤖 **Machine Learning & Feature Engineering**
+```
+🤖 **Machine Learning & Feature Engineering**
 
 ```python
 # === COMPREHENSIVE FEATURE ENGINEERING ===
@@ -784,8 +784,8 @@ print(f"  🔄 Retraining schedule: Monthly")
 print(f"  📈 A/B testing: 20% traffic to new model")
 
 print(f"\n🎯 Ready for production deployment!")
-```### 🔄 **
-Production Backtesting Engine**
+```
+ 🔄 **Production Backtesting Engine**
 
 ```python
 # === COMPREHENSIVE BACKTESTING EXAMPLE ===
