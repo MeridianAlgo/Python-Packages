@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="meridianalgo",
-    version="4.0.0-quantum",
+    version="4.0.3",
     author="Meridian Algorithmic Research Team",
     author_email="support@meridianalgo.com",
     description="Meridian Quant - The Ultimate Quantitative Development Platform",
@@ -28,18 +28,13 @@ setup(
         "scikit-learn>=1.0.0",
         "yfinance>=0.2.0",
         "requests>=2.28.0",
-        "torch>=2.0.0",
         "matplotlib>=3.5.0",
         "seaborn>=0.11.0",
         "ta>=0.10.0",
-        "pandas-ta>=0.3.14",
-        "statsmodels>=0.13.0",
         "tqdm>=4.62.0",
         "joblib>=1.1.0",
         "python-dateutil>=2.8.2",
         "pytz>=2021.3",
-        "lxml>=4.6.0",
-        "beautifulsoup4>=4.10.0",
     ],
     extras_require={
         "dev": [
@@ -50,6 +45,22 @@ setup(
             "mypy>=0.910",
             "sphinx>=4.0.0",
             "sphinx-rtd-theme>=0.5.0",
+        ],
+        "ml": [
+            "torch>=2.0.0",
+            "statsmodels>=0.13.0",
+        ],
+        "extended": [
+            "pandas-ta>=0.4.67b0",
+            "lxml>=4.6.0",
+            "beautifulsoup4>=4.10.0",
+        ],
+        "all": [
+            "torch>=2.0.0",
+            "statsmodels>=0.13.0",
+            "pandas-ta>=0.4.67b0",
+            "lxml>=4.6.0",
+            "beautifulsoup4>=4.10.0",
         ]
     },
     keywords=[

@@ -146,3 +146,64 @@ def rolling_volatility(returns: pd.Series, window: int = 21,
     if annualized:
         vol = vol * np.sqrt(252)  # Assuming daily data
     return vol
+
+def calculate_metrics(returns: pd.Series) -> Dict[str, float]:
+    """
+    Calculate comprehensive performance metrics for a return series.
+    
+    Args:
+        returns: Series of returns
+        
+    Returns:
+        Dictionary containing various performance metrics
+    """
+    if len(returns) == 0:
+        return {}
+    
+    # Basic statistics
+    total_return = (1 + returns).prod() - 1
+    annual_return = (1 + total_return) ** (252 / len(returns)) - 1
+    volatility = returns.std() * np.sqrt(252)
+    
+    # Risk-adjusted metrics
+    sharpe_ratio = annual_return / volatility if volatility > 0 else 0
+    
+    # Downside metrics
+    downside_returns = returns[returns < 0]
+    downside_deviation = downside_returns.std() * np.sqrt(252) if len(downside_returns) > 0 else 0
+    sortino_ratio = annual_return / downside_deviation if downside_deviation > 0 else 0
+    
+    # Maximum drawdown
+    cumulative = (1 + returns).cumprod()
+    running_max = cumulative.expanding().max()
+    drawdown = (cumulative - running_max) / running_max
+    max_drawdown = drawdown.min()
+    
+    # Calmar ratio
+    calmar_ratio = annual_return / abs(max_drawdown) if max_drawdown != 0 else 0
+    
+    # Skewness and kurtosis
+    skewness = returns.skew()
+    kurtosis = returns.kurtosis()
+    
+    # VaR and ES
+    var_95 = calculate_value_at_risk(returns, 0.95)
+    es_95 = calculate_expected_shortfall(returns, 0.95)
+    
+    return {
+        'total_return': total_return,
+        'annual_return': annual_return,
+        'volatility': volatility,
+        'sharpe_ratio': sharpe_ratio,
+        'sortino_ratio': sortino_ratio,
+        'max_drawdown': max_drawdown,
+        'calmar_ratio': calmar_ratio,
+        'skewness': skewness,
+        'kurtosis': kurtosis,
+        'var_95': var_95,
+        'expected_shortfall_95': es_95,
+        'win_rate': (returns > 0).mean(),
+        'avg_win': returns[returns > 0].mean() if (returns > 0).any() else 0,
+        'avg_loss': returns[returns < 0].mean() if (returns < 0).any() else 0,
+        'profit_factor': abs(returns[returns > 0].sum() / returns[returns < 0].sum()) if (returns < 0).any() else float('inf')
+    }

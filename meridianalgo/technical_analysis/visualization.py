@@ -869,8 +869,8 @@ class ChartAnnotationTool:
         self.annotations.clear()
         self.chart.annotations.clear()
         return self
-clas
-s RealTimeChartUpdater:
+
+class RealTimeChartUpdater:
     """Real-time chart updater for streaming data."""
     
     def __init__(self, chart: TechnicalChart, update_interval: int = 1000):
