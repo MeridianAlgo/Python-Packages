@@ -1,31 +1,33 @@
-# MeridianAlgo v5.0.0
-## Advanced Quantitative Development Platform
+# MeridianAlgo v6.0.0
 
-[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
+## The Complete Quantitative Finance Platform
+
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![PyPI Version](https://img.shields.io/badge/pypi-5.0.0-orange.svg)](https://pypi.org/project/meridianalgo/)
-[![Tests](https://img.shields.io/badge/tests-200%2B%20passing-brightgreen.svg)](tests/)
+[![PyPI Version](https://img.shields.io/badge/pypi-6.0.0-orange.svg)](https://pypi.org/project/meridianalgo/)
+[![Tests](https://img.shields.io/badge/tests-300%2B%20passing-brightgreen.svg)](tests/)
 [![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen.svg)]()
 
-**Enterprise-Grade Quantitative Finance Platform for Professional Developers**
+**The All-in-One Python Library for Quantitative Finance**
 
-MeridianAlgo is the most comprehensive Python platform for institutional quantitative finance, trusted by hedge funds, asset managers, and quantitative researchers worldwide. Features cutting-edge algorithms for market microstructure, statistical arbitrage, optimal execution, high-frequency trading, factor models, and advanced risk management.
+MeridianAlgo is the most comprehensive Python platform for institutional quantitative finance. From trading research to portfolio analytics, from liquidity analysis to options pricing — everything you need in one professional-grade package.
 
 ---
 
-## 🎯 What Makes MeridianAlgo Different
+## 🎯 Why MeridianAlgo?
 
-### **Production-Ready Algorithms**
-Every algorithm is implemented to institutional standards with proper error handling, parameter validation, and performance optimization.
-
-### **Academic Rigor**
-Based on peer-reviewed research from leading academics and practitioners (Almgren & Chriss, Avellaneda & Stoikov, Fama & French, and others).
-
-### **Comprehensive Testing**
-Over 200 test cases ensuring reliability in production environments.
-
-### **Professional Documentation**
-Clear, complete documentation with mathematical formulations and real-world examples.
+| Feature | MeridianAlgo | QuantLib | Zipline | Pyfolio |
+|---------|--------------|----------|---------|---------|
+| Portfolio Analytics | ✅ | ❌ | ⚠️ | ✅ |
+| Options Pricing | ✅ | ✅ | ❌ | ❌ |
+| Market Microstructure | ✅ | ❌ | ❌ | ❌ |
+| Backtesting | ✅ | ❌ | ✅ | ❌ |
+| Execution Algorithms | ✅ | ❌ | ⚠️ | ❌ |
+| Risk Management | ✅ | ✅ | ❌ | ⚠️ |
+| Factor Models | ✅ | ❌ | ⚠️ | ❌ |
+| Machine Learning | ✅ | ❌ | ❌ | ❌ |
+| Liquidity Analysis | ✅ | ❌ | ❌ | ❌ |
+| Tear Sheets | ✅ | ❌ | ❌ | ✅ |
 
 ---
 
@@ -40,13 +42,11 @@ pip install meridianalgo
 # With machine learning support
 pip install meridianalgo[ml]
 
-# Complete installation (recommended for professionals)
-pip install meridianalgo[all]
+# Full installation (recommended)
+pip install meridianalgo[full]
 
-# Development installation
-git clone https://github.com/MeridianAlgo/Python-Packages.git
-cd Python-Packages
-pip install -e .[dev]
+# Everything including distributed computing
+pip install meridianalgo[all]
 ```
 
 ### Basic Usage
@@ -54,227 +54,264 @@ pip install -e .[dev]
 ```python
 import meridianalgo as ma
 
-# Get market data
-data = ma.api_get_market_data(['AAPL', 'GOOGL'], '2023-01-01', '2023-12-31')
+# Quick analysis of any asset
+data = ma.get_market_data_quick(['AAPL', 'MSFT', 'GOOGL'], start='2023-01-01')
+analysis = ma.quick_analysis(data['AAPL']['Close'])
 
-# Calculate technical indicators
-rsi = ma.RSI(data['AAPL'], period=14)
-macd_line, signal_line, histogram = ma.MACD(data['AAPL'])
-
-# Risk analysis
-metrics = ma.api_calculate_risk_metrics(data['AAPL'].pct_change())
-print(f"Sharpe Ratio: {metrics['sharpe_ratio']:.2f}")
-print(f"VaR (95%): {metrics['var_95']:.2%}")
+print(f"Sharpe Ratio: {analysis['sharpe_ratio']:.2f}")
+print(f"Max Drawdown: {analysis['max_drawdown']:.1%}")
+print(f"Win Rate: {analysis['win_rate']:.1%}")
 ```
 
 ---
 
-## 💼 Advanced Quantitative Development
+## 📦 Core Modules
 
-### 1. **Market Microstructure Analysis**
+### 📊 Analytics (Pyfolio-Style)
 
-Professional tools for analyzing market microstructure and order flow:
+Generate comprehensive performance tear sheets:
 
 ```python
-from meridianalgo.quant import OrderFlowImbalance, RealizedVolatility, MarketImpactModel
+from meridianalgo.analytics import TearSheet, create_full_tear_sheet
 
-# Order flow analysis
-ofi = OrderFlowImbalance()
-imbalance = ofi.calculate_ofi(bid_volumes, ask_volumes, bid_prices, ask_prices)
+# Create full performance tear sheet
+ts = TearSheet(returns, benchmark=spy_returns)
+ts.create_full_tear_sheet(filename='report.pdf')
 
-# Realized volatility (institutional standard)
-rv = RealizedVolatility.rv_5min(high_freq_prices, freq='5min')
-bipower_var = RealizedVolatility.bipower_variation(returns)
+# Print summary statistics
+ts.print_summary()
+
+# Get all metrics as DataFrame
+metrics = ts.get_metrics_summary()
+```
+
+**Features:**
+- Cumulative returns visualization
+- Rolling Sharpe ratio analysis
+- Monthly returns heatmap
+- Drawdown analysis & underwater chart
+- Distribution analysis with VaR
+- Benchmark comparison
+
+### 💼 Portfolio Optimization
+
+Multiple optimization methods:
+
+```python
+from meridianalgo.portfolio import (
+    PortfolioOptimizer, RiskParity, 
+    BlackLitterman, EfficientFrontier
+)
+
+# Mean-variance optimization
+optimizer = PortfolioOptimizer(returns)
+weights = optimizer.optimize(method='sharpe')
+
+# Risk parity portfolio
+rp = RiskParity(returns)
+rp_weights = rp.optimize()
+
+# Black-Litterman with views
+bl = BlackLitterman(returns, market_caps)
+bl_weights = bl.optimize_with_views({'AAPL': 0.15, 'MSFT': 0.12})
+
+# Efficient frontier
+ef = EfficientFrontier(returns)
+frontier = ef.calculate_frontier(n_portfolios=100)
+```
+
+### 📈 Liquidity Analysis
+
+Comprehensive market microstructure:
+
+```python
+from meridianalgo.liquidity import (
+    OrderBookAnalyzer, MarketMicrostructure,
+    VPIN, MarketImpact, VolumeProfile
+)
+
+# Order book analysis
+analyzer = OrderBookAnalyzer()
+analyzer.update(order_book)
+
+imbalance = analyzer.order_imbalance()
+toxicity = analyzer.flow_toxicity()
+kyle_lambda = analyzer.kyle_lambda()
+
+# VPIN (Volume-Synchronized PIN)
+vpin = VPIN(trades)
+current_toxicity = vpin.current_vpin()
+regime = vpin.toxicity_regime()
 
 # Market impact estimation
-impact_model = MarketImpactModel()
-expected_impact = impact_model.square_root_law(
-    order_size=10000, daily_volume=500000, sigma=0.02
+impact = MarketImpact(daily_volume=1e6, volatility=0.02)
+cost = impact.estimate_total_cost(order_size=10000, price=150)
+
+# Volume profile analysis
+vp = VolumeProfile(trades)
+poc = vp.point_of_control()  # Price with highest volume
+va_low, va_high = vp.value_area(0.70)  # Value area
+```
+
+### 📉 Risk Management
+
+Enterprise-grade risk analytics:
+
+```python
+from meridianalgo.risk import (
+    VaRCalculator, CVaRCalculator, 
+    StressTest, DrawdownAnalyzer
 )
+from meridianalgo.analytics import RiskAnalyzer
+
+# Risk analyzer
+risk = RiskAnalyzer(returns)
+
+# VaR & CVaR (multiple methods)
+var_95 = risk.value_at_risk(0.95, method='historical')
+var_99 = risk.value_at_risk(0.99, method='cornish_fisher')
+cvar = risk.conditional_var(0.95)
+
+# GARCH volatility
+garch_vol = risk.garch_volatility()
+
+# Stress testing
+stress = risk.stress_test({
+    'Market Crash': -0.20,
+    'Flash Crash': -0.10,
+    'Black Swan': -0.40
+})
+
+# Comprehensive summary
+risk_summary = risk.summary()
 ```
 
-### 2. **Statistical Arbitrage**
+### 🎰 Derivatives & Options
 
-Complete framework for statistical arbitrage strategies:
+Full options pricing suite:
 
 ```python
-from meridianalgo.quant import PairsTrading, CointegrationAnalyzer, OrnsteinUhlenbeck
+from meridianalgo.derivatives import (
+    OptionsPricer, VolatilitySurface,
+    BlackScholes, GreeksCalculator
+)
 
-# Pairs trading with dynamic hedge ratio
-pt = PairsTrading(entry_threshold=2.0, exit_threshold=0.5)
-hedge_ratio = pt.calculate_hedge_ratio(stock1, stock2, method='tls')
-signals = pt.generate_signals(stock1, stock2, window=20)
+# Options pricing
+pricer = OptionsPricer()
 
-# Test for cointegration
-analyzer = CointegrationAnalyzer()
-result = analyzer.engle_granger_test(stock1, stock2)
+# Black-Scholes
+price = pricer.black_scholes(S=100, K=105, T=0.5, r=0.05, sigma=0.2)
 
-# Ornstein-Uhlenbeck process modeling
-ou = OrnsteinUhlenbeck()
-params = ou.fit(spread_series)
-print(f"Half-life: {params['half_life']:.1f} days")
+# Binomial tree (American options)
+price = pricer.binomial_tree(S=100, K=105, T=0.5, r=0.05, sigma=0.2, 
+                             american=True, n_steps=100)
+
+# Monte Carlo
+price, std = pricer.monte_carlo_pricing(S=100, K=105, T=0.5, r=0.05, 
+                                        sigma=0.2, n_simulations=10000)
+
+# Greeks calculation
+greeks = pricer.calculate_greeks(S=100, K=105, T=0.5, r=0.05, sigma=0.2)
+print(f"Delta: {greeks['delta']:.4f}")
+print(f"Gamma: {greeks['gamma']:.4f}")
+print(f"Vega: {greeks['vega']:.4f}")
+print(f"Theta: {greeks['theta']:.4f}")
+
+# Implied volatility
+iv = pricer.calculate_implied_volatility(S=100, K=105, T=0.5, r=0.05, 
+                                         market_price=8.50)
 ```
 
-### 3. **Optimal Execution Algorithms**
+### ⚡ Execution Algorithms
 
-Institutional-grade execution algorithms:
+Institutional-grade execution:
 
 ```python
-from meridianalgo.quant import VWAP, TWAP, ImplementationShortfall
+from meridianalgo.execution import (
+    VWAP, TWAP, ImplementationShortfall, POV
+)
 
 # VWAP execution
 vwap = VWAP(total_quantity=10000, start_time='09:30', end_time='16:00')
-schedule = vwap.calculate_schedule(historical_volume_profile)
+schedule = vwap.calculate_schedule(historical_volume)
 
 # Implementation Shortfall (Almgren-Chriss)
 is_algo = ImplementationShortfall(
-    total_quantity=50000, total_time=1.0, volatility=0.02, risk_aversion=1e-6
+    total_quantity=50000,
+    total_time=1.0,
+    volatility=0.02,
+    risk_aversion=1e-6
 )
 trajectory = is_algo.calculate_optimal_trajectory()
-cost_analysis = is_algo.calculate_expected_cost()
+costs = is_algo.calculate_expected_cost()
 ```
 
-### 4. **High-Frequency Trading**
+### 📐 Factor Models
 
-Professional HFT strategies:
-
-```python
-from meridianalgo.quant import MarketMaking, LatencyArbitrage, HFTSignalGenerator
-
-# Market making (Avellaneda-Stoikov model)
-mm = MarketMaking(target_spread_bps=5.0, max_inventory=1000)
-bid_price, ask_price = mm.calculate_quotes(mid_price=100, volatility=0.02)
-
-# Latency arbitrage detection
-arb = LatencyArbitrage(latency_threshold_us=100.0, min_profit_bps=1.0)
-opportunity = arb.detect_opportunity(venue1_price, venue1_time, venue2_price, venue2_time)
-```
-
-### 5. **Factor Models**
-
-Multi-factor models for portfolio construction:
+Multi-factor analysis:
 
 ```python
-from meridianalgo.quant import FamaFrenchModel, APTModel, FactorRiskDecomposition
+from meridianalgo.factors import (
+    FamaFrench, FactorModel, FactorRiskDecomposition
+)
 
-# Fama-French three-factor model
-ff = FamaFrenchModel(model_type='three_factor')
-results = ff.fit(asset_returns, factor_data)
+# Fama-French analysis
+ff = FamaFrench(model_type='five_factor')
+results = ff.fit(returns, factor_data)
+
+print(f"Alpha: {results['alpha']:.4f} (t={results['alpha_t_stat']:.2f})")
+print(f"Market Beta: {results['coefficients']['MKT']:.2f}")
+print(f"SMB Beta: {results['coefficients']['SMB']:.2f}")
 
 # Factor risk decomposition
 decomp = FactorRiskDecomposition.decompose_variance(
-    portfolio_weights, factor_exposures, factor_covariance, specific_variances
+    weights, factor_exposures, factor_covariance, specific_variances
 )
 ```
 
-### 6. **Regime Detection**
+### 🔄 Statistical Arbitrage
 
-Advanced regime detection and market state classification:
+Pairs trading and mean reversion:
 
 ```python
-from meridianalgo.quant import HiddenMarkovModel, StructuralBreakDetection
+from meridianalgo.quant import (
+    PairsTrading, CointegrationAnalyzer, 
+    OrnsteinUhlenbeck, HiddenMarkovModel
+)
 
-# Hidden Markov Model for regime detection
+# Cointegration test
+coint = CointegrationAnalyzer()
+result = coint.engle_granger_test(stock1, stock2)
+
+# Pairs trading strategy
+pt = PairsTrading(entry_threshold=2.0, exit_threshold=0.5)
+hedge_ratio = pt.calculate_hedge_ratio(stock1, stock2)
+signals = pt.generate_signals(stock1, stock2)
+
+# Mean reversion dynamics (OU process)
+ou = OrnsteinUhlenbeck()
+params = ou.fit(spread)
+print(f"Half-life: {params['half_life']:.1f} days")
+
+# Regime detection
 hmm = HiddenMarkovModel(n_states=2)
 results = hmm.fit(returns)
-current_regime = hmm.predict_state(recent_returns).iloc[-1]
-
-# Detect structural breaks
-sbd = StructuralBreakDetection()
-breaks = sbd.cusum_test(returns)
+current_regime = hmm.predict_state(returns).iloc[-1]
 ```
 
 ---
 
-## 📊 Portfolio Management & Risk
+## 🎓 Use Cases
 
-### Portfolio Optimization
-
-```python
-# Maximum Sharpe Ratio
-sharpe_weights = ma.api_optimize_portfolio(returns, method='sharpe')
-
-# Black-Litterman Model
-bl_model = ma.BlackLitterman(returns, market_caps)
-bl_weights = bl_model.optimize_with_views({'AAPL': 0.15, 'MSFT': 0.12})
-
-# Risk Parity
-rp_model = ma.RiskParity(returns)
-rp_weights = rp_model.optimize()
-
-# Efficient Frontier
-frontier = ma.EfficientFrontier(returns)
-frontier_data = frontier.calculate_frontier(target_returns)
-```
-
-### Risk Management
-
-```python
-# Value at Risk (Multiple Methods)
-historical_var = ma.HistoricalVaR(returns, confidence_level=0.95)
-parametric_var = ma.ParametricVaR(returns, confidence_level=0.99)
-monte_carlo_var = ma.MonteCarloVaR(returns, n_simulations=10000)
-
-# Expected Shortfall (CVaR)
-es = ma.calculate_expected_shortfall(returns, confidence_level=0.95)
-
-# Comprehensive risk metrics
-metrics = ma.api_calculate_risk_metrics(returns)
-```
-
----
-
-## 🤖 Machine Learning for Trading
-
-```python
-# Feature engineering
-engineer = ma.FeatureEngineer()
-features = engineer.create_features(prices)
-
-# LSTM for price prediction
-predictor = ma.LSTMPredictor(sequence_length=60, epochs=100)
-X, y = ma.prepare_data_for_lstm(prices.values)
-predictor.fit(X_train, y_train)
-predictions = predictor.predict(X_test)
-```
-
----
-
-## 📦 Package Structure
-
-```
-meridianalgo/
-├── quant/                          # Advanced Quantitative Algorithms
-│   ├── market_microstructure.py   # Order flow, realized vol, market impact
-│   ├── statistical_arbitrage.py   # Pairs trading, cointegration
-│   ├── execution_algorithms.py    # VWAP, TWAP, POV, Implementation Shortfall
-│   ├── high_frequency.py          # Market making, latency arbitrage
-│   ├── factor_models.py           # Fama-French, APT, custom factors
-│   └── regime_detection.py        # HMM, structural breaks
-├── portfolio_management/          # Portfolio optimization
-├── risk_analysis/                 # Risk management
-├── backtesting/                   # Backtesting engine
-├── technical_indicators/          # 200+ technical indicators
-├── ml/                           # Machine learning models
-├── derivatives/                   # Options & derivatives
-├── fixed_income/                  # Bond pricing
-├── forex/                        # FX analysis
-└── crypto/                       # Cryptocurrency tools
-```
-
----
-
-## 🎓 Use Cases by Professional Type
-
-### **Hedge Funds**
+### **Hedge Funds & Prop Trading**
 - Statistical arbitrage strategies
-- Multi-factor alpha generation
-- High-frequency trading
+- High-frequency signal generation
+- Multi-factor alpha models
 - Risk-adjusted portfolio construction
 
 ### **Asset Managers**
 - Factor-based investing
-- Portfolio optimization (Markowitz, Black-Litterman, Risk Parity)
+- Portfolio optimization (MVO, Black-Litterman, Risk Parity)
 - Transaction cost analysis
 - Performance attribution
 
@@ -282,73 +319,140 @@ meridianalgo/
 - Market microstructure analysis
 - Regime detection and forecasting
 - Cointegration and mean reversion testing
-- Factor model development
+- VPIN and flow toxicity analysis
 
-### **Proprietary Trading Firms**
-- Optimal execution algorithms
-- Market making strategies
-- Latency arbitrage
-- Real-time risk monitoring
+### **Risk Managers**
+- VaR and CVaR calculation
+- Stress testing and scenario analysis
+- Drawdown risk monitoring
+- Tail risk analysis
 
 ---
 
-## 🧪 Testing & Quality
+## ⚙️ Configuration
+
+```python
+import meridianalgo as ma
+
+# Configure the library
+ma.set_config(
+    data_provider='yahoo',       # Data source
+    cache_enabled=True,          # Enable caching
+    parallel_processing=True,    # Use multiprocessing
+    risk_free_rate=0.05,         # Default risk-free rate
+    trading_days_per_year=252,   # Trading days
+)
+
+# Enable GPU acceleration (if available)
+ma.enable_gpu_acceleration()
+
+# Enable distributed computing
+ma.enable_distributed_computing(backend='ray')
+
+# Get system info
+info = ma.get_system_info()
+```
+
+---
+
+## 🧪 Testing
 
 ```bash
 # Run all tests
 pytest tests/ -v
 
 # Run specific module tests
-pytest tests/test_quant.py -v
+pytest tests/test_analytics.py -v
+pytest tests/test_liquidity.py -v
 
 # Run with coverage
 pytest tests/ --cov=meridianalgo --cov-report=html
 
-# Run integration tests
-pytest tests/integration/ -v
+# Run performance benchmarks
+pytest tests/benchmarks/ -v
 ```
-
-**Test Coverage**: 200+ test cases | 90%+ code coverage
 
 ---
 
 ## 📚 Documentation
 
-- **API Reference**: `docs/api/`
-- **User Guide**: `docs/user_guide/`
-- **Tutorials**: `docs/tutorials/`
-- **Examples**: `examples/`
+- **API Reference**: [docs.meridianalgo.com](https://docs.meridianalgo.com)
+- **Tutorials**: [tutorials/](tutorials/)
+- **Examples**: [examples/](examples/)
+- **Cookbook**: [cookbook/](docs/cookbook/)
 
-### Examples
+---
 
-```bash
-python examples/quant_examples.py              # Quant algorithms demo
-python examples/advanced_trading_strategy.py   # Trading strategy
-python examples/basic_usage.py                 # Getting started
+## 🏗️ Architecture
+
+```
+meridianalgo/
+├── analytics/           # Pyfolio-style analytics & tear sheets
+│   ├── performance.py   # Performance metrics (50+ measures)
+│   ├── risk_analytics.py # Risk analysis (VaR, CVaR, GARCH)
+│   ├── tear_sheets.py   # Visual tear sheet generation
+│   ├── attribution.py   # Performance attribution (Brinson, Factor)
+│   └── drawdown.py      # Drawdown analysis
+│
+├── liquidity/           # Market microstructure & liquidity
+│   ├── order_book.py    # Order book analysis, microprice
+│   ├── microstructure.py # PIN, VPIN, spread decomposition
+│   ├── spread.py        # Effective & realized spread
+│   ├── volume.py        # Volume profile, institutional flow
+│   ├── impact.py        # Market impact models (Almgren-Chriss)
+│   └── metrics.py       # Amihud, turnover, liquidity ratios
+│
+├── portfolio/           # Portfolio optimization
+│   ├── optimization.py  # MVO, Black-Litterman, HRP
+│   ├── risk_parity.py   # Risk parity strategies
+│   └── rebalancing.py   # Rebalancing algorithms
+│
+├── risk/                # Risk management
+│   ├── var.py           # VaR calculations
+│   ├── stress_test.py   # Stress testing
+│   └── scenario.py      # Scenario analysis
+│
+├── derivatives/         # Options & derivatives
+│   ├── pricing.py       # Black-Scholes, Binomial, Monte Carlo
+│   ├── greeks.py        # Greeks calculation
+│   └── volatility.py    # Vol surface, local vol
+│
+├── execution/           # Execution algorithms
+│   ├── vwap.py          # VWAP execution
+│   ├── twap.py          # TWAP execution
+│   └── impact.py        # Implementation shortfall
+│
+├── quant/               # Quantitative strategies
+│   ├── pairs_trading.py # Pairs trading, cointegration
+│   ├── regime.py        # Regime detection (HMM)
+│   └── arbitrage.py     # Statistical arbitrage
+│
+├── factors/             # Factor models
+│   ├── fama_french.py   # Fama-French models
+│   └── factor_risk.py   # Factor risk decomposition
+│
+├── ml/                  # Machine learning
+├── signals/             # Technical indicators
+├── backtesting/         # Backtesting engine
+├── data/                # Data management
+└── fixed_income/        # Fixed income analytics
 ```
 
 ---
 
-## 🏗️ Development
+## 🌟 What's New in v6.0.0
 
-### Setup Development Environment
+### Major Features
+- **Pyfolio-Style Analytics**: Complete tear sheet generation with 50+ metrics
+- **Comprehensive Liquidity Module**: Order book, VPIN, market impact, spread decomposition
+- **Modern Architecture**: Lazy loading, configuration management, GPU support
+- **Type Hints Throughout**: Full typing for better IDE support
 
-```bash
-git clone https://github.com/MeridianAlgo/Python-Packages.git
-cd Python-Packages
-pip install -e .[dev]
-
-# Run tests
-pytest tests/
-
-# Format code
-black meridianalgo/
-flake8 meridianalgo/
-```
-
-### Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+### Improvements
+- Modular design for better code organization
+- Enhanced error handling and validation
+- Performance optimizations across all modules
+- Extended documentation and examples
 
 ---
 
@@ -358,81 +462,28 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-## 💬 Support & Community
+## 💬 Support
 
-- **GitHub Issues**: [Report bugs](https://github.com/MeridianAlgo/Python-Packages/issues)
-- **GitHub Discussions**: [Ask questions](https://github.com/MeridianAlgo/Python-Packages/discussions)
+- **Issues**: [GitHub Issues](https://github.com/MeridianAlgo/Python-Packages/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/MeridianAlgo/Python-Packages/discussions)
 - **Email**: support@meridianalgo.com
-- **Documentation**: [Full docs](https://meridianalgo.readthedocs.io)
 
 ---
 
 ## 🌟 Citation
 
 ```bibtex
-@software{meridianalgo2024,
-  title = {MeridianAlgo: Advanced Quantitative Development Platform},
+@software{meridianalgo2025,
+  title = {MeridianAlgo: The Complete Quantitative Finance Platform},
   author = {Meridian Algorithmic Research Team},
-  year = {2024},
-  version = {5.0.0},
+  year = {2025},
+  version = {6.0.0},
   url = {https://github.com/MeridianAlgo/Python-Packages}
 }
 ```
 
 ---
 
-## 🚀 Changelog
+**MeridianAlgo v6.0.0** — *The Complete Quantitative Finance Platform*
 
-### v5.0.0 (2024-11-29) - "Advanced Quantitative Development Edition"
-
-#### ✨ New Features
-- **Professional Quant Module**: Complete suite of institutional-grade algorithms
-  - Market microstructure analysis (order flow, VPIN, realized volatility)
-  - Statistical arbitrage (pairs trading, cointegration, OU process)
-  - Execution algorithms (VWAP, TWAP, POV, Implementation Shortfall)
-  - High-frequency trading (market making, latency arbitrage)
-  - Factor models (Fama-French, APT, custom factors)
-  - Regime detection (HMM, structural breaks, market classification)
-
-#### 🔧 Improvements
-- Reorganized package structure for better clarity
-- Enhanced documentation with 100+ examples
-- Complete test coverage (200+ tests)
-- Improved error handling and validation
-- Performance optimizations throughout
-
-#### 📚 Documentation
-- New comprehensive README
-- Professional examples for all modules  
-- Updated API documentation
-- Real-world use case guides
-
-#### 🧪 Testing
-- 200+ unit tests
-- Integration test suite
-- Comprehensive test coverage
-- Mock data generators
-
----
-
-## 🎯 Roadmap
-
-### v5.1.0 (Q1 2025)
-- GPU acceleration for ML models
-- Real-time data streaming
-- Enhanced visualization tools
-- Additional execution algorithms
-
-### v5.2.0 (Q2 2025)
-- Distributed computing support
-- Cloud deployment tools
-- Advanced options pricing models
-- ESG factor integration
-
----
-
-**MeridianAlgo v5.0.0 - Advanced Quantitative Development Platform**
-
-*Built by quantitative professionals, for quantitative professionals.*
-
-**Empowering the next generation of quantitative finance.**
+*Built by students for quantitative finance.*

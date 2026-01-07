@@ -7,7 +7,7 @@ This module provides tools for calculating various financial risk metrics.
 import numpy as np
 import pandas as pd
 from typing import Optional, Dict, Union, List
-from ..config import get_config
+from ...config import get_config
 
 def calculate_metrics(returns: pd.Series, risk_free_rate: Optional[float] = None) -> Dict[str, float]:
     """Calculate key performance metrics for a return series.
@@ -29,6 +29,7 @@ def calculate_metrics(returns: pd.Series, risk_free_rate: Optional[float] = None
     metrics = {
         'total_return': (1 + returns).prod() - 1,
         'annualized_return': (1 + returns).prod() ** (252/len(returns)) - 1,
+        'volatility': returns.std() * np.sqrt(252),
         'annualized_volatility': returns.std() * np.sqrt(252),
         'sharpe_ratio': (excess_returns.mean() / returns.std()) * np.sqrt(252) if returns.std() > 0 else 0,
         'max_drawdown': calculate_max_drawdown(returns),
@@ -60,9 +61,12 @@ def calculate_value_at_risk(returns: pd.Series, confidence_level: float = 0.95) 
         confidence_level: Confidence level for VaR (default: 0.95)
         
     Returns:
-        Value at Risk as a decimal
+        Value at Risk as a decimal (negative for losses)
     """
-    return -np.percentile(returns, (1 - confidence_level) * 100)
+    if not (0 <= confidence_level <= 1):
+        raise ValueError("confidence_level must be between 0 and 1")
+        
+    return np.percentile(returns, (1 - confidence_level) * 100)
 
 def calculate_expected_shortfall(returns: pd.Series, confidence_level: float = 0.95) -> float:
     """Calculate Expected Shortfall (CVaR) using historical simulation.
@@ -72,10 +76,13 @@ def calculate_expected_shortfall(returns: pd.Series, confidence_level: float = 0
         confidence_level: Confidence level for ES (default: 0.95)
         
     Returns:
-        Expected Shortfall as a decimal
+        Expected Shortfall as a decimal (negative for losses)
     """
+    if not (0 <= confidence_level <= 1):
+        raise ValueError("confidence_level must be between 0 and 1")
+        
     var = calculate_value_at_risk(returns, confidence_level)
-    return -returns[returns <= -var].mean()
+    return returns[returns <= var].mean()
 
 def calculate_sortino_ratio(returns: pd.Series, risk_free_rate: Optional[float] = None) -> float:
     """Calculate the Sortino ratio.

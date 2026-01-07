@@ -7,7 +7,7 @@ This module provides tools for analyzing financial time series data.
 import numpy as np
 import pandas as pd
 from typing import Optional, Dict, Union, List, Tuple
-from ..config import get_config
+from ...config import get_config
 
 class TimeSeriesAnalyzer:
     """Time series analysis for financial data."""

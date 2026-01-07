@@ -62,14 +62,16 @@ class FeatureEngineer:
     - Sentiment features (if available)
     """
     
-    def __init__(self, lookback_periods: List[int] = [5, 10, 20, 50]):
+    def __init__(self, lookback: int = 10, lookback_periods: Optional[List[int]] = None):
         """
         Initialize feature engineer.
         
         Args:
+            lookback: Default lookback period
             lookback_periods: List of lookback periods for features
         """
-        self.lookback_periods = lookback_periods
+        self.lookback = lookback
+        self.lookback_periods = lookback_periods or [5, 10, 20, 50]
         self.scalers = {}
         self.feature_names = []
         self.is_fitted = False
@@ -104,8 +106,12 @@ class FeatureEngineer:
                 features[f'{asset}_ema_{period}'] = price_series.ewm(span=period).mean()
             
             # Volatility
+            features[f'{asset}_volatility'] = price_series.pct_change().rolling(self.lookback).std()
             for period in self.lookback_periods:
                 features[f'{asset}_vol_{period}'] = price_series.pct_change().rolling(period).std()
+            
+            # Momentum
+            features[f'{asset}_momentum'] = price_series.pct_change(self.lookback)
             
             # RSI
             features[f'{asset}_rsi_14'] = self._calculate_rsi(price_series, 14)
@@ -142,6 +148,26 @@ class FeatureEngineer:
         
         self.feature_names = features.columns.tolist()
         return features
+    
+    def create_features(self, prices: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
+        """Alias for create_technical_features for simplified usage."""
+        if isinstance(prices, pd.Series):
+            name = prices.name or 'price'
+            df = pd.DataFrame({name: prices})
+            result = self.create_technical_features(df)
+            # Remove the name prefix if it's a single series to match test expectations
+            result.columns = [col.replace(f"{name}_", "") for col in result.columns]
+            return result
+        else:
+            return self.create_technical_features(prices)
+        
+    def create_sequences(self, X: np.ndarray, y: np.ndarray, sequence_length: int) -> Tuple[np.ndarray, np.ndarray]:
+        """Create sequences for time series prediction models."""
+        X_seq, y_seq = [], []
+        for i in range(sequence_length, len(X)):
+            X_seq.append(X[i-sequence_length:i])
+            y_seq.append(y[i])
+        return np.array(X_seq), np.array(y_seq)
     
     def create_lag_features(
         self,
@@ -450,7 +476,7 @@ class LSTMPredictor:
                 output = self.fc(lstm_out)
                 return output
         
-        return LSTMModel(input_size, hidden_size, num_layers, dropout).to(self.device)
+        return LSTMModel(input_size, self.hidden_size, self.num_layers, self.dropout).to(self.device)
     
     def prepare_data(
         self,
@@ -477,7 +503,9 @@ class LSTMPredictor:
         
         for i in range(self.sequence_length, len(features_scaled)):
             X.append(features_scaled[i-self.sequence_length:i])
-            y.append(target.iloc[i])
+            # Handle both pandas and numpy for target
+            target_val = target.iloc[i] if hasattr(target, 'iloc') else target[i]
+            y.append(target_val)
         
         X = np.array(X)
         y = np.array(y)
@@ -813,61 +841,99 @@ class ModelEvaluator:
             from sklearn.model_selection import KFold
             cv = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
         
-        # Cross-validation predictions
+        # Cross-validation predictions and per-fold metrics
         predictions = np.zeros(len(y))
+        fold_metrics = []
         
         for train_idx, val_idx in cv.split(X):
-            X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
-            y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+            # Handle both pandas and numpy
+            if hasattr(X, 'iloc'):
+                X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+            else:
+                X_train, X_val = X[train_idx], X[val_idx]
+                
+            if hasattr(y, 'iloc'):
+                y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+            else:
+                y_train, y_val = y[train_idx], y[val_idx]
             
             model.fit(X_train, y_train)
-            predictions[val_idx] = model.predict(X_val)
+            y_pred = model.predict(X_val)
+            predictions[val_idx] = y_pred
+            fold_metrics.append(self.calculate_metrics(y_val, y_pred))
         
-        # Calculate metrics
-        metrics = self._calculate_metrics(y, predictions)
+        # Calculate summary metrics
+        summary_results = {}
+        if fold_metrics:
+            metric_keys = fold_metrics[0].keys()
+            for key in metric_keys:
+                values = [m[key] for m in fold_metrics]
+                summary_results[f'mean_{key}'] = np.mean(values)
+                summary_results[f'std_{key}'] = np.std(values)
+        
+        # Overall metrics
+        metrics = self.calculate_metrics(y, predictions)
+        summary_results['metrics'] = metrics
+        summary_results['predictions'] = predictions
+        summary_results['model'] = model
         
         # Feature importance
-        feature_importance = None
-        if hasattr(model, 'feature_importances_'):
-            feature_importance = dict(zip(X.columns, model.feature_importances_))
+        if hasattr(model, 'feature_importances_') and hasattr(X, 'columns'):
+            summary_results['feature_importance'] = dict(zip(X.columns, model.feature_importances_))
+        else:
+            summary_results['feature_importance'] = None
         
-        return {
-            'metrics': metrics,
-            'feature_importance': feature_importance,
-            'predictions': predictions,
-            'model': model
-        }
+        return summary_results
     
-    def _calculate_metrics(self, y_true: pd.Series, y_pred: np.ndarray) -> Dict[str, float]:
+    @staticmethod
+    def calculate_metrics(y_true: Union[pd.Series, np.ndarray], y_pred: np.ndarray) -> Dict[str, float]:
         """Calculate comprehensive evaluation metrics."""
+        # Convert to numpy for calculations
+        y_true_np = np.asarray(y_true)
+        y_pred_np = np.asarray(y_pred)
+        
         # Basic regression metrics
-        mse = mean_squared_error(y_true, y_pred)
-        mae = mean_absolute_error(y_true, y_pred)
-        r2 = r2_score(y_true, y_pred)
+        mse = mean_squared_error(y_true_np, y_pred_np)
+        mae = mean_absolute_error(y_true_np, y_pred_np)
+        r2 = r2_score(y_true_np, y_pred_np)
+        rmse = np.sqrt(mse)
         
         # Financial metrics
         # Directional accuracy
-        direction_true = np.diff(y_true) > 0
-        direction_pred = np.diff(y_pred) > 0
-        directional_accuracy = (direction_true == direction_pred).mean()
+        if len(y_true_np) > 1:
+            direction_true = np.diff(y_true_np) > 0
+            direction_pred = np.diff(y_pred_np) > 0
+            direction_accuracy = (direction_true == direction_pred).mean()
+        else:
+            direction_accuracy = 1.0
         
         # Information ratio (if returns)
-        if y_true.std() > 0:
-            information_ratio = (y_pred - y_true).mean() / (y_pred - y_true).std()
+        if y_true_np.std() > 0:
+            information_ratio = (y_pred_np - y_true_np).mean() / (y_pred_np - y_true_np).std()
         else:
             information_ratio = 0
         
         # Hit rate (correct sign prediction)
-        hit_rate = (np.sign(y_true) == np.sign(y_pred)).mean()
+        hit_rate = (np.sign(y_true_np) == np.sign(y_pred_np)).mean()
         
         return {
             'mse': mse,
+            'rmse': rmse,
             'mae': mae,
             'r2': r2,
-            'directional_accuracy': directional_accuracy,
+            'direction_accuracy': direction_accuracy,
+            'directional_accuracy': direction_accuracy,
             'information_ratio': information_ratio,
             'hit_rate': hit_rate
         }
+
+    _calculate_metrics = calculate_metrics
+
+    @staticmethod
+    def time_series_cv(model: BaseEstimator, X: Union[pd.DataFrame, np.ndarray], y: Union[pd.Series, np.ndarray], n_splits: int = 5) -> Dict[str, Any]:
+        """Alias for evaluate_model with time_series method."""
+        evaluator = ModelEvaluator()
+        return evaluator.evaluate_model(model, X, y, cv_method='time_series', cv_folds=n_splits)
     
     def compare_models(
         self,

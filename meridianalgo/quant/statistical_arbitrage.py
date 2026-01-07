@@ -399,19 +399,36 @@ class OrnsteinUhlenbeck:
         S_xy = np.sum(prices[:-1] * prices[1:])
         
         # MLE estimates
-        self.mu = (S_y * S_xx - S_x * S_xy) / ((n - 1) * (S_xx - S_xy) - (S_x**2 - S_x * S_y))
-        
-        # Additional calculations
-        denominator = S_xx - 2 * self.mu * S_x + (n - 1) * self.mu**2
-        if denominator > 0:
-            self.theta = -np.log((S_xy - self.mu * S_x - self.mu * S_y + (n - 1) * self.mu**2) / denominator) / dt
-        else:
-            self.theta = 0.1  # Default value
-        
-        # Estimate sigma
-        a = np.exp(-self.theta * dt)
-        sum_squared_errors = np.sum((prices[1:] - a * prices[:-1] - self.mu * (1 - a))**2)
-        self.sigma = np.sqrt(sum_squared_errors * 2 * self.theta / (n - 1) / (1 - a**2))
+        try:
+            numerator = S_y * S_xx - S_x * S_xy
+            denominator = (n - 1) * (S_xx - S_xy) - (S_x**2 - S_x * S_y)
+            if abs(denominator) > 1e-12:
+                self.mu = numerator / denominator
+            else:
+                self.mu = np.mean(prices)
+            
+            # Additional calculations
+            ou_den = S_xx - 2 * self.mu * S_x + (n - 1) * self.mu**2
+            ou_num = S_xy - self.mu * S_x - self.mu * S_y + (n - 1) * self.mu**2
+            
+            if ou_den > 1e-12 and ou_num / ou_den > 0:
+                self.theta = -np.log(ou_num / ou_den) / dt
+            else:
+                self.theta = 0.1  # Default value
+            
+            # Clamp theta to be non-negative
+            self.theta = max(0.0001, self.theta)
+            
+            # Estimate sigma
+            a = np.exp(-self.theta * dt)
+            sum_squared_errors = np.sum((prices[1:] - a * prices[:-1] - self.mu * (1 - a))**2)
+            sigma_sq = sum_squared_errors * 2 * self.theta / ((n - 1) * (1 - a**2))
+            self.sigma = np.sqrt(max(0, sigma_sq))
+            
+        except Exception:
+            self.theta = 0.1
+            self.mu = np.mean(prices)
+            self.sigma = np.std(prices)
         
         return {
             'theta': self.theta,

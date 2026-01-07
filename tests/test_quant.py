@@ -270,8 +270,8 @@ class TestHighFrequency:
         mid_price = ob.get_mid_price()
         spread = ob.get_spread()
         
-        assert mid_price == 100.025
-        assert spread == 0.05
+        assert abs(mid_price - 100.025) < 1e-10
+        assert abs(spread - 0.05) < 1e-10
     
     def test_microprice_estimator(self):
         """Test microprice estimation."""

@@ -7,7 +7,7 @@ This module provides tools for portfolio optimization using modern portfolio the
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Tuple, Union, Optional
-from ..config import get_config
+from ...config import get_config
 
 class PortfolioOptimizer:
     """Portfolio optimization using modern portfolio theory."""
@@ -18,6 +18,8 @@ class PortfolioOptimizer:
         Args:
             returns: DataFrame containing historical returns (tickers as columns)
         """
+        if returns is None or returns.empty:
+            raise ValueError("Returns data cannot be empty")
         self.returns = returns
         self.cov_matrix = self._calculate_covariance_matrix()
     

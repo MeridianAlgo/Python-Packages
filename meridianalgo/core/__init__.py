@@ -19,7 +19,10 @@ from .statistics import (
     calculate_correlation_matrix,
     calculate_rolling_correlation,
     calculate_hurst_exponent,
-    calculate_half_life
+    calculate_half_life,
+    calculate_autocorrelation,
+    hurst_exponent,
+    rolling_volatility
 )
 
 __all__ = [
@@ -36,5 +39,8 @@ __all__ = [
     'calculate_correlation_matrix',
     'calculate_rolling_correlation',
     'calculate_hurst_exponent',
-    'calculate_half_life'
+    'calculate_half_life',
+    'calculate_autocorrelation',
+    'hurst_exponent',
+    'rolling_volatility'
 ]
