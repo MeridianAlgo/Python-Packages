@@ -473,7 +473,7 @@ class HFTSignalGenerator:
             signed_volume = window_volumes * window_sides
 
             # Price change
-            price_change = window_prices[-1] - window_prices[0]
+            window_prices[-1] - window_prices[0]
 
             # Correlation between signed volume and price change
             if np.std(signed_volume) > 0:

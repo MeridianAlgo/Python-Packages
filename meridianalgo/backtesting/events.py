@@ -5,7 +5,8 @@ Event system for event-driven backtesting architecture.
 from abc import ABC, abstractmethod
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
+import queue
 
 
 class EventType(Enum):
@@ -234,8 +235,6 @@ class FillEvent(Event):
 
 
 # Event queue for managing events
-import queue
-from typing import List
 
 
 class EventQueue:

@@ -53,7 +53,7 @@ def example_time_series_analysis():
 
     # Calculate returns and volatility
     returns = analyzer.calculate_returns()
-    volatility = analyzer.calculate_volatility(window=21, annualized=True)
+    analyzer.calculate_volatility(window=21, annualized=True)
 
     # Calculate performance metrics
     metrics = ma.calculate_metrics(returns)
@@ -141,7 +141,7 @@ def example_machine_learning():
 
     # Check if PyTorch is available for LSTM
     try:
-        import torch
+        import torch  # noqa: F401
 
         print("\nPyTorch available - testing LSTM predictor...")
 
@@ -155,7 +155,7 @@ def example_machine_learning():
             # Split data
             train_size = int(0.8 * len(X))
             X_train, X_test = X[:train_size], X[train_size:]
-            y_train, y_test = y[:train_size], y[train_size:]
+            y_train, _y_test = y[:train_size], y[train_size:]
 
             # Scale features
             from sklearn.preprocessing import StandardScaler

@@ -55,7 +55,7 @@ class HiddenMarkovModel:
         Dict
             Model parameters
         """
-        n_obs = len(returns)
+        len(returns)
         returns_array = returns.values
 
         # Initialize parameters
@@ -436,7 +436,7 @@ class StructuralBreakDetection:
         # Try different numbers of breaks
         for n_breaks in range(1, min(max_breaks + 1, n // min_segment)):
             # Grid search for break points
-            possible_breaks = range(min_segment, n - min_segment)
+            range(min_segment, n - min_segment)
 
             # For simplicity, use equal spacing
             break_spacing = (n - 2 * min_segment) // (n_breaks + 1)

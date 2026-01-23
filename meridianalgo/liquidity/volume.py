@@ -141,7 +141,7 @@ class VolumeProfile:
         target_volume = total_volume * pct
 
         # Start from POC and expand outward
-        poc_idx = profile["volume"].idxmax()
+        profile["volume"].idxmax()
         profile = profile.reset_index(drop=True)
         poc_row = profile["volume"].idxmax()
 

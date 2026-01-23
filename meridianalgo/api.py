@@ -15,11 +15,17 @@ import pandas as pd
 
 from . import __version__
 from .config import get_config, set_config
+
 # Core imports
-from .core import (PortfolioOptimizer, TimeSeriesAnalyzer,
-                   calculate_calmar_ratio, calculate_expected_shortfall,
-                   calculate_max_drawdown, calculate_sortino_ratio,
-                   calculate_value_at_risk, get_market_data)
+from .core import (
+    PortfolioOptimizer,
+    TimeSeriesAnalyzer,
+    calculate_calmar_ratio,
+    calculate_expected_shortfall,
+    calculate_max_drawdown,
+    calculate_sortino_ratio,
+    calculate_value_at_risk,
+)
 from .core.statistics import StatisticalArbitrage
 
 # Set up logging
@@ -32,6 +38,13 @@ logger = logging.getLogger(__name__)
 DEFAULT_RISK_FREE_RATE = 0.0
 DEFAULT_CONFIDENCE_LEVEL = 0.95
 DEFAULT_WINDOW = 21
+
+try:
+    # signals module available but not directly imported
+    TECHNICAL_AVAILABLE = True
+except ImportError:
+    TECHNICAL_AVAILABLE = False
+
 
 # Type aliases
 Numeric = Union[int, float, np.number]
@@ -293,7 +306,9 @@ def get_market_data(
     symbols: List[str], start_date: str, end_date: str = None
 ) -> pd.DataFrame:
     """Get market data for specified symbols."""
-    return get_api().get_market_data(symbols, start_date, end_date)
+    api = get_api()
+    return api.get_market_data(symbols, start_date, end_date)
+
 
 
 def optimize_portfolio(

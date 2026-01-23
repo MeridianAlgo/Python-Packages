@@ -14,8 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 try:
     from meridianalgo.technical_analysis.framework import BaseIndicator
-    from meridianalgo.technical_analysis.indicators import (MACD, RSI,
-                                                            BollingerBands)
+    from meridianalgo.technical_analysis.indicators import MACD, RSI, BollingerBands
     from meridianalgo.technical_analysis.patterns import CandlestickPatterns
 
     TECHNICAL_ANALYSIS_AVAILABLE = True
@@ -28,8 +27,7 @@ try:
     from meridianalgo.technical_indicators import MACD as LegacyMACD
     from meridianalgo.technical_indicators import RSI as LegacyRSI
     from meridianalgo.technical_indicators import SMA
-    from meridianalgo.technical_indicators import \
-        BollingerBands as LegacyBollingerBands
+    from meridianalgo.technical_indicators import BollingerBands as LegacyBollingerBands
     from meridianalgo.technical_indicators import Stochastic
 
     LEGACY_INDICATORS_AVAILABLE = True
@@ -365,20 +363,20 @@ class TestIndicatorPerformance:
         if LEGACY_INDICATORS_AVAILABLE:
             start_time = time.time()
             try:
-                rsi = LegacyRSI(prices, period=14)
+                LegacyRSI(prices, period=14)
                 rsi_time = time.time() - start_time
                 assert rsi_time < 1.0  # Should complete in less than 1 second
-            except:
+            except Exception:
                 pass
 
         # Test SMA performance
         if LEGACY_INDICATORS_AVAILABLE:
             start_time = time.time()
             try:
-                sma = SMA(prices, period=20)
+                SMA(prices, period=20)
                 sma_time = time.time() - start_time
                 assert sma_time < 0.5  # Should be very fast
-            except:
+            except Exception:
                 pass
 
 
@@ -421,12 +419,12 @@ def test_technical_analysis_availability():
     # This test should always run
     try:
         # Try importing various technical analysis components
-        from meridianalgo import technical_analysis
+        from meridianalgo import technical_analysis  # noqa: F401
 
         assert True
     except ImportError:
         try:
-            from meridianalgo import technical_indicators
+            from meridianalgo import technical_indicators  # noqa: F401
 
             assert True
         except ImportError:

@@ -13,7 +13,7 @@ import pandas as pd
 from scipy import stats
 
 try:
-    from arch import arch_model
+    from arch import arch_model  # noqa: F401
 
     ARCH_AVAILABLE = True
 except ImportError:
@@ -162,7 +162,7 @@ class ParametricVaR(BaseRiskModel):
                 params = stats.skewt.fit(returns_clean)
                 var_value = stats.skewt.ppf(1 - confidence_level, *params)
                 return -var_value
-            except:
+            except Exception:
                 # Fallback to normal distribution
                 return self._normal_var(returns_clean, confidence_level)
 

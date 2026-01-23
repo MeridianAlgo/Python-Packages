@@ -163,7 +163,7 @@ class TearSheet:
         )
 
         if self.benchmark is not None:
-            aligned = cumulative.reindex(self.returns.index)
+            cumulative.reindex(self.returns.index)
             bench_cum = (1 + self.benchmark).cumprod()
             ax.plot(
                 bench_cum.index,

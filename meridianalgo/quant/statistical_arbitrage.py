@@ -409,7 +409,7 @@ class OrnsteinUhlenbeck:
         S_x = np.sum(prices[:-1])
         S_y = np.sum(prices[1:])
         S_xx = np.sum(prices[:-1] ** 2)
-        S_yy = np.sum(prices[1:] ** 2)
+        np.sum(prices[1:] ** 2)
         S_xy = np.sum(prices[:-1] * prices[1:])
 
         # MLE estimates

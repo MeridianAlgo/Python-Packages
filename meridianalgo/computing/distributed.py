@@ -13,7 +13,7 @@ try:
     import dask
     import dask.dataframe as dd
     from dask import delayed
-    from dask.distributed import Client, as_completed
+    from dask.distributed import Client
 
     DASK_AVAILABLE = True
 except ImportError:

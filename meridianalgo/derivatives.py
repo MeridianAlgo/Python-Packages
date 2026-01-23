@@ -24,7 +24,7 @@ except ImportError:
     SCIPY_AVAILABLE = False
 
 try:
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # noqa: F401
 
     MATPLOTLIB_AVAILABLE = True
 except ImportError:

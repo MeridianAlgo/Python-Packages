@@ -8,37 +8,48 @@ This module provides comprehensive portfolio management capabilities including:
 - Performance attribution and factor analysis
 """
 
-from .optimization import (BlackLittermanOptimizer, FactorModelOptimizer,
-                           HierarchicalRiskParityOptimizer, OptimizationResult,
-                           PortfolioOptimizer, RiskParityOptimizer)
+from .optimization import (
+    BlackLittermanOptimizer,
+    FactorModelOptimizer,
+    HierarchicalRiskParityOptimizer,
+    OptimizationResult,
+    PortfolioOptimizer,
+    RiskParityOptimizer,
+)
 
 try:
-    from .risk_management import (RiskManager, RiskMetrics, StressTester,
-                                  VaRCalculator)
+    from .risk_management import RiskManager, RiskMetrics, StressTester, VaRCalculator  # noqa: F401
 
     RISK_MANAGEMENT_AVAILABLE = True
 except ImportError:
     RISK_MANAGEMENT_AVAILABLE = False
 
 try:
-    from .performance import (AttributionAnalyzer, FactorAnalyzer,
-                              PerformanceAnalyzer)
+    from .performance import AttributionAnalyzer, FactorAnalyzer, PerformanceAnalyzer  # noqa: F401
 
     PERFORMANCE_AVAILABLE = True
 except ImportError:
     PERFORMANCE_AVAILABLE = False
 
 try:
-    from .transaction_costs import (LinearImpactModel, SquareRootImpactModel,
-                                    TaxLossHarvester, TransactionCostOptimizer)
+    from .transaction_costs import (  # noqa: F401
+        LinearImpactModel,
+        SquareRootImpactModel,
+        TaxLossHarvester,
+        TransactionCostOptimizer,
+    )
 
     TRANSACTION_COSTS_AVAILABLE = True
 except ImportError:
     TRANSACTION_COSTS_AVAILABLE = False
 
 try:
-    from .rebalancing import (CalendarRebalancer, OptimalRebalancer,
-                              Rebalancer, ThresholdRebalancer)
+    from .rebalancing import (  # noqa: F401
+        CalendarRebalancer,
+        OptimalRebalancer,
+        Rebalancer,
+        ThresholdRebalancer,
+    )
 
     REBALANCING_AVAILABLE = True
 except ImportError:
@@ -50,6 +61,7 @@ __all__ = [
     "BlackLittermanOptimizer",
     "RiskParityOptimizer",
     "HierarchicalRiskParityOptimizer",
+    "FactorModelOptimizer",
     "OptimizationResult",
 ]
 

@@ -11,9 +11,20 @@ from typing import Any, Dict, Iterator, List, Optional
 import numpy as np
 import pandas as pd
 
-from .events import (Event, EventDispatcher, EventQueue, EventType, FillEvent,
-                     FillStatus, MarketEvent, OrderEvent, OrderSide, OrderType,
-                     SignalEvent, SignalType)
+from .events import (
+    Event,
+    EventDispatcher,
+    EventQueue,
+    EventType,
+    FillEvent,
+    FillStatus,
+    MarketEvent,
+    OrderEvent,
+    OrderSide,
+    OrderType,
+    SignalEvent,
+    SignalType,
+)
 from .market_simulator import MarketSimulator
 
 logger = logging.getLogger(__name__)

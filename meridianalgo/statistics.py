@@ -21,8 +21,7 @@ warnings.filterwarnings("ignore")
 # Check for optional dependencies
 try:
     import statsmodels.api as sm
-    from statsmodels.tsa.stattools import (adfuller, coint,
-                                           grangercausalitytests)
+    from statsmodels.tsa.stattools import adfuller, coint, grangercausalitytests  # noqa: F401
     from statsmodels.tsa.vector_ar.vecm import coint_johansen
 
     STATSMODELS_AVAILABLE = True
@@ -437,7 +436,7 @@ class AdvancedStatistics:
                     "aic": fitted_model.aic,
                     "bic": fitted_model.bic,
                 }
-            except:
+            except Exception:
                 # Fallback to EWMA
                 ewma_vol = self.returns[asset].ewm(span=30).std()
                 results[asset] = {
@@ -948,8 +947,4 @@ __all__ = [
     "calculate_hurst_exponent",
     "calculate_half_life",
     "perform_statistical_tests",
-    "calculate_value_at_risk",
-    "calculate_expected_shortfall",
-    "calculate_rolling_volatility",
-    "calculate_metrics",
 ]

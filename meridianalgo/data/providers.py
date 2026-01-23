@@ -12,11 +12,11 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import pandas as pd
 import requests
+
 # Import existing yfinance functionality
 import yfinance as yf
 
-from .exceptions import (AuthenticationError, NetworkError, ProviderError,
-                         RateLimitError)
+from .exceptions import AuthenticationError, NetworkError, ProviderError, RateLimitError
 from .models import DataRequest, DataResponse, FundamentalData
 
 logger = logging.getLogger(__name__)

@@ -13,7 +13,7 @@ import pandas as pd
 import talib
 
 try:
-    import numba
+    import numba  # noqa: F401
     from numba import jit, njit
 
     NUMBA_AVAILABLE = True
@@ -481,7 +481,7 @@ class TALibIndicators:
 
         # Get function info from TA-Lib
         try:
-            talib_func = getattr(talib, indicator_name)
+            getattr(talib, indicator_name)
             func_info = talib.abstract.Function(indicator_name).info
 
             return {
@@ -493,7 +493,7 @@ class TALibIndicators:
                 "output_names": func_info.get("output_names", {}),
                 "parameters": func_info.get("parameters", {}),
             }
-        except:
+        except Exception:
             return {"name": indicator_name, "group": group}
 
     def list_indicators_by_group(self, group: str) -> List[str]:

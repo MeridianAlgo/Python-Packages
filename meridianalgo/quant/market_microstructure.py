@@ -50,8 +50,8 @@ class OrderFlowImbalance:
         delta_ask_volume = np.diff(ask_volume, prepend=ask_volume[0])
 
         # Price changes
-        delta_bid_price = np.diff(bid_price, prepend=bid_price[0])
-        delta_ask_price = np.diff(ask_price, prepend=ask_price[0])
+        np.diff(bid_price, prepend=bid_price[0])
+        np.diff(ask_price, prepend=ask_price[0])
 
         # OFI calculation
         ofi = (
@@ -238,7 +238,7 @@ class RealizedVolatility:
         float
             Realized kernel estimate
         """
-        n = len(returns)
+        len(returns)
         gamma = np.zeros(bandwidth + 1)
 
         # Calculate autocovariances
@@ -458,8 +458,8 @@ class TickDataAnalyzer:
         volume_imbalance = np.abs(buy_volume - sell_volume)
 
         # Create volume buckets
-        cumulative_volume = np.cumsum(total_volume)
-        bucket_volume = np.max(total_volume) * bucket_size
+        np.cumsum(total_volume)
+        np.max(total_volume) * bucket_size
 
         # Calculate VPIN for each bucket
         vpin_values = []

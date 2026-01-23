@@ -14,7 +14,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.ml import *
+    from meridianalgo.ml import (
+        FeatureEngineer,
+        LSTMPredictor,
+        prepare_data_for_lstm,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -78,7 +82,7 @@ class TestMachineLearning:
             feature_names = features.columns.tolist()
 
             # Should contain some technical indicators
-            has_technical = any(
+            any(
                 name.lower() in ["rsi", "sma", "ema", "macd"] for name in feature_names
             )
 
@@ -99,7 +103,7 @@ class TestMachineLearning:
 
             # Should include returns
             feature_names = features.columns.tolist()
-            has_returns = any("return" in name.lower() for name in feature_names)
+            any("return" in name.lower() for name in feature_names)
 
             print(" Price features test passed")
         except Exception as e:
@@ -138,7 +142,7 @@ class TestMachineLearning:
 
             # Should include volatility measures
             feature_names = vol_features.columns.tolist()
-            has_volatility = any(
+            any(
                 "vol" in name.lower() or "std" in name.lower() for name in feature_names
             )
 
@@ -298,9 +302,9 @@ class TestMachineLearning:
                 split_point = len(features_aligned) // 2
 
                 train_features = features_aligned.iloc[:split_point]
-                train_target = target_aligned.iloc[:split_point]
+                target_aligned.iloc[:split_point]
                 test_features = features_aligned.iloc[split_point:]
-                test_target = target_aligned.iloc[split_point:]
+                target_aligned.iloc[split_point:]
 
                 # Check splits
                 assert len(train_features) > 0
@@ -390,14 +394,14 @@ class TestMachineLearning:
 
             try:
                 engineer = FeatureEngineer()
-                features = engineer.create_features(short_data)
+                engineer.create_features(short_data)
                 # Should either work or handle gracefully
             except (ValueError, IndexError):
                 pass  # Expected for insufficient data
 
             # Test LSTM with invalid sequence length
             try:
-                predictor = LSTMPredictor(sequence_length=0)
+                LSTMPredictor(sequence_length=0)
             except ValueError:
                 pass  # Expected behavior
 
@@ -409,7 +413,7 @@ class TestMachineLearning:
 def test_machine_learning_import():
     """Test that machine learning can be imported."""
     try:
-        from meridianalgo.ml import FeatureEngineer, LSTMPredictor
+        from meridianalgo.ml import FeatureEngineer, LSTMPredictor  # noqa: F401
 
         print(" Machine learning import test passed")
         return True

@@ -245,7 +245,7 @@ class ParquetStorage:
                             "start": sample_df.index.min(),
                             "end": sample_df.index.max(),
                         }
-                except:
+                except Exception:
                     pass
 
             return info

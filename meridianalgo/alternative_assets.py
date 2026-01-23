@@ -519,7 +519,6 @@ class AlternativeAssetsAnalyzer:
 
         # Equal weight allocation
         allocation = {}
-        remaining_capital = capital
         n_strategies = len(selected_strategies)
 
         for strategy in selected_strategies:
@@ -762,7 +761,7 @@ class AlternativeAssetsAnalyzer:
                 if abs(npv) < 0.001:
                     return rate
             return 0.10  # Default if not found
-        except:
+        except Exception:
             return 0.10  # Default return
 
 

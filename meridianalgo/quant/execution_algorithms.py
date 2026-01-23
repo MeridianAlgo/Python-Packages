@@ -368,7 +368,7 @@ class ImplementationShortfall:
         pd.DataFrame
             Optimal trajectory with holdings and trade sizes
         """
-        tau = self.T / n_intervals
+        self.T / n_intervals
         kappa = np.sqrt(self.lambda_risk * self.sigma**2 / self.eta)
 
         # Calculate trajectory using closed-form solution

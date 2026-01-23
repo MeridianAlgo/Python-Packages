@@ -46,7 +46,7 @@ except ImportError:
     LIGHTGBM_AVAILABLE = False
 
 try:
-    from sklearn.neural_network import MLPRegressor
+    from sklearn.neural_network import MLPRegressor  # noqa: F401
 
     SKLEARN_ML_AVAILABLE = True
 except ImportError:

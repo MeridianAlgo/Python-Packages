@@ -2,10 +2,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from meridianalgo.quant.advanced_signals import (calculate_z_score,
-                                                 fractional_difference,
-                                                 get_half_life, hurst_exponent,
-                                                 information_coefficient)
+from meridianalgo.quant.advanced_signals import (
+    calculate_z_score,
+    fractional_difference,
+    get_half_life,
+    hurst_exponent,
+    information_coefficient,
+)
 
 
 class TestAdvancedSignals:

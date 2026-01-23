@@ -12,9 +12,8 @@ from typing import Any, Dict, Iterator, List, Optional, Tuple
 import numpy as np
 
 try:
-    from sklearn.metrics import (mean_absolute_error, mean_squared_error,
-                                 r2_score)
-    from sklearn.model_selection import BaseCrossValidator
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+    from sklearn.model_selection import BaseCrossValidator  # noqa: F401
 
     SKLEARN_AVAILABLE = True
 except ImportError:
@@ -485,7 +484,7 @@ class TimeSeriesValidator:
             from sklearn.base import clone
 
             return clone(model)
-        except:
+        except Exception:
             # Fallback: return the same model (not ideal but works for testing)
             return model
 

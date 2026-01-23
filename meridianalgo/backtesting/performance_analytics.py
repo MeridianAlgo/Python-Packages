@@ -594,7 +594,7 @@ class PerformanceAnalyzer:
                 if len(monthly_returns) > 0
                 else 0.0
             )
-        except:
+        except Exception:
             best_month = worst_month = positive_months = 0.0
 
         # Yearly returns
@@ -602,7 +602,7 @@ class PerformanceAnalyzer:
             yearly_returns = returns.resample("Y").apply(lambda x: (1 + x).prod() - 1)
             best_year = yearly_returns.max() if len(yearly_returns) > 0 else 0.0
             worst_year = yearly_returns.min() if len(yearly_returns) > 0 else 0.0
-        except:
+        except Exception:
             best_year = worst_year = 0.0
 
         return {

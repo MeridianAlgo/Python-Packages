@@ -56,8 +56,7 @@ def test_performance_analytics():
     print("Testing Performance Analytics...")
 
     try:
-        from meridianalgo.backtesting.performance_analytics import \
-            PerformanceAnalyzer
+        from meridianalgo.backtesting.performance_analytics import PerformanceAnalyzer
 
         returns = create_sample_returns()
         analyzer = PerformanceAnalyzer()
@@ -155,8 +154,7 @@ def test_transaction_costs():
     print("\nTesting Transaction Cost Optimization...")
 
     try:
-        from meridianalgo.portfolio.transaction_costs import \
-            TransactionCostOptimizer
+        from meridianalgo.portfolio.transaction_costs import TransactionCostOptimizer
 
         optimizer = TransactionCostOptimizer()
 

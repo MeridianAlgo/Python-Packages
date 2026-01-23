@@ -191,8 +191,17 @@ class TechnicalAnalyzer:
         Returns:
             DataFrame with all indicators
         """
-        from .indicators import (ADX, ATR, EMA, MACD, OBV, RSI, SMA,
-                                 BollingerBands, Stochastic)
+        from .indicators import (
+            ADX,
+            ATR,
+            EMA,
+            MACD,
+            OBV,
+            RSI,
+            SMA,
+            BollingerBands,
+            Stochastic,
+        )
 
         df = pd.DataFrame(index=self.close.index)
 

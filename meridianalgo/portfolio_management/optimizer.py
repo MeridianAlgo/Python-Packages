@@ -90,7 +90,7 @@ class PortfolioOptimizer:
                     asset: weight
                     for asset, weight in zip(self.returns.columns, result.x)
                 }
-        except:
+        except Exception:
             pass
 
         return self._equal_weights()
@@ -118,7 +118,7 @@ class PortfolioOptimizer:
                     asset: weight
                     for asset, weight in zip(self.returns.columns, result.x)
                 }
-        except:
+        except Exception:
             pass
 
         return self._equal_weights()
@@ -146,7 +146,7 @@ class PortfolioOptimizer:
                     asset: weight
                     for asset, weight in zip(self.returns.columns, result.x)
                 }
-        except:
+        except Exception:
             pass
 
         return self._equal_weights()
@@ -180,7 +180,7 @@ class PortfolioOptimizer:
                     asset: weight
                     for asset, weight in zip(self.returns.columns, result.x)
                 }
-        except:
+        except Exception:
             pass
 
         return self._equal_weights()
@@ -227,7 +227,7 @@ class EfficientFrontier:
                         ),
                     }
                 )
-            except:
+            except Exception:
                 # Skip failed optimizations
                 continue
 
@@ -286,7 +286,7 @@ class BlackLitterman:
                 }
 
             return adjusted_weights
-        except:
+        except Exception:
             return self.optimizer._equal_weights()
 
 
@@ -310,7 +310,7 @@ class RiskParity:
                 asset: weight
                 for asset, weight in zip(self.returns.columns, normalized_weights)
             }
-        except:
+        except Exception:
             # Fallback to equal weights
             n_assets = len(self.returns.columns)
             return {asset: 1 / n_assets for asset in self.returns.columns}

@@ -10,12 +10,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 import pandas as pd
 
-from meridianalgo.portfolio.optimization import (PortfolioOptimizer,
-                                                 RebalancingOptimizer,
-                                                 TransactionCostAwareOptimizer)
-from meridianalgo.portfolio.transaction_costs import (LinearImpactModel,
-                                                      SquareRootImpactModel,
-                                                      TransactionCostOptimizer)
+from meridianalgo.portfolio.optimization import (
+    PortfolioOptimizer,
+    RebalancingOptimizer,
+    TransactionCostAwareOptimizer,
+)
+from meridianalgo.portfolio.transaction_costs import (
+    LinearImpactModel,
+    SquareRootImpactModel,
+    TransactionCostOptimizer,
+)
 
 
 def demonstrate_execution_algorithms():
@@ -392,13 +396,13 @@ def main():
     impact_comparison = demonstrate_market_impact_models()
 
     # 3. Tax-loss harvesting
-    tax_result = demonstrate_tax_loss_harvesting()
+    demonstrate_tax_loss_harvesting()
 
     # 4. Transaction-cost-aware optimization
     standard_result, tc_result = demonstrate_transaction_cost_aware_optimization()
 
     # 5. Rebalancing frequency optimization
-    rebalancing_result = demonstrate_rebalancing_frequency_optimization()
+    demonstrate_rebalancing_frequency_optimization()
 
     # 6. Create visualizations
     create_visualization_plots(execution_results, impact_comparison)

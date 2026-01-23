@@ -17,15 +17,15 @@ warnings.filterwarnings("ignore")
 
 # Check for optional dependencies
 try:
-    import requests
+    import requests  # noqa: F401
 
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
 
 try:
-    from sklearn.ensemble import IsolationForest
-    from sklearn.preprocessing import StandardScaler
+    from sklearn.ensemble import IsolationForest  # noqa: F401
+    from sklearn.preprocessing import StandardScaler  # noqa: F401
 
     SKLEARN_AVAILABLE = True
 except ImportError:

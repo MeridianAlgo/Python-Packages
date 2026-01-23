@@ -326,7 +326,7 @@ def pastor_stambaugh_liquidity(
     try:
         betas = np.linalg.lstsq(X, y, rcond=None)[0]
         gamma = betas[2]  # Liquidity coefficient
-    except:
+    except Exception:
         gamma = 0
 
     return gamma

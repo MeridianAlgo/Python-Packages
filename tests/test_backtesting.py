@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.backtesting import *
+    from meridianalgo.backtesting import BacktestEngine
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -353,7 +353,6 @@ class TestBacktesting:
 
             # Test position sizing
             max_position_size = 0.1  # 10% of portfolio
-            symbol = "TEST"
             price = 100.0
 
             max_quantity = int((engine.cash * max_position_size) / price)
@@ -374,7 +373,7 @@ class TestBacktesting:
             current_price = 94.0  # Below stop loss
 
             should_stop = current_price <= stop_price
-            assert should_stop == True
+            assert should_stop
 
             print(" Risk management test passed")
         except Exception as e:
@@ -528,7 +527,7 @@ class TestBacktesting:
             )
 
             # Should fail or handle gracefully
-            assert success == False or engine.positions.get(symbol, 0) >= 0
+            assert not success or engine.positions.get(symbol, 0) >= 0
 
             # Test buying with insufficient cash
             engine.cash = 10  # Very low cash
@@ -542,7 +541,7 @@ class TestBacktesting:
             )
 
             # Should fail or handle gracefully
-            assert success == False or engine.cash >= 0
+            assert not success or engine.cash >= 0
 
             print(" Error handling test passed")
         except Exception as e:
@@ -552,7 +551,7 @@ class TestBacktesting:
 def test_backtesting_import():
     """Test that backtesting can be imported."""
     try:
-        from meridianalgo.backtesting import BacktestEngine
+        from meridianalgo.backtesting import BacktestEngine  # noqa: F401
 
         print(" Backtesting import test passed")
         return True

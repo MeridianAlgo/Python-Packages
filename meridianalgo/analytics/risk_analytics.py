@@ -473,7 +473,7 @@ class RiskAnalyzer:
                         "max_loss": period_returns.min(),
                         "days": len(period_returns),
                     }
-            except:
+            except Exception:
                 continue
 
         return results

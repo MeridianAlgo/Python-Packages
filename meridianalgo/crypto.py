@@ -24,15 +24,15 @@ except ImportError:
     YFINANCE_AVAILABLE = False
 
 try:
-    import requests
+    import requests  # noqa: F401
 
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
 
 try:
-    from sklearn.cluster import KMeans
-    from sklearn.preprocessing import StandardScaler
+    from sklearn.cluster import KMeans  # noqa: F401
+    from sklearn.preprocessing import StandardScaler  # noqa: F401
 
     SKLEARN_AVAILABLE = True
 except ImportError:
@@ -342,7 +342,7 @@ class CryptoAnalyzer:
                 condensed_distance.append(distance.iloc[i, j])
 
         # Perform hierarchical clustering
-        linkage_matrix = linkage(condensed_distance, method="ward")
+        linkage(condensed_distance, method="ward")
 
         # Simple equal weight within clusters (simplified HRP)
         weights = np.ones(len(returns.columns)) / len(returns.columns)

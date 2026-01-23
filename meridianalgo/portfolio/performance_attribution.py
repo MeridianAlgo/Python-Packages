@@ -255,7 +255,7 @@ class FactorAttributionModel(BaseAttributionModel):
 
         # Calculate factor contributions
         factor_contributions = {}
-        factor_names = ["Alpha"] + list(factor_returns.columns)
+        ["Alpha"] + list(factor_returns.columns)
 
         # Alpha contribution
         factor_contributions["Alpha"] = alpha * len(active_aligned)

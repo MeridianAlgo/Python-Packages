@@ -9,6 +9,7 @@
 import os
 import sys
 from datetime import datetime
+from meridianalgo import __version__
 
 # Add the project root to the Python path
 sys.path.insert(0, os.path.abspath("../../"))
@@ -20,8 +21,6 @@ copyright = f"{datetime.now().year}, Meridian Algorithmic Research Team"
 author = "Meridian Algorithmic Research Team"
 
 # The full version, including alpha/beta/rc tags
-from meridianalgo import __version__
-
 release = __version__
 
 # -- General configuration ---------------------------------------------------

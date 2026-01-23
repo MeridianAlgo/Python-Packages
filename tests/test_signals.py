@@ -60,7 +60,6 @@ class TestIndicators:
 
         upper, middle, lower = BollingerBands(price_data["close"])
         # After warmup period, upper > middle > lower
-        valid_idx = 20
         assert upper.iloc[-1] > middle.iloc[-1] > lower.iloc[-1]
 
     def test_atr(self, price_data):

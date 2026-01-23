@@ -163,8 +163,8 @@ class DataValidator(DataProcessor):
 
                     high = data[("High", symbol)]
                     low = data[("Low", symbol)]
-                    open_price = data[("Open", symbol)]
-                    close = data[("Close", symbol)]
+                    data[("Open", symbol)]
+                    data[("Close", symbol)]
 
                     # Check High >= Low
                     inconsistent = high < low

@@ -14,7 +14,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.portfolio_management import *
+    from meridianalgo.portfolio_management import (
+        PortfolioOptimizer,
+        EfficientFrontier,
+        BlackLitterman,
+        RiskParity,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -317,7 +322,7 @@ class TestPortfolioManagement:
 
             try:
                 optimizer = PortfolioOptimizer(short_returns)
-                weights = optimizer.optimize_portfolio()
+                optimizer.optimize_portfolio()
                 # Should either work or raise appropriate error
             except (ValueError, np.linalg.LinAlgError):
                 pass  # Expected for insufficient data
@@ -325,7 +330,7 @@ class TestPortfolioManagement:
             # Test with invalid objective
             optimizer = PortfolioOptimizer(sample_returns)
             try:
-                weights = optimizer.optimize_portfolio(objective="invalid")
+                optimizer.optimize_portfolio(objective="invalid")
             except (ValueError, KeyError):
                 pass  # Expected behavior
 
@@ -337,8 +342,10 @@ class TestPortfolioManagement:
 def test_portfolio_management_import():
     """Test that portfolio management can be imported."""
     try:
-        from meridianalgo.portfolio_management import (EfficientFrontier,
-                                                       PortfolioOptimizer)
+        from meridianalgo.portfolio_management import (  # noqa: F401
+            EfficientFrontier,
+            PortfolioOptimizer,
+        )
 
         print(" Portfolio management import test passed")
         return True

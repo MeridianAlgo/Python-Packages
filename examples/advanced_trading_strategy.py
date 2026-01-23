@@ -51,7 +51,7 @@ class TradingStrategy:
     def backtest(self, data, initial_capital=100000):
         """Backtest the trading strategy."""
         signals = self.generate_signals(data)
-        returns = data.pct_change()
+        _ = data.pct_change()  # Calculate returns for potential use
 
         portfolio_value = initial_capital
         position_sizes = {}
@@ -218,7 +218,7 @@ def main():
 
     try:
         # Run trading strategy example
-        strategy_results = example_trading_strategy()
+        example_trading_strategy()
 
         # Run advanced portfolio optimization
         example_portfolio_optimization_advanced()

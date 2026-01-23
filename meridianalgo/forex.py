@@ -24,7 +24,7 @@ except ImportError:
     YFINANCE_AVAILABLE = False
 
 try:
-    import requests
+    import requests  # noqa: F401
 
     REQUESTS_AVAILABLE = True
 except ImportError:

@@ -9,10 +9,12 @@ from typing import Any, Dict, List, Tuple, Union
 import numpy as np
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 try:
-    import plotly.express as px
+    import plotly.express as px  # noqa: F401
     import plotly.graph_objects as go
-    import plotly.offline as pyo
+    import plotly.offline as pyo  # noqa: F401
     from plotly.subplots import make_subplots
 
     PLOTLY_AVAILABLE = True
@@ -23,13 +25,11 @@ except ImportError:
 try:
     import dash
     import dash_bootstrap_components as dbc
-    from dash import Input, Output, State, callback, dcc, html
+    from dash import Input, Output, State, callback, dcc, html  # noqa: F401
 
     DASH_AVAILABLE = True
 except ImportError:
     DASH_AVAILABLE = False
-
-logger = logging.getLogger(__name__)
 
 
 class TechnicalChart:
@@ -915,7 +915,7 @@ class InteractiveDashboard:
         self.data_sources[symbol] = data
 
         # Update symbol dropdown options
-        options = [
+        [
             {"label": symbol, "value": symbol} for symbol in self.data_sources.keys()
         ]
 

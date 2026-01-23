@@ -8,15 +8,29 @@ This module provides comprehensive technical analysis capabilities including:
 - Interactive visualization system
 """
 
-from .framework import (CustomIndicatorFramework, IndicatorBuilder,
-                        IndicatorCompiler, IndicatorMetadata,
-                        IndicatorRegistry, IndicatorValidator, indicator,
-                        indicator_registry)
-from .indicators import (BaseIndicator, CustomIndicator, IndicatorManager,
-                         TALibIndicators)
+from .framework import (
+    CustomIndicatorFramework,
+    IndicatorBuilder,
+    IndicatorCompiler,
+    IndicatorMetadata,
+    IndicatorRegistry,
+    IndicatorValidator,
+    indicator,
+    indicator_registry,
+)
+from .indicators import (
+    BaseIndicator,
+    CustomIndicator,
+    IndicatorManager,
+    TALibIndicators,
+)
 from .patterns import CandlestickPatterns, ChartPatterns, PatternRecognizer
-from .visualization import (ChartAnnotationTool, ChartTemplate,
-                            InteractiveDashboard, TechnicalChart)
+from .visualization import (
+    ChartAnnotationTool,
+    ChartTemplate,
+    InteractiveDashboard,
+    TechnicalChart,
+)
 
 __all__ = [
     # Indicators

@@ -12,9 +12,9 @@ import numpy as np
 import pandas as pd
 
 try:
-    import numba
-    from numba import jit, njit, types
-    from numba.typed import Dict as NumbaDict
+    import numba  # noqa: F401
+    from numba import jit, njit, types  # noqa: F401
+    from numba.typed import Dict as NumbaDict  # noqa: F401
 
     NUMBA_AVAILABLE = True
 except ImportError:
@@ -407,9 +407,10 @@ class CustomIndicatorFramework:
         """Optimize indicator parameters."""
         if optimization_metric is None:
             # Default optimization metric (maximize absolute mean)
-            optimization_metric = lambda x: (
-                abs(x.mean()) if isinstance(x, pd.Series) else abs(x.mean().mean())
-            )
+            def optimization_metric(x):
+                return (
+                            abs(x.mean()) if isinstance(x, pd.Series) else abs(x.mean().mean())
+                        )
 
         if method == "grid_search":
             return self._grid_search_optimization(

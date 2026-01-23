@@ -20,12 +20,14 @@ except ImportError:
     warnings.warn("TA-Lib not available. Some technical indicators will be limited.")
 
 try:
-    from sklearn.decomposition import PCA, FastICA
-    from sklearn.ensemble import RandomForestRegressor
-    from sklearn.feature_selection import (SelectKBest, f_regression,
-                                           mutual_info_regression)
-    from sklearn.preprocessing import (MinMaxScaler, RobustScaler,
-                                       StandardScaler)
+    from sklearn.decomposition import PCA, FastICA  # noqa: F401
+    from sklearn.ensemble import RandomForestRegressor  # noqa: F401
+    from sklearn.feature_selection import (
+        SelectKBest,
+        f_regression,
+        mutual_info_regression,
+    )
+    from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 
     SKLEARN_AVAILABLE = True
 except ImportError:
@@ -84,13 +86,13 @@ class TechnicalIndicatorFeatures(BaseFeatureGenerator):
         features = pd.DataFrame(index=data.index)
 
         # Price data
-        high = data["High"].values
-        low = data["Low"].values
+        data["High"].values
+        data["Low"].values
         close = data["Close"].values
-        volume = (
+        (
             data["Volume"].values if "Volume" in data.columns else np.ones_like(close)
         )
-        open_price = data["Open"].values if "Open" in data.columns else close
+        data["Open"].values if "Open" in data.columns else close
 
         # Moving Averages
         for period in self.periods:
@@ -199,7 +201,7 @@ class VolumeFeatures(BaseFeatureGenerator):
             return features
 
         volume = data["Volume"].values
-        close = data["Close"].values
+        data["Close"].values
 
         # Volume moving averages
         for period in self.periods:

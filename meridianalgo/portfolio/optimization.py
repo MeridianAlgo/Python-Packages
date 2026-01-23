@@ -138,7 +138,7 @@ class PortfolioOptimizer(BaseOptimizer):
         """
         self.validate_inputs(expected_returns, covariance_matrix)
 
-        n_assets = len(expected_returns)
+        len(expected_returns)
         constraints = constraints or {}
 
         # Define optimization variables
@@ -952,7 +952,7 @@ class TransactionCostAwareOptimizer(BaseOptimizer):
                 }
 
         # Extract risk_aversion from kwargs before passing to base optimizer
-        risk_aversion = kwargs.pop("risk_aversion", 1.0)
+        kwargs.pop("risk_aversion", 1.0)
 
         # First, get the unconstrained optimal weights
         base_result = self.base_optimizer.optimize(

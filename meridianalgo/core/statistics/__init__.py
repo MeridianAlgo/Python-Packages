@@ -4,12 +4,12 @@ Statistical analysis module.
 This module provides tools for statistical analysis of financial time series.
 """
 
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, Union
 
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-from scipy import stats
+from scipy import stats  # noqa: F401
 
 
 class StatisticalArbitrage:

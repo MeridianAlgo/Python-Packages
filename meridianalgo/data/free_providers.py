@@ -11,6 +11,7 @@ import pandas as pd
 import requests
 
 from .exceptions import ProviderError
+
 # Import existing functionality
 from .models import DataRequest, DataResponse, FundamentalData
 from .providers import DataProvider

@@ -288,7 +288,7 @@ class EventDrivenProcessor:
         """Add an event to the processing queue."""
         try:
             self.event_queue.put_nowait(event)
-        except:
+        except Exception:
             logger.warning("Event queue is full, dropping event")
 
     def start(self) -> None:
@@ -311,7 +311,7 @@ class EventDrivenProcessor:
         for _ in range(self.num_workers):
             try:
                 self.event_queue.put_nowait(None)
-            except:
+            except Exception:
                 pass
 
         # Wait for workers to finish

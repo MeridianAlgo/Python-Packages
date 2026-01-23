@@ -241,9 +241,8 @@ class FactorAttribution:
         # OLS regression
         try:
             betas, residuals, rank, s = np.linalg.lstsq(X_with_const, Y, rcond=None)
-        except:
+        except Exception:
             betas = np.zeros(X_with_const.shape[1])
-            residuals = Y
 
         self._alpha = betas[0]
         self._betas = dict(zip(self.factors.columns, betas[1:]))

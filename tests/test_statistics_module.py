@@ -99,8 +99,7 @@ class TestStatisticsModule(unittest.TestCase):
 
     def test_expected_shortfall(self):
         """Test Expected Shortfall calculation."""
-        from meridianalgo import (calculate_expected_shortfall,
-                                  calculate_value_at_risk)
+        from meridianalgo import calculate_expected_shortfall, calculate_value_at_risk
 
         es_95 = calculate_expected_shortfall(
             self.returns["AAPL"], confidence_level=0.95

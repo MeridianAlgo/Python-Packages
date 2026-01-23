@@ -228,7 +228,7 @@ class ImpactModel:
         try:
             betas = np.linalg.lstsq(X_with_const, y, rcond=None)[0]
             self.params = {"alpha": betas[0], "lambda": betas[1]}
-        except:
+        except Exception:
             self.params = {"alpha": 0, "lambda": 0.01}
 
     def _fit_square_root(self, data: pd.DataFrame):
@@ -240,7 +240,7 @@ class ImpactModel:
         try:
             betas = np.linalg.lstsq(X_with_const, y, rcond=None)[0]
             self.params = {"alpha": betas[0], "eta": betas[1]}
-        except:
+        except Exception:
             self.params = {"alpha": 0, "eta": 0.1}
 
     def _fit_power_law(self, data: pd.DataFrame):
@@ -263,7 +263,7 @@ class ImpactModel:
                 "eta": np.exp(betas[0]),
                 "delta": betas[1],
             }
-        except:
+        except Exception:
             self.params = {"eta": 0.1, "delta": 0.5}
 
     def predict(
@@ -345,7 +345,7 @@ class AlmgrenChrissImpact:
         Returns:
             DataFrame with optimal holdings and trades
         """
-        tau = self.T / n_intervals  # Time per interval
+        self.T / n_intervals  # Time per interval
 
         # Urgency parameter
         kappa = np.sqrt(self.lambda_ * self.sigma**2 / self.eta)

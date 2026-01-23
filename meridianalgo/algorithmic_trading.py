@@ -17,8 +17,7 @@ warnings.filterwarnings("ignore")
 
 # Check for optional dependencies
 try:
-    from sklearn.ensemble import (GradientBoostingClassifier,
-                                  RandomForestClassifier)
+    from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
 
@@ -27,7 +26,7 @@ except ImportError:
     SKLEARN_AVAILABLE = False
 
 try:
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # noqa: F401
 
     MATPLOTLIB_AVAILABLE = True
 except ImportError:
@@ -864,7 +863,7 @@ class HighFrequencyStrategy(TradingStrategy):
 
         for symbol in data.columns:
             if symbol in self.order_book:
-                mm_signals = self.market_making_signals(symbol)
+                self.market_making_signals(symbol)
                 # Simplified: place orders at bid/ask
                 # In practice, this would be more sophisticated
                 signals[symbol] = 0.0  # Market making doesn't use traditional signals

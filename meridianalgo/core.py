@@ -542,7 +542,7 @@ class PortfolioOptimizer:
                         result["sharpe_ratio"],
                     ]
                 )
-            except:
+            except Exception:
                 continue
 
         if not efficient_portfolios:
@@ -681,7 +681,7 @@ class PortfolioOptimizer:
         Returns:
             Optimization results
         """
-        n_assets = len(self.returns.columns)
+        len(self.returns.columns)
 
         if method == "equal_risk_contribution":
             weights = self._equal_risk_contribution()
@@ -739,7 +739,7 @@ class PortfolioOptimizer:
         volatilities = np.sqrt(np.diag(cov_matrix))
 
         # Optimize for maximum diversification ratio
-        n_assets = len(self.returns.columns)
+        len(self.returns.columns)
 
         # Simplified optimization using inverse volatility weights
         inv_vol_weights = 1 / volatilities
@@ -1002,7 +1002,7 @@ class PortfolioOptimizer:
             window_returns = returns_clean.iloc[i - lookback_window : i]
 
             # Simplified mean-variance using equal risk contribution
-            cov_matrix = window_returns.cov()
+            window_returns.cov()
             n_assets = len(window_returns.columns)
 
             # Use equal risk contribution as approximation

@@ -14,7 +14,7 @@ from scipy import signal
 from scipy.stats import linregress
 
 try:
-    import numba
+    import numba  # noqa: F401
     from numba import jit, njit
 
     NUMBA_AVAILABLE = True

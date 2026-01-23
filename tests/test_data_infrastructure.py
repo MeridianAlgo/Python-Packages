@@ -15,11 +15,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 try:
     from meridianalgo.data.models import MarketData
-    from meridianalgo.data.processing import (DataPipeline, DataValidator,
-                                              MissingDataHandler,
-                                              OutlierDetector)
-    from meridianalgo.data.providers import (AlphaVantageProvider,
-                                             YahooFinanceProvider)
+    from meridianalgo.data.processing import (
+        DataPipeline,
+        DataValidator,
+        MissingDataHandler,
+        OutlierDetector,
+    )
+    from meridianalgo.data.providers import AlphaVantageProvider, YahooFinanceProvider  # noqa: F401
 
     DATA_AVAILABLE = True
 except ImportError:
@@ -240,7 +242,7 @@ def test_data_infrastructure_availability():
     """Test that data infrastructure components are available."""
     # This test should always run
     try:
-        from meridianalgo.data import models, processing, providers
+        from meridianalgo.data import models, processing, providers  # noqa: F401
 
         assert True  # If imports work, test passes
     except ImportError:

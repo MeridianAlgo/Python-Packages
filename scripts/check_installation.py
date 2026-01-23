@@ -53,13 +53,13 @@ def main():
                     "MSFT": np.random.normal(0.001, 0.02, 100),
                 }
             )
-            optimizer = meridianalgo.PortfolioOptimizer(returns)
+            meridianalgo.PortfolioOptimizer(returns)
             print(" PortfolioOptimizer created successfully")
 
             # Test TimeSeriesAnalyzer
             print("\nTesting TimeSeriesAnalyzer...")
             prices = pd.Series(np.cumprod(1 + np.random.normal(0.001, 0.02, 100)))
-            analyzer = meridianalgo.TimeSeriesAnalyzer(prices)
+            meridianalgo.TimeSeriesAnalyzer(prices)
             print(" TimeSeriesAnalyzer created successfully")
 
             # Test get_market_data

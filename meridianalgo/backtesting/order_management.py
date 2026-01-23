@@ -578,7 +578,7 @@ class OrderManager:
         order.add_fill(fill_event)
 
         # Update position tracker
-        realized_pnl = self.position_tracker.update_position(fill_event)
+        self.position_tracker.update_position(fill_event)
 
         # Handle order completion
         if order.status == OrderStatus.FILLED:

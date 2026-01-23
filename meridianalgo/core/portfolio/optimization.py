@@ -90,7 +90,7 @@ class PortfolioOptimizer:
         if risk_free_rate is None:
             risk_free_rate = get_config("risk_free_rate", 0.0)
 
-        n_assets = len(self.returns.columns)
+        len(self.returns.columns)
 
         if target_return is None:
             # Find portfolio with maximum Sharpe ratio

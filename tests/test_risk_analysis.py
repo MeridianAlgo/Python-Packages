@@ -14,7 +14,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.risk_analysis import *
+    from meridianalgo.risk_analysis import (
+        VaRCalculator,
+        ExpectedShortfall,
+        HistoricalVaR,
+        ParametricVaR,
+        MonteCarloVaR,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -191,7 +197,6 @@ class TestRiskAnalysis:
         """Test correlation-based risk measures."""
         try:
             # Create multiple return series
-            n_assets = 3
             returns_matrix = np.column_stack(
                 [
                     sample_returns.values,
@@ -253,8 +258,8 @@ class TestRiskAnalysis:
         """Test tail risk measures."""
         try:
             # Calculate skewness and kurtosis
-            skewness = sample_returns.skew()
-            kurtosis = sample_returns.kurtosis()
+            sample_returns.skew()
+            sample_returns.kurtosis()
 
             # Test tail ratio (95th percentile / 5th percentile)
             p95 = sample_returns.quantile(0.95)
@@ -295,7 +300,7 @@ class TestRiskAnalysis:
             )
 
             # Calculate portfolio return
-            portfolio_return = np.dot(asset_returns, weights)
+            np.dot(asset_returns, weights)
 
             # Calculate individual asset contributions to portfolio risk
             cov_matrix = np.cov(asset_returns.T)
@@ -322,7 +327,7 @@ class TestRiskAnalysis:
 
             try:
                 var_calc = VaRCalculator(short_returns)
-                var_result = var_calc.calculate_var(confidence_level=0.95)
+                var_calc.calculate_var(confidence_level=0.95)
                 # Should either work or raise appropriate error
             except (ValueError, IndexError):
                 pass  # Expected for insufficient data
@@ -330,7 +335,7 @@ class TestRiskAnalysis:
             # Test with invalid confidence level
             var_calc = VaRCalculator(sample_returns)
             try:
-                var_result = var_calc.calculate_var(confidence_level=1.5)  # Invalid
+                var_calc.calculate_var(confidence_level=1.5)  # Invalid
             except ValueError:
                 pass  # Expected behavior
 
@@ -342,7 +347,7 @@ class TestRiskAnalysis:
 def test_risk_analysis_import():
     """Test that risk analysis can be imported."""
     try:
-        from meridianalgo.risk_analysis import ExpectedShortfall, VaRCalculator
+        from meridianalgo.risk_analysis import ExpectedShortfall, VaRCalculator  # noqa: F401
 
         print(" Risk analysis import test passed")
         return True

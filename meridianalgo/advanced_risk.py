@@ -20,8 +20,9 @@ warnings.filterwarnings("ignore")
 
 # Check for optional dependencies
 try:
-    from sklearn.covariance import EmpiricalCovariance, LedoitWolf
-    from sklearn.decomposition import PCA
+    # Optional sklearn imports available but not directly used
+    import sklearn.covariance  # noqa: F401
+    import sklearn.decomposition  # noqa: F401
 
     SKLEARN_AVAILABLE = True
 except ImportError:
@@ -212,7 +213,7 @@ class AdvancedVaR:
         if portfolio_weights is None:
             portfolio_weights = np.ones(returns.shape[1]) / returns.shape[1]
 
-        n_assets = returns.shape[1]
+        returns.shape[1]
 
         # Calculate covariance matrix
         cov_matrix = returns.cov()
@@ -895,7 +896,7 @@ class RiskBudgeting:
 
         # Optimize for target factor risk contributions
         def objective(weights):
-            portfolio_var = weights @ asset_cov @ weights
+            weights @ asset_cov @ weights
 
             # Calculate factor contributions to portfolio risk
             factor_contributions = []

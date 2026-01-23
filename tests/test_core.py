@@ -6,15 +6,22 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from meridianalgo.core import (PortfolioOptimizer, StatisticalArbitrage,
-                               TimeSeriesAnalyzer, calculate_calmar_ratio,
-                               calculate_correlation_matrix,
-                               calculate_expected_shortfall,
-                               calculate_half_life, calculate_hurst_exponent,
-                               calculate_max_drawdown, calculate_metrics,
-                               calculate_rolling_correlation,
-                               calculate_sortino_ratio,
-                               calculate_value_at_risk, get_market_data)
+from meridianalgo.core import (
+    PortfolioOptimizer,
+    StatisticalArbitrage,
+    TimeSeriesAnalyzer,
+    calculate_calmar_ratio,
+    calculate_correlation_matrix,
+    calculate_expected_shortfall,
+    calculate_half_life,
+    calculate_hurst_exponent,
+    calculate_max_drawdown,
+    calculate_metrics,
+    calculate_rolling_correlation,
+    calculate_sortino_ratio,
+    calculate_value_at_risk,
+    get_market_data,
+)
 
 
 @pytest.fixture

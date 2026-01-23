@@ -107,7 +107,7 @@ def test_ml():
 
         # Check if PyTorch is available for LSTM tests
         try:
-            import torch
+            import torch  # noqa: F401
 
             from meridianalgo import LSTMPredictor
 
@@ -125,7 +125,7 @@ def test_ml():
             # Split and scale data
             train_size = int(0.8 * len(X))
             X_train, X_test = X[:train_size], X[train_size:]
-            y_train, y_test = y[:train_size], y[train_size:]
+            y_train, _y_test = y[:train_size], y[train_size:]
 
             scaler = StandardScaler()
             X_train_scaled = scaler.fit_transform(X_train)

@@ -118,7 +118,7 @@ def calculate_sortino_ratio(
 
     # Convert annual risk-free rate to daily if needed
     daily_risk_free = (1 + risk_free_rate) ** (1 / 252) - 1
-    excess_returns = returns - daily_risk_free
+    returns - daily_risk_free
 
     # Calculate downside deviation
     downside_returns = returns[returns < 0]

@@ -19,8 +19,12 @@ def test_events_system():
     try:
         from datetime import datetime
 
-        from meridianalgo.backtesting.events import (EventQueue, MarketEvent,
-                                                     SignalEvent, SignalType)
+        from meridianalgo.backtesting.events import (
+            EventQueue,
+            MarketEvent,
+            SignalEvent,
+            SignalType,
+        )
 
         # Test event creation
         market_event = MarketEvent(
@@ -50,8 +54,8 @@ def test_events_system():
         assert queue.size() == 2
         assert not queue.empty()
 
-        event1 = queue.get()
-        event2 = queue.get()
+        queue.get()
+        queue.get()
 
         assert queue.empty()
         print(" Event queue working correctly")
@@ -70,8 +74,12 @@ def test_market_simulator():
     try:
         from datetime import datetime
 
-        from meridianalgo.backtesting.events import (MarketEvent, OrderEvent,
-                                                     OrderSide, OrderType)
+        from meridianalgo.backtesting.events import (
+            MarketEvent,
+            OrderEvent,
+            OrderSide,
+            OrderType,
+        )
         from meridianalgo.backtesting.market_simulator import MarketSimulator
 
         # Create simulator
@@ -118,9 +126,11 @@ def test_backtesting_framework():
     print("\nTesting Backtesting Framework...")
 
     try:
-        from meridianalgo.backtesting.backtester import (BuyAndHoldStrategy,
-                                                         EventDrivenBacktester,
-                                                         PandasDataHandler)
+        from meridianalgo.backtesting.backtester import (
+            BuyAndHoldStrategy,
+            EventDrivenBacktester,
+            PandasDataHandler,
+        )
 
         # Create sample data
         dates = pd.date_range("2023-01-01", "2023-01-31", freq="D")
@@ -178,8 +188,7 @@ def test_portfolio_tracking():
         from datetime import datetime
 
         from meridianalgo.backtesting.backtester import Portfolio
-        from meridianalgo.backtesting.events import (FillEvent, FillStatus,
-                                                     OrderSide)
+        from meridianalgo.backtesting.events import FillEvent, FillStatus, OrderSide
 
         # Create portfolio
         portfolio = Portfolio(initial_cash=10000)

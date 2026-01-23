@@ -12,6 +12,17 @@ Demonstrates all major features of the package including:
 
 import numpy as np
 import pandas as pd
+import meridianalgo as ma
+from meridianalgo.analytics import PerformanceAnalyzer, RiskAnalyzer, DrawdownAnalyzer
+from meridianalgo.liquidity import VPIN, MarketImpact, OrderBook
+from meridianalgo.signals import (
+    ATR,
+    MACD,
+    RSI,
+    BollingerBands,
+    SignalGenerator,
+    TechnicalAnalyzer,
+)
 
 print("=" * 70)
 print("MeridianAlgo v6.0.0 - Comprehensive Examples")
@@ -25,8 +36,6 @@ print("=" * 70)
 print("\n" + "=" * 70)
 print("1. QUICK START")
 print("=" * 70)
-
-import meridianalgo as ma
 
 # Get system info
 info = ma.get_system_info()
@@ -59,8 +68,6 @@ print(f"  Win Rate: {analysis['win_rate']:.1%}")
 print("\n" + "=" * 70)
 print("2. PORTFOLIO ANALYTICS (Pyfolio-Style)")
 print("=" * 70)
-
-from meridianalgo.analytics import PerformanceAnalyzer, RiskAnalyzer
 
 # Create benchmark returns
 benchmark = pd.Series(
@@ -102,8 +109,6 @@ print("\n" + "=" * 70)
 print("3. DRAWDOWN ANALYSIS")
 print("=" * 70)
 
-from meridianalgo.analytics import DrawdownAnalyzer
-
 dd = DrawdownAnalyzer(returns)
 
 print("\nDrawdown Metrics:")
@@ -129,8 +134,6 @@ for _, row in top_dd.iterrows():
 print("\n" + "=" * 70)
 print("4. LIQUIDITY ANALYSIS")
 print("=" * 70)
-
-from meridianalgo.liquidity import VPIN, MarketImpact, OrderBook
 
 # Create sample order book
 ob = OrderBook()
@@ -184,9 +187,6 @@ print(f"  Toxicity Regime: {vpin_calc.toxicity_regime()}")
 print("\n" + "=" * 70)
 print("5. TECHNICAL SIGNALS")
 print("=" * 70)
-
-from meridianalgo.signals import (ATR, MACD, RSI, BollingerBands,
-                                  SignalGenerator, TechnicalAnalyzer)
 
 # Generate sample OHLCV data
 n = 200
@@ -338,8 +338,11 @@ print("8. QUANTITATIVE STRATEGIES")
 print("=" * 70)
 
 try:
-    from meridianalgo.quant import (CointegrationAnalyzer, OrnsteinUhlenbeck,
-                                    PairsTrading)
+    from meridianalgo.quant import (
+        CointegrationAnalyzer,
+        OrnsteinUhlenbeck,
+        PairsTrading,
+    )
 
     # Create cointegrated pairs
     np.random.seed(123)

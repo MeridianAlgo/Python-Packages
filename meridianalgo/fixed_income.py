@@ -221,7 +221,7 @@ class BondPricer:
         convexity_sum = 0.0
 
         for t in range(1, n_periods + 1):
-            time_in_years = t / frequency
+            t / frequency
             cash_flow = period_coupon
 
             if t == n_periods:
@@ -914,8 +914,8 @@ class StructuredProducts:
 
         for i in range(n_tranches):
             tranche_size = tranche_sizes[i]
-            attachment = tranche_attachments[i]
-            detachment = tranche_detachments[i]
+            tranche_attachments[i]
+            tranche_detachments[i]
 
             # Calculate loss for this tranche
             if remaining_loss > 0:
