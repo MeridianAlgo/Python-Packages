@@ -1,5 +1,5 @@
 """
-MeridianAlgo v6.1.1 - Comprehensive Examples
+MeridianAlgo v6.2.1 - Comprehensive Examples
 
 Demonstrates all major features of the package including:
 - Portfolio Analytics (Pyfolio-style)
@@ -25,7 +25,7 @@ from meridianalgo.signals import (
 )
 
 print("=" * 70)
-print("MeridianAlgo v6.1.1 - Comprehensive Examples")
+print("MeridianAlgo v6.2.1 - Comprehensive Examples")
 print("=" * 70)
 
 
@@ -398,7 +398,7 @@ print("=" * 70)
 
 print(
     """
-MeridianAlgo v6.1.1 provides:
+MeridianAlgo v6.2.1 provides:
 
  Portfolio Analytics
    - 50+ performance metrics (Sharpe, Sortino, Calmar, etc.)
