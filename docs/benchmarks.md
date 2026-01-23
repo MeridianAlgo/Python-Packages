@@ -2,11 +2,11 @@
 
 Comprehensive performance metrics and benchmarks for MeridianAlgo.
 
-## 📊 Overview
+##  Overview
 
 This document provides detailed performance benchmarks for MeridianAlgo across different modules and use cases. All benchmarks are run on standardized hardware and datasets to ensure reproducibility.
 
-## 🖥️ Test Environment
+##  Test Environment
 
 - **CPU**: Intel i7-10700K @ 3.80GHz
 - **RAM**: 32GB DDR4-3200
@@ -17,7 +17,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 - **Pandas**: 1.3.0
 - **PyTorch**: 2.0.0
 
-## 📈 Technical Indicators Performance
+##  Technical Indicators Performance
 
 ### Momentum Indicators
 
@@ -64,7 +64,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | Money Flow Index | 1,000 points | 6.1 | 1.5 | 99.7% |
 | Ease of Movement | 1,000 points | 3.8 | 1.1 | 99.9% |
 
-## 🏦 Portfolio Management Performance
+##  Portfolio Management Performance
 
 ### Portfolio Optimization
 
@@ -88,7 +88,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | 1,000 | 20 | 234.6 | 67.8 | 99.8% |
 | 1,000 | 50 | 567.9 | 156.3 | 99.7% |
 
-## ⚠️ Risk Analysis Performance
+##  Risk Analysis Performance
 
 ### Value at Risk Calculation
 
@@ -116,7 +116,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | 10 scenarios | 1,000 points | 15.7 | 4.1 | 100% |
 | 20 scenarios | 1,000 points | 28.4 | 7.8 | 100% |
 
-## 🤖 Machine Learning Performance
+##  Machine Learning Performance
 
 ### Feature Engineering
 
@@ -147,7 +147,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | 10 | 128 | 6.4 | 23.7 | 78.5% |
 | 20 | 128 | 11.2 | 34.8 | 82.1% |
 
-## 📊 Data Processing Performance
+##  Data Processing Performance
 
 ### Data Cleaning
 
@@ -168,7 +168,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | Z-Score | 1,000 points | 2.1 | 0.7 | 99.8% |
 | Z-Score | 10,000 points | 18.7 | 6.8 | 99.8% |
 
-## 🎯 End-to-End Performance
+##  End-to-End Performance
 
 ### Complete Analysis Pipeline
 
@@ -187,7 +187,7 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 | 100ms | 8.7 | 114.9 | 18.7 |
 | 10ms | 6.2 | 161.3 | 15.2 |
 
-## 📈 Scalability Analysis
+##  Scalability Analysis
 
 ### Memory Usage
 
@@ -206,11 +206,11 @@ This document provides detailed performance benchmarks for MeridianAlgo across d
 ```python
 # Most operations are O(n) or O(n log n)
 # Technical indicators: O(n)
-# Portfolio optimization: O(n²) to O(n³)
+# Portfolio optimization: O(n) to O(n)
 # LSTM training: O(n * epochs * features)
 ```
 
-## 🚀 Optimization Tips
+##  Optimization Tips
 
 ### 1. Use Appropriate Data Types
 
@@ -250,7 +250,7 @@ if torch.cuda.is_available():
     model = model.to(device)
 ```
 
-## 📊 Comparison with Other Libraries
+##  Comparison with Other Libraries
 
 ### Technical Indicators
 
@@ -270,7 +270,7 @@ if torch.cuda.is_available():
 | QuantLib | 156.2ms | 298.7ms | 334.5ms |
 | zipline | 234.6ms | 456.7ms | 523.8ms |
 
-## 🎯 Performance Recommendations
+##  Performance Recommendations
 
 ### For Small Datasets (< 1,000 points)
 - Use default settings
@@ -294,7 +294,7 @@ if torch.cuda.is_available():
 - Consider using faster libraries for critical paths
 - Optimize data structures
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Installation Guide](installation.md) - Performance optimization tips
 - [API Reference](api/) - Detailed performance characteristics

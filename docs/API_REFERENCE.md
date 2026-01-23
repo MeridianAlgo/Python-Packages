@@ -1,10 +1,10 @@
 # API Reference - MeridianAlgo v4.0.0
 
-## 📚 Complete API Documentation
+##  Complete API Documentation
 
 This document provides comprehensive API reference for all MeridianAlgo modules.
 
-## 🗂️ Module Overview
+##  Module Overview
 
 ### Core Modules
 - [Data Infrastructure](#data-infrastructure) - Multi-source data providers and processing
@@ -246,7 +246,7 @@ stress_results = stress_tester.run_historical_scenarios(portfolio, scenarios)
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 ### Global Configuration
 
@@ -275,7 +275,7 @@ ma.logging.enable_file_logging('meridianalgo.log')
 
 ---
 
-## 🚀 Quick Start Examples
+##  Quick Start Examples
 
 ### Basic Portfolio Analysis
 
@@ -336,7 +336,7 @@ predictions = model.predict(test_features)
 
 ---
 
-## 📊 Performance Considerations
+##  Performance Considerations
 
 ### Optimization Tips
 
@@ -358,7 +358,7 @@ ma.config.enable_memory_mapping(True)
 
 ---
 
-## 🔍 Error Handling
+##  Error Handling
 
 ### Exception Types
 
@@ -377,7 +377,7 @@ except ValidationError as e:
 
 ---
 
-## 📞 Support
+##  Support
 
 For detailed API documentation and examples:
 - **Online Docs**: [docs.meridianalgo.com](https://docs.meridianalgo.com)

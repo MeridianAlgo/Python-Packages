@@ -8,62 +8,38 @@ This module provides comprehensive technical analysis capabilities including:
 - Interactive visualization system
 """
 
-from .indicators import (
-    TALibIndicators,
-    IndicatorManager,
-    BaseIndicator,
-    CustomIndicator
-)
-
-from .patterns import (
-    CandlestickPatterns,
-    ChartPatterns,
-    PatternRecognizer
-)
-
-from .visualization import (
-    TechnicalChart,
-    InteractiveDashboard,
-    ChartTemplate,
-    ChartAnnotationTool
-)
-
-from .framework import (
-    IndicatorMetadata,
-    IndicatorValidator,
-    IndicatorCompiler,
-    IndicatorBuilder,
-    CustomIndicatorFramework,
-    IndicatorRegistry,
-    indicator_registry,
-    indicator
-)
+from .framework import (CustomIndicatorFramework, IndicatorBuilder,
+                        IndicatorCompiler, IndicatorMetadata,
+                        IndicatorRegistry, IndicatorValidator, indicator,
+                        indicator_registry)
+from .indicators import (BaseIndicator, CustomIndicator, IndicatorManager,
+                         TALibIndicators)
+from .patterns import CandlestickPatterns, ChartPatterns, PatternRecognizer
+from .visualization import (ChartAnnotationTool, ChartTemplate,
+                            InteractiveDashboard, TechnicalChart)
 
 __all__ = [
     # Indicators
-    'TALibIndicators',
-    'IndicatorManager', 
-    'BaseIndicator',
-    'CustomIndicator',
-    
+    "TALibIndicators",
+    "IndicatorManager",
+    "BaseIndicator",
+    "CustomIndicator",
     # Patterns
-    'CandlestickPatterns',
-    'ChartPatterns',
-    'PatternRecognizer',
-    
+    "CandlestickPatterns",
+    "ChartPatterns",
+    "PatternRecognizer",
     # Visualization
-    'TechnicalChart',
-    'InteractiveDashboard',
-    'ChartTemplate',
-    'ChartAnnotationTool',
-    
+    "TechnicalChart",
+    "InteractiveDashboard",
+    "ChartTemplate",
+    "ChartAnnotationTool",
     # Framework
-    'IndicatorMetadata',
-    'IndicatorValidator',
-    'IndicatorCompiler',
-    'IndicatorBuilder',
-    'CustomIndicatorFramework',
-    'IndicatorRegistry',
-    'indicator_registry',
-    'indicator'
+    "IndicatorMetadata",
+    "IndicatorValidator",
+    "IndicatorCompiler",
+    "IndicatorBuilder",
+    "CustomIndicatorFramework",
+    "IndicatorRegistry",
+    "indicator_registry",
+    "indicator",
 ]

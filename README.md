@@ -158,4 +158,4 @@ If you use MeridianAlgo in your research or business, please cite it:
 }
 ```
 
-**MeridianAlgo** — *Empowering Quantitative Excellence.*
+**MeridianAlgo**  *Empowering Finance for Everyone*

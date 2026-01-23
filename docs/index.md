@@ -2,7 +2,7 @@
 
 Welcome to the comprehensive documentation for MeridianAlgo, the advanced algorithmic trading and statistical analysis library.
 
-## 📚 Table of Contents
+##  Table of Contents
 
 - [Quick Start Guide](quickstart.md)
 - [Installation Guide](installation.md)
@@ -23,7 +23,7 @@ Welcome to the comprehensive documentation for MeridianAlgo, the advanced algori
 - [Contributing Guide](contributing.md)
 - [Changelog](changelog.md)
 
-## 🚀 What is MeridianAlgo?
+##  What is MeridianAlgo?
 
 MeridianAlgo is a comprehensive Python library designed for quantitative finance, algorithmic trading, and statistical analysis. It provides a complete toolkit for:
 
@@ -33,35 +33,35 @@ MeridianAlgo is a comprehensive Python library designed for quantitative finance
 - **Machine Learning**: LSTM models and feature engineering for financial time series
 - **Data Processing**: Data cleaning, validation, and feature engineering utilities
 
-## 🎯 Key Features
+##  Key Features
 
-### 📊 Technical Analysis Suite
+###  Technical Analysis Suite
 - **Momentum Indicators**: RSI, Stochastic, Williams %R, ROC, Momentum
 - **Trend Indicators**: Moving averages, MACD, ADX, Aroon, Parabolic SAR, Ichimoku
 - **Volatility Indicators**: Bollinger Bands, ATR, Keltner Channels, Donchian Channels
 - **Volume Indicators**: OBV, AD Line, Chaikin Oscillator, Money Flow Index
 - **Overlay Indicators**: Pivot Points, Fibonacci Retracement, Support/Resistance
 
-### 🏦 Portfolio Management
+###  Portfolio Management
 - **Optimization Strategies**: MPT, Black-Litterman, Risk Parity
 - **Risk Management**: VaR, Expected Shortfall, Maximum Drawdown
 - **Performance Analysis**: Attribution analysis, benchmark comparison
 - **Rebalancing**: Calendar and threshold-based rebalancing
 
-### 📈 Risk Analysis
+###  Risk Analysis
 - **Value at Risk**: Historical, Parametric, Monte Carlo methods
 - **Expected Shortfall**: Tail risk analysis
 - **Stress Testing**: Scenario analysis and historical stress tests
 - **Risk Metrics**: Sharpe, Sortino, Calmar ratios
 - **Regime Analysis**: Market regime detection
 
-### 🤖 Machine Learning
+###  Machine Learning
 - **Feature Engineering**: Technical and fundamental features
 - **LSTM Models**: Time series prediction
 - **Model Evaluation**: Comprehensive metrics and validation
 - **Data Processing**: Cleaning and validation utilities
 
-## 📦 Installation
+##  Installation
 
 ```bash
 # Install latest version
@@ -71,7 +71,7 @@ pip install meridianalgo
 pip install meridianalgo[dev]
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```python
 import meridianalgo as ma
@@ -93,23 +93,23 @@ optimal_portfolio = optimizer.optimize_portfolio(objective='sharpe')
 var_95 = ma.calculate_value_at_risk(returns['AAPL'], confidence_level=0.95)
 ```
 
-## 📊 Performance
+##  Performance
 
 - **Prediction Accuracy**: 78-85% (within 3% of actual price)
 - **Excellent Predictions**: 25-35% (within 1% of actual price)
 - **Average Error**: 1.8-2.4%
 - **Test Coverage**: 40+ comprehensive tests
-- **All Demos**: 6/6 passing ✅
+- **All Demos**: 6/6 passing 
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions! Please see our [Contributing Guide](contributing.md) for details.
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **Quant Analytics**: Portions integrate concepts from [quant-analytics](https://pypi.org/project/quant-analytics/) by Anthony Baxter
 - **Open Source**: Built on NumPy, Pandas, SciPy, Scikit-learn, PyTorch
@@ -119,4 +119,4 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 **MeridianAlgo** - Empowering quantitative finance with advanced algorithmic trading tools.
 
-*Built with ❤️ by the Meridian Algorithmic Research Team*
+*Built with  by the Meridian Algorithmic Research Team*

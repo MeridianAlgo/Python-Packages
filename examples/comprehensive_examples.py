@@ -12,7 +12,6 @@ Demonstrates all major features of the package including:
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
 
 print("=" * 70)
 print("MeridianAlgo v6.0.0 - Comprehensive Examples")
@@ -39,8 +38,8 @@ np.random.seed(42)
 n_days = 500
 returns = pd.Series(
     np.random.normal(0.0005, 0.015, n_days),
-    index=pd.date_range(start='2023-01-01', periods=n_days, freq='B'),
-    name='Strategy'
+    index=pd.date_range(start="2023-01-01", periods=n_days, freq="B"),
+    name="Strategy",
 )
 
 analysis = ma.quick_analysis(returns)
@@ -65,9 +64,7 @@ from meridianalgo.analytics import PerformanceAnalyzer, RiskAnalyzer
 
 # Create benchmark returns
 benchmark = pd.Series(
-    np.random.normal(0.0003, 0.012, n_days),
-    index=returns.index,
-    name='Benchmark'
+    np.random.normal(0.0003, 0.012, n_days), index=returns.index, name="Benchmark"
 )
 
 # Performance analysis
@@ -120,7 +117,9 @@ print(f"  Calmar Ratio: {dd.calmar_ratio():.2f}")
 print("\nTop 3 Drawdowns:")
 top_dd = dd.top_drawdowns(3)
 for _, row in top_dd.iterrows():
-    print(f"  #{int(row['Rank'])}: {row['Depth']:.2%} depth, {row['Duration (days)']} days")
+    print(
+        f"  #{int(row['Rank'])}: {row['Depth']:.2%} depth, {row['Duration (days)']} days"
+    )
 
 
 # =============================================================================
@@ -131,9 +130,7 @@ print("\n" + "=" * 70)
 print("4. LIQUIDITY ANALYSIS")
 print("=" * 70)
 
-from meridianalgo.liquidity import (
-    OrderBook, OrderBookAnalyzer, VPIN, VolumeProfile, MarketImpact
-)
+from meridianalgo.liquidity import VPIN, MarketImpact, OrderBook
 
 # Create sample order book
 ob = OrderBook()
@@ -151,7 +148,7 @@ depth = ob.depth(5)
 print(f"  Depth Imbalance: {depth['depth_imbalance']:.2f}")
 
 # Estimate impact
-impact_5k = ob.price_impact(5000, 'buy')
+impact_5k = ob.price_impact(5000, "buy")
 print(f"  Price Impact (5,000 shares): {impact_5k:.1f} bps")
 
 # Market impact modeling
@@ -164,14 +161,16 @@ print(f"  Spread Cost: {costs['spread_cost_bps']:.2f} bps")
 print(f"  Total Cost: ${costs['total_cost_dollars']:.2f}")
 
 # VPIN calculation with simulated trades
-trades = pd.DataFrame({
-    'price': 100 + np.cumsum(np.random.randn(1000) * 0.01),
-    'size': np.random.randint(10, 100, 1000),
-    'side': np.random.choice(['buy', 'sell'], 1000)
-})
+trades = pd.DataFrame(
+    {
+        "price": 100 + np.cumsum(np.random.randn(1000) * 0.01),
+        "size": np.random.randint(10, 100, 1000),
+        "side": np.random.choice(["buy", "sell"], 1000),
+    }
+)
 
 vpin_calc = VPIN(trades)
-print(f"\nVPIN Analysis:")
+print("\nVPIN Analysis:")
 print(f"  Current VPIN: {vpin_calc.current_vpin():.4f}")
 print(f"  Average VPIN: {vpin_calc.average_vpin():.4f}")
 print(f"  VPIN Percentile: {vpin_calc.vpin_percentile():.1f}%")
@@ -186,14 +185,12 @@ print("\n" + "=" * 70)
 print("5. TECHNICAL SIGNALS")
 print("=" * 70)
 
-from meridianalgo.signals import (
-    RSI, MACD, BollingerBands, ATR,
-    SignalGenerator, TechnicalAnalyzer
-)
+from meridianalgo.signals import (ATR, MACD, RSI, BollingerBands,
+                                  SignalGenerator, TechnicalAnalyzer)
 
 # Generate sample OHLCV data
 n = 200
-dates = pd.date_range(start='2024-01-01', periods=n, freq='B')
+dates = pd.date_range(start="2024-01-01", periods=n, freq="B")
 close = pd.Series(100 + np.cumsum(np.random.randn(n) * 1), index=dates)
 high = close + np.random.uniform(0.5, 2, n)
 low = close - np.random.uniform(0.5, 2, n)
@@ -221,8 +218,12 @@ print("\nTechnical Analysis Summary:")
 print(f"  Trend: {summary['trend'].upper()}")
 print(f"  Momentum: {summary['momentum'].upper()}")
 print(f"  Volatility: {summary['volatility'].upper()}")
-print(f"  RSI: {summary['rsi']:.2f} ({'OVERSOLD' if summary['oversold'] else 'OVERBOUGHT' if summary['overbought'] else 'NEUTRAL'})")
-print(f"  Combined Signal: {int(summary['combined_signal'])} ({'+' if summary['combined_signal'] > 0 else '-' if summary['combined_signal'] < 0 else '='} bias)")
+print(
+    f"  RSI: {summary['rsi']:.2f} ({'OVERSOLD' if summary['oversold'] else 'OVERBOUGHT' if summary['overbought'] else 'NEUTRAL'})"
+)
+print(
+    f"  Combined Signal: {int(summary['combined_signal'])} ({'+' if summary['combined_signal'] > 0 else '-' if summary['combined_signal'] < 0 else '='} bias)"
+)
 
 
 # =============================================================================
@@ -234,23 +235,29 @@ print("6. SIGNAL GENERATION & BACKTESTING")
 print("=" * 70)
 
 # Create signal generator
-data = pd.DataFrame({
-    'close': close,
-    'high': high,
-    'low': low,
-    'volume': volume,
-    'rsi': rsi,
-    'macd': macd_line,
-    'signal': signal_line
-})
+data = pd.DataFrame(
+    {
+        "close": close,
+        "high": high,
+        "low": low,
+        "volume": volume,
+        "rsi": rsi,
+        "macd": macd_line,
+        "signal": signal_line,
+    }
+)
 
 gen = SignalGenerator(data)
 
 # Add trading rules
-gen.add_rule('rsi_oversold', lambda d: d['rsi'] < 30, weight=1.5, signal_type='long')
-gen.add_rule('rsi_overbought', lambda d: d['rsi'] > 70, weight=1.5, signal_type='short')
-gen.add_rule('macd_bullish', lambda d: d['macd'] > d['signal'], weight=1.0, signal_type='long')
-gen.add_rule('macd_bearish', lambda d: d['macd'] < d['signal'], weight=1.0, signal_type='short')
+gen.add_rule("rsi_oversold", lambda d: d["rsi"] < 30, weight=1.5, signal_type="long")
+gen.add_rule("rsi_overbought", lambda d: d["rsi"] > 70, weight=1.5, signal_type="short")
+gen.add_rule(
+    "macd_bullish", lambda d: d["macd"] > d["signal"], weight=1.0, signal_type="long"
+)
+gen.add_rule(
+    "macd_bearish", lambda d: d["macd"] < d["signal"], weight=1.0, signal_type="short"
+)
 
 # Generate signals
 signals = gen.generate(threshold=0.4)
@@ -264,7 +271,9 @@ print(f"  Neutral: {(signals['signal'] == 0).sum()}")
 returns_bt = close.pct_change().dropna()
 signals_aligned = signals.reindex(returns_bt.index)
 
-backtest_results = gen.backtest_signals(signals_aligned, returns_bt, transaction_cost=0.001)
+backtest_results = gen.backtest_signals(
+    signals_aligned, returns_bt, transaction_cost=0.001
+)
 
 print("\nBacktest Results:")
 print(f"  Total Return: {backtest_results['total_return']:.2%}")
@@ -284,20 +293,20 @@ print("=" * 70)
 
 try:
     from meridianalgo.derivatives import OptionsPricer
-    
+
     pricer = OptionsPricer()
-    
+
     # Option parameters
     S = 100  # Stock price
     K = 105  # Strike
     T = 0.5  # Time to expiration (6 months)
     r = 0.05  # Risk-free rate
     sigma = 0.2  # Volatility
-    
+
     # Black-Scholes pricing
-    call_price = pricer.black_scholes_merton(S, K, T, r, sigma, 'call')
-    put_price = pricer.black_scholes_merton(S, K, T, r, sigma, 'put')
-    
+    call_price = pricer.black_scholes_merton(S, K, T, r, sigma, "call")
+    put_price = pricer.black_scholes_merton(S, K, T, r, sigma, "put")
+
     print("\nOptions Pricing (Black-Scholes):")
     print(f"  Stock Price: ${S}")
     print(f"  Strike: ${K}")
@@ -305,17 +314,17 @@ try:
     print(f"  Volatility: {sigma:.0%}")
     print(f"  Call Price: ${call_price:.2f}")
     print(f"  Put Price: ${put_price:.2f}")
-    
+
     # Greeks
-    greeks = pricer.calculate_greeks(S, K, T, r, sigma, 'call')
-    
+    greeks = pricer.calculate_greeks(S, K, T, r, sigma, "call")
+
     print("\nCall Option Greeks:")
     print(f"  Delta: {greeks['delta']:.4f}")
     print(f"  Gamma: {greeks['gamma']:.4f}")
     print(f"  Theta: {greeks['theta']:.4f}")
     print(f"  Vega: {greeks['vega']:.4f}")
     print(f"  Rho: {greeks['rho']:.4f}")
-    
+
 except ImportError as e:
     print(f"\nDerivatives module import note: {e}")
 
@@ -329,46 +338,49 @@ print("8. QUANTITATIVE STRATEGIES")
 print("=" * 70)
 
 try:
-    from meridianalgo.quant import PairsTrading, CointegrationAnalyzer, OrnsteinUhlenbeck
-    
+    from meridianalgo.quant import (CointegrationAnalyzer, OrnsteinUhlenbeck,
+                                    PairsTrading)
+
     # Create cointegrated pairs
     np.random.seed(123)
     n = 300
     common_trend = np.cumsum(np.random.randn(n) * 0.5)
-    
-    stock1 = pd.Series(100 + common_trend + np.random.randn(n) * 2, name='STOCK1')
-    stock2 = pd.Series(50 + common_trend * 0.6 + np.random.randn(n) * 1.5, name='STOCK2')
-    
+
+    stock1 = pd.Series(100 + common_trend + np.random.randn(n) * 2, name="STOCK1")
+    stock2 = pd.Series(
+        50 + common_trend * 0.6 + np.random.randn(n) * 1.5, name="STOCK2"
+    )
+
     # Cointegration test
     coint = CointegrationAnalyzer()
     result = coint.engle_granger_test(stock1, stock2)
-    
+
     print("\nCointegration Analysis:")
     print(f"  Test Statistic: {result['test_statistic']:.4f}")
     print(f"  P-value: {result['pvalue']:.4f}")
     print(f"  Cointegrated: {'Yes' if result['is_cointegrated'] else 'No'}")
-    
+
     # Pairs trading
     pt = PairsTrading(entry_threshold=2.0, exit_threshold=0.5)
     hedge_ratio = pt.calculate_hedge_ratio(stock1, stock2)
     signals = pt.generate_signals(stock1, stock2, window=20)
-    
-    print(f"\nPairs Trading Strategy:")
+
+    print("\nPairs Trading Strategy:")
     print(f"  Hedge Ratio: {hedge_ratio:.4f}")
     print(f"  Current Z-Score: {signals['zscore'].iloc[-1]:.2f}")
     print(f"  Current Position: {signals['signal'].iloc[-1]:.0f}")
-    
+
     # Ornstein-Uhlenbeck process
     spread = stock1 - hedge_ratio * stock2
     ou = OrnsteinUhlenbeck()
     params = ou.fit(spread)
-    
-    print(f"\nMean Reversion Analysis (OU Process):")
-    print(f"  Speed (θ): {params['theta']:.4f}")
-    print(f"  Long-term Mean (μ): {params['mu']:.2f}")
-    print(f"  Volatility (σ): {params['sigma']:.2f}")
+
+    print("\nMean Reversion Analysis (OU Process):")
+    print(f"  Speed (): {params['theta']:.4f}")
+    print(f"  Long-term Mean (): {params['mu']:.2f}")
+    print(f"  Volatility (): {params['sigma']:.2f}")
     print(f"  Half-life: {params['half_life']:.1f} periods")
-    
+
 except ImportError as e:
     print(f"\nQuant module import note: {e}")
 
@@ -381,38 +393,39 @@ print("\n" + "=" * 70)
 print("EXAMPLES COMPLETED!")
 print("=" * 70)
 
-print("""
+print(
+    """
 MeridianAlgo v6.0.0 provides:
 
-📊 Portfolio Analytics
+ Portfolio Analytics
    - 50+ performance metrics (Sharpe, Sortino, Calmar, etc.)
    - Benchmark-relative analysis (alpha, beta, IR)
    - Pyfolio-style tear sheets
 
-📈 Liquidity Analysis  
+ Liquidity Analysis  
    - Order book analysis (microprice, depth, imbalance)
    - VPIN (Volume-Synchronized PIN)
    - Market impact models (Almgren-Chriss)
    - Spread decomposition
 
-📉 Risk Management
+ Risk Management
    - VaR/CVaR (Historical, Parametric, Cornish-Fisher)
    - GARCH volatility
    - Stress testing
    - Drawdown analysis
 
-📐 Technical Analysis
+ Technical Analysis
    - 50+ technical indicators
    - Signal generation framework
    - Built-in backtesting
 
-🎰 Derivatives
+ Derivatives
    - Black-Scholes pricing
    - Binomial & Monte Carlo
    - Greeks calculation
    - Implied volatility
 
-🔄 Quantitative Strategies
+ Quantitative Strategies
    - Pairs trading
    - Cointegration testing
    - Mean reversion (OU process)
@@ -420,4 +433,5 @@ MeridianAlgo v6.0.0 provides:
    - Regime detection
 
 For more information, visit: https://github.com/MeridianAlgo/Python-Packages
-""")
+"""
+)

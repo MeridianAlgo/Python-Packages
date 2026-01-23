@@ -112,7 +112,7 @@ All algorithms are optimized for production use:
 - **Market microstructure**: < 1ms for tick processing
 - **Statistical arbitrage**: < 100ms for signal generation
 - **Execution algorithms**: < 10ms per order slice
-- **HFT strategies**: < 100μs for quote calculation
+- **HFT strategies**: < 100s for quote calculation
 - **Factor models**: < 1s for portfolio optimization
 - **Regime detection**: < 5s for HMM fitting (100 observations)
 

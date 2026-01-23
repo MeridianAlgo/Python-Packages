@@ -2,7 +2,7 @@
 
 Comprehensive technical analysis indicators for financial data.
 
-## 📊 Overview
+##  Overview
 
 The Technical Indicators module provides 50+ indicators across five categories:
 - **Momentum Indicators**: RSI, Stochastic, Williams %R, ROC, Momentum
@@ -11,7 +11,7 @@ The Technical Indicators module provides 50+ indicators across five categories:
 - **Volume Indicators**: OBV, AD Line, Chaikin Oscillator, Money Flow Index
 - **Overlay Indicators**: Pivot Points, Fibonacci Retracement, Support/Resistance
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```python
 import meridianalgo as ma
@@ -30,7 +30,7 @@ macd_line, signal_line, histogram = ma.MACD(close)
 bb_upper, bb_middle, bb_lower = ma.BollingerBands(close)
 ```
 
-## 📈 Momentum Indicators
+##  Momentum Indicators
 
 ### RSI (Relative Strength Index)
 
@@ -121,7 +121,7 @@ momentum = ma.Momentum(prices, period=10)
 **Returns:**
 - `pd.Series`: Momentum values
 
-## 📊 Trend Indicators
+##  Trend Indicators
 
 ### Simple Moving Average (SMA)
 
@@ -247,7 +247,7 @@ ichimoku = ma.Ichimoku(high, low, close)
   - `senkou_span_b`: Leading Span B
   - `chikou_span`: Lagging Span
 
-## 📊 Volatility Indicators
+##  Volatility Indicators
 
 ### Bollinger Bands
 
@@ -318,7 +318,7 @@ dc_upper, dc_middle, dc_lower = ma.DonchianChannels(high, low, period=20)
 **Returns:**
 - `tuple`: (Upper Channel, Middle Channel, Lower Channel)
 
-## 📊 Volume Indicators
+##  Volume Indicators
 
 ### On-Balance Volume (OBV)
 
@@ -396,7 +396,7 @@ eom = ma.EaseOfMovement(high, low, volume, period=14)
 **Returns:**
 - `pd.Series`: Ease of Movement values
 
-## 📊 Overlay Indicators
+##  Overlay Indicators
 
 ### Pivot Points
 
@@ -447,7 +447,7 @@ sr_data = ma.SupportResistance(prices, window=20, min_touches=2)
   - `resistance_levels`: Key resistance levels
   - `support_levels`: Key support levels
 
-## 🎯 Complete Example
+##  Complete Example
 
 ```python
 import meridianalgo as ma
@@ -518,7 +518,7 @@ if __name__ == "__main__":
     signals = technical_analysis_example()
 ```
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Portfolio Management API](portfolio_management.md) - Portfolio optimization
 - [Risk Analysis API](risk_analysis.md) - Risk metrics and analysis

@@ -2,7 +2,7 @@
 
 Get up and running with MeridianAlgo in minutes!
 
-## 🚀 Installation
+##  Installation
 
 ```bash
 # Install MeridianAlgo
@@ -12,7 +12,7 @@ pip install meridianalgo
 python -c "import meridianalgo; print(meridianalgo.__version__)"
 ```
 
-## 📊 Basic Usage
+##  Basic Usage
 
 ### 1. Import the Library
 
@@ -122,7 +122,7 @@ except ImportError:
     print("PyTorch not available. Install with: pip install torch")
 ```
 
-## 📈 Complete Example
+##  Complete Example
 
 Here's a complete example that demonstrates all major features:
 
@@ -134,16 +134,16 @@ import numpy as np
 def comprehensive_example():
     """Comprehensive example showcasing MeridianAlgo features."""
     
-    print("🚀 MeridianAlgo Comprehensive Example")
+    print(" MeridianAlgo Comprehensive Example")
     print("=" * 50)
     
     # 1. Get market data
-    print("\n📊 Fetching market data...")
+    print("\n Fetching market data...")
     data = ma.get_market_data(['AAPL', 'MSFT', 'GOOGL'], start_date='2023-01-01')
     returns = data.pct_change().dropna()
     
     # 2. Technical Analysis
-    print("\n📈 Technical Analysis...")
+    print("\n Technical Analysis...")
     close = data['AAPL']
     rsi = ma.RSI(close, period=14)
     macd_line, signal_line, histogram = ma.MACD(close)
@@ -154,7 +154,7 @@ def comprehensive_example():
     print(f"  Price vs BB: {close.iloc[-1]:.2f} (Upper: {bb_upper.iloc[-1]:.2f}, Lower: {bb_lower.iloc[-1]:.2f})")
     
     # 3. Portfolio Optimization
-    print("\n🏦 Portfolio Optimization...")
+    print("\n Portfolio Optimization...")
     optimizer = ma.PortfolioOptimizer(returns)
     optimal = optimizer.optimize_portfolio(objective='sharpe')
     
@@ -164,7 +164,7 @@ def comprehensive_example():
     print(f"  Sharpe ratio: {optimal['sharpe_ratio']:.2f}")
     
     # 4. Risk Analysis
-    print("\n⚠️ Risk Analysis...")
+    print("\n Risk Analysis...")
     portfolio_returns = returns.mean(axis=1)
     var_95 = ma.calculate_value_at_risk(portfolio_returns, confidence_level=0.95)
     es_95 = ma.calculate_expected_shortfall(portfolio_returns, confidence_level=0.95)
@@ -175,35 +175,35 @@ def comprehensive_example():
     print(f"  Max Drawdown: {max_dd:.2%}")
     
     # 5. Statistical Analysis
-    print("\n📊 Statistical Analysis...")
+    print("\n Statistical Analysis...")
     hurst = ma.hurst_exponent(close)
     autocorr = ma.calculate_autocorrelation(returns['AAPL'])
     
     print(f"  Hurst Exponent: {hurst:.3f}")
     print(f"  Autocorrelation: {autocorr:.3f}")
     
-    print("\n✅ Example completed successfully!")
+    print("\n Example completed successfully!")
 
 # Run the example
 if __name__ == "__main__":
     comprehensive_example()
 ```
 
-## 🎯 Next Steps
+##  Next Steps
 
 1. **Explore the API**: Check out the [API Reference](api/) for detailed documentation
 2. **Try Examples**: See [Examples](examples/) for more complex use cases
 3. **Learn Advanced Features**: Dive into [Portfolio Management](api/portfolio_management.md) and [Risk Analysis](api/risk_analysis.md)
 4. **Contribute**: Help improve MeridianAlgo by contributing to the project
 
-## 🆘 Getting Help
+##  Getting Help
 
 - **Documentation**: Browse the comprehensive [API Reference](api/)
 - **Examples**: Check out [example scripts](examples/)
 - **Issues**: Report bugs or request features on [GitHub](https://github.com/MeridianAlgo/Python-Packages/issues)
 - **Discussions**: Join the community on [GitHub Discussions](https://github.com/MeridianAlgo/Python-Packages/discussions)
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Installation Guide](installation.md) - Detailed installation instructions
 - [Performance Benchmarks](benchmarks.md) - Performance metrics and comparisons

@@ -2,7 +2,7 @@
 
 Advanced portfolio optimization and management tools.
 
-## 📊 Overview
+##  Overview
 
 The Portfolio Management module provides comprehensive tools for:
 - **Portfolio Optimization**: Modern Portfolio Theory, Black-Litterman, Risk Parity
@@ -10,7 +10,7 @@ The Portfolio Management module provides comprehensive tools for:
 - **Performance Analysis**: Attribution analysis, benchmark comparison
 - **Rebalancing**: Calendar and threshold-based rebalancing strategies
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```python
 import meridianalgo as ma
@@ -31,7 +31,7 @@ print(f"Expected return: {optimal_portfolio['return']:.2%}")
 print(f"Volatility: {optimal_portfolio['volatility']:.2%}")
 ```
 
-## 🏦 Portfolio Optimization
+##  Portfolio Optimization
 
 ### PortfolioOptimizer
 
@@ -234,7 +234,7 @@ print(f"Risk parity weights: {rp_portfolio['weights']}")
 print(f"Risk contributions: {rp_portfolio['risk_contributions']}")
 ```
 
-## ⚠️ Risk Management
+##  Risk Management
 
 ### RiskManager
 
@@ -368,7 +368,7 @@ stress_results = stress_tester.scenario_stress_test(scenarios)
 print(f"Stress test results: {stress_results}")
 ```
 
-## 📈 Performance Analysis
+##  Performance Analysis
 
 ### PerformanceAnalyzer
 
@@ -455,7 +455,7 @@ comparison_results = comparison.compare_performance()
   - `tracking_error`: Tracking error
   - `information_ratio`: Information ratio
 
-## 🔄 Rebalancing
+##  Rebalancing
 
 ### Rebalancer
 
@@ -528,7 +528,7 @@ should_rebalance = threshold_rebalancer.should_rebalance(current_weights)
 **Returns:**
 - `bool`: Whether to rebalance
 
-## 🎯 Complete Example
+##  Complete Example
 
 ```python
 import meridianalgo as ma
@@ -544,11 +544,11 @@ def portfolio_management_example():
     data = ma.get_market_data(symbols, start_date='2023-01-01')
     returns = data.pct_change().dropna()
     
-    print("📊 Portfolio Management Example")
+    print(" Portfolio Management Example")
     print("=" * 50)
     
     # 1. Portfolio Optimization
-    print("\n🏦 Portfolio Optimization...")
+    print("\n Portfolio Optimization...")
     optimizer = ma.PortfolioOptimizer(returns)
     
     # Calculate efficient frontier
@@ -564,7 +564,7 @@ def portfolio_management_example():
     print(f"Max-return weights: {optimal_max_return['weights']}")
     
     # 2. Risk Analysis
-    print("\n⚠️ Risk Analysis...")
+    print("\n Risk Analysis...")
     portfolio_returns = returns.mean(axis=1)
     
     # Calculate VaR
@@ -583,7 +583,7 @@ def portfolio_management_example():
     print(f"Max Drawdown: {max_dd:.2%}")
     
     # 3. Performance Analysis
-    print("\n📈 Performance Analysis...")
+    print("\n Performance Analysis...")
     analyzer = ma.PerformanceAnalyzer(portfolio_returns)
     metrics = analyzer.calculate_metrics()
     
@@ -594,7 +594,7 @@ def portfolio_management_example():
     print(f"Max Drawdown: {metrics['max_drawdown']:.2%}")
     
     # 4. Rebalancing
-    print("\n🔄 Rebalancing...")
+    print("\n Rebalancing...")
     target_weights = dict(zip(symbols, optimal_sharpe['weights']))
     rebalancer = ma.Rebalancer(target_weights)
     
@@ -617,7 +617,7 @@ def portfolio_management_example():
         print(f"New weights: {new_weights}")
     
     # 5. Visualization
-    print("\n📊 Creating visualizations...")
+    print("\n Creating visualizations...")
     
     # Plot efficient frontier
     plt.figure(figsize=(12, 8))
@@ -670,14 +670,14 @@ def portfolio_management_example():
     plt.tight_layout()
     plt.show()
     
-    print("\n✅ Portfolio management example completed successfully!")
+    print("\n Portfolio management example completed successfully!")
 
 # Run example
 if __name__ == "__main__":
     portfolio_management_example()
 ```
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Technical Indicators API](technical_indicators.md) - Technical analysis
 - [Risk Analysis API](risk_analysis.md) - Risk metrics and analysis

@@ -6,61 +6,55 @@ Includes market microstructure, high-frequency trading, statistical arbitrage,
 and advanced execution algorithms.
 """
 
-from .market_microstructure import *
-from .statistical_arbitrage import *
-from .execution_algorithms import *
-from .high_frequency import *
-from .factor_models import *
-from .regime_detection import *
 from .advanced_signals import *
+from .execution_algorithms import *
+from .factor_models import *
+from .high_frequency import *
+from .market_microstructure import *
+from .regime_detection import *
+from .statistical_arbitrage import *
 
 __all__ = [
     # Market Microstructure
-    'OrderFlowImbalance',
-    'VolumeWeightedSpread',
-    'RealizedVolatility',
-    'MarketImpactModel',
-    'TickDataAnalyzer',
-    
+    "OrderFlowImbalance",
+    "VolumeWeightedSpread",
+    "RealizedVolatility",
+    "MarketImpactModel",
+    "TickDataAnalyzer",
     # Statistical Arbitrage
-    'PairsTrading',
-    'CointegrationAnalyzer',
-    'OrnsteinUhlenbeck',
-    'MeanReversionTester',
-    'SpreadAnalyzer',
-    
+    "PairsTrading",
+    "CointegrationAnalyzer",
+    "OrnsteinUhlenbeck",
+    "MeanReversionTester",
+    "SpreadAnalyzer",
     # Execution Algorithms
-    'VWAP',
-    'TWAP',
-    'POV',
-    'ImplementationShortfall',
-    'AlmanacExecution',
-    
+    "VWAP",
+    "TWAP",
+    "POV",
+    "ImplementationShortfall",
+    "AlmanacExecution",
     # High Frequency
-    'LatencyArbitrage',
-    'MarketMaking',
-    'LiquidityProvision',
-    'HFTSignalGenerator',
-    'MicropriceEstimator',
-    
+    "LatencyArbitrage",
+    "MarketMaking",
+    "LiquidityProvision",
+    "HFTSignalGenerator",
+    "MicropriceEstimator",
     # Factor Models
-    'FamaFrenchModel',
-    'APTModel',
-    'CustomFactorModel',
-    'FactorRiskDecomposition',
-    'AlphaCapture',
-    
+    "FamaFrenchModel",
+    "APTModel",
+    "CustomFactorModel",
+    "FactorRiskDecomposition",
+    "AlphaCapture",
     # Regime Detection
-    'HiddenMarkovModel',
-    'RegimeSwitchingModel',
-    'StructuralBreakDetection',
-    'MarketStateClassifier',
-    'VolatilityRegimeDetector',
-    
+    "HiddenMarkovModel",
+    "RegimeSwitchingModel",
+    "StructuralBreakDetection",
+    "MarketStateClassifier",
+    "VolatilityRegimeDetector",
     # Advanced Signals
-    'hurst_exponent',
-    'fractional_difference',
-    'calculate_z_score',
-    'get_half_life',
-    'information_coefficient',
+    "hurst_exponent",
+    "fractional_difference",
+    "calculate_z_score",
+    "get_half_life",
+    "information_coefficient",
 ]

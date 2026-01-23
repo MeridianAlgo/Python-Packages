@@ -2,6 +2,7 @@
 Portfolio Management module for MeridianAlgo.
 """
 
-from .optimizer import PortfolioOptimizer, EfficientFrontier, BlackLitterman, RiskParity
+from .optimizer import (BlackLitterman, EfficientFrontier, PortfolioOptimizer,
+                        RiskParity)
 
-__all__ = ['PortfolioOptimizer', 'EfficientFrontier', 'BlackLitterman', 'RiskParity']
+__all__ = ["PortfolioOptimizer", "EfficientFrontier", "BlackLitterman", "RiskParity"]

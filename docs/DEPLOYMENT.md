@@ -1,6 +1,6 @@
 # Deployment Guide for MeridianAlgo
 
-## 🚀 PyPI Deployment
+##  PyPI Deployment
 
 ### Prerequisites
 
@@ -43,7 +43,7 @@ Use API token authentication:
 - **Username**: `__token__`
 - **Password**: Your PyPI API token
 
-## 🐳 Docker Deployment
+##  Docker Deployment
 
 ### Build Docker Image
 ```bash
@@ -68,7 +68,7 @@ services:
       - PYTHONPATH=/app
 ```
 
-## ☁️ Cloud Deployment
+##  Cloud Deployment
 
 ### AWS Lambda
 ```python
@@ -109,7 +109,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     return func.HttpResponse(risk_metrics)
 ```
 
-## 🔧 CI/CD Pipeline
+##  CI/CD Pipeline
 
 ### GitHub Actions
 ```yaml
@@ -141,7 +141,7 @@ jobs:
       run: twine upload dist/*
 ```
 
-## 📊 Monitoring and Analytics
+##  Monitoring and Analytics
 
 ### Package Usage Analytics
 - Monitor download statistics on PyPI
@@ -160,7 +160,7 @@ ma.enable_monitoring(
 )
 ```
 
-## 🔒 Security Considerations
+##  Security Considerations
 
 ### API Key Management
 ```python
@@ -184,7 +184,7 @@ cipher_suite = Fernet(key)
 encrypted_data = cipher_suite.encrypt(sensitive_data.encode())
 ```
 
-## 📈 Scaling Considerations
+##  Scaling Considerations
 
 ### Horizontal Scaling
 - Use Redis for caching market data
@@ -196,7 +196,7 @@ encrypted_data = cipher_suite.encrypt(sensitive_data.encode())
 - Use distributed computing with Dask/Ray
 - Implement intelligent caching strategies
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Common Deployment Issues
 
@@ -227,7 +227,7 @@ docker run -it meridianalgo:debug /bin/bash
 - Implement caching strategies
 - Consider using container-based deployments
 
-## 📞 Support
+##  Support
 
 For deployment issues:
 1. Check the [troubleshooting guide](TROUBLESHOOTING.md)
@@ -237,4 +237,4 @@ For deployment issues:
 
 ---
 
-**MeridianAlgo** - Deploy anywhere, analyze everywhere! 🌍
+**MeridianAlgo** - Deploy anywhere, analyze everywhere! 

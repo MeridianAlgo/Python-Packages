@@ -2,7 +2,7 @@
 
 Complete installation guide for MeridianAlgo.
 
-## 📋 System Requirements
+##  System Requirements
 
 ### Python Version
 - **Python 3.7+** (tested on 3.7, 3.8, 3.9, 3.10, 3.11, 3.12)
@@ -19,7 +19,7 @@ Complete installation guide for MeridianAlgo.
 - **Storage**: 1GB+ free space
 - **GPU**: Optional but recommended for ML features (NVIDIA CUDA, AMD ROCm, Apple MPS)
 
-## 🚀 Quick Installation
+##  Quick Installation
 
 ### Basic Installation
 
@@ -42,7 +42,7 @@ pip install meridianalgo[ml]      # Machine learning features
 pip install meridianalgo[dev]     # Development dependencies
 ```
 
-## 📦 Detailed Installation
+##  Detailed Installation
 
 ### 1. Create Virtual Environment (Recommended)
 
@@ -88,7 +88,7 @@ cd Python-Packages
 pip install -e .
 ```
 
-## 🔧 Development Installation
+##  Development Installation
 
 For developers who want to contribute or modify the source code:
 
@@ -110,7 +110,7 @@ pytest tests/
 python demo.py
 ```
 
-## 🐍 Conda Installation
+##  Conda Installation
 
 If you prefer using Conda:
 
@@ -128,7 +128,7 @@ conda install numpy pandas scipy scikit-learn matplotlib seaborn
 pip install meridianalgo
 ```
 
-## 🐳 Docker Installation
+##  Docker Installation
 
 For containerized deployment:
 
@@ -158,7 +158,7 @@ COPY . .
 CMD ["python", "your_script.py"]
 ```
 
-## 🔍 Verification
+##  Verification
 
 After installation, verify everything is working:
 
@@ -181,10 +181,10 @@ optimizer = ma.PortfolioOptimizer(returns)
 optimal = optimizer.optimize_portfolio(objective='sharpe')
 print(f"Portfolio optimization successful: {optimal['sharpe_ratio']:.2f}")
 
-print("✅ All tests passed! MeridianAlgo is working correctly.")
+print(" All tests passed! MeridianAlgo is working correctly.")
 ```
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -268,7 +268,7 @@ sudo apt-get install python3-dev
 sudo yum install python3-devel
 ```
 
-## 📊 Performance Optimization
+##  Performance Optimization
 
 ### 1. Enable Multi-threading
 
@@ -305,7 +305,7 @@ else:
     device = torch.device('cpu')
 ```
 
-## 🔄 Updating
+##  Updating
 
 ```bash
 # Update to latest version
@@ -315,7 +315,7 @@ pip install --upgrade meridianalgo
 python -c "import meridianalgo; print(meridianalgo.__version__)"
 ```
 
-## 🗑️ Uninstallation
+##  Uninstallation
 
 ```bash
 # Uninstall MeridianAlgo
@@ -325,7 +325,7 @@ pip uninstall meridianalgo
 pip uninstall numpy pandas scipy scikit-learn yfinance matplotlib seaborn torch
 ```
 
-## 📞 Support
+##  Support
 
 If you encounter issues:
 
@@ -334,7 +334,7 @@ If you encounter issues:
 3. **Create a new issue** with detailed error information
 4. **Join [GitHub Discussions](https://github.com/MeridianAlgo/Python-Packages/discussions)** for community help
 
-## 📚 Next Steps
+##  Next Steps
 
 After successful installation:
 
