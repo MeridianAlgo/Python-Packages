@@ -4,7 +4,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![PyPI Version](https://img.shields.io/badge/pypi-6.0.0-orange.svg)](https://pypi.org/project/meridianalgo/)
+[![PyPI Version](https://img.shields.io/badge/pypi-6.1.1-orange.svg)](https://pypi.org/project/meridianalgo/)
 [![Tests](https://img.shields.io/badge/tests-300%2B%20passing-brightgreen.svg)](tests/)
 
 MeridianAlgo is a comprehensive Python platform designed for institutional-grade quantitative finance. It provides a robust suite of tools for trading research, portfolio analytics, liquidity analysis, options pricing, and high-frequency execution. 
@@ -153,7 +153,7 @@ If you use MeridianAlgo in your research or business, please cite it:
   title = {MeridianAlgo: The Complete Quantitative Finance Platform},
   author = {Meridian Algorithmic Research Team},
   year = {2026},
-  version = {6.0.0},
+  version = {6.1.1},
   url = {https://github.com/MeridianAlgo/Python-Packages}
 }
 ```
