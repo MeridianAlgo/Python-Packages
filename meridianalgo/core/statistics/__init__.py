@@ -102,7 +102,9 @@ def calculate_half_life(price_series: pd.Series) -> float:
     X = sm.add_constant(lag_p)
     model = sm.OLS(delta_p, X)
     results = model.fit()
-    return -np.log(2) / results.params[1]
+    # Access the slope parameter (second parameter after const)
+    slope = results.params.iloc[1] if len(results.params) > 1 else results.params[1]
+    return -np.log(2) / slope
 
 
 def calculate_autocorrelation(series: pd.Series, lag: int = 1) -> float:
