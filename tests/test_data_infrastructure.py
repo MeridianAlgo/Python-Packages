@@ -21,7 +21,10 @@ try:
         MissingDataHandler,
         OutlierDetector,
     )
-    from meridianalgo.data.providers import AlphaVantageProvider, YahooFinanceProvider  # noqa: F401
+    from meridianalgo.data.providers import (
+        AlphaVantageProvider,
+        YahooFinanceProvider,
+    )  # noqa: F401
 
     DATA_AVAILABLE = True
 except ImportError:

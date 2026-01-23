@@ -82,9 +82,7 @@ class TestMachineLearning:
             feature_names = features.columns.tolist()
 
             # Should contain some technical indicators
-            any(
-                name.lower() in ["rsi", "sma", "ema", "macd"] for name in feature_names
-            )
+            any(name.lower() in ["rsi", "sma", "ema", "macd"] for name in feature_names)
 
             print(" Technical features test passed")
         except Exception as e:

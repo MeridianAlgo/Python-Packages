@@ -347,7 +347,10 @@ class TestRiskAnalysis:
 def test_risk_analysis_import():
     """Test that risk analysis can be imported."""
     try:
-        from meridianalgo.risk_analysis import ExpectedShortfall, VaRCalculator  # noqa: F401
+        from meridianalgo.risk_analysis import (
+            ExpectedShortfall,
+            VaRCalculator,
+        )  # noqa: F401
 
         print(" Risk analysis import test passed")
         return True

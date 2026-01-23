@@ -21,7 +21,10 @@ warnings.filterwarnings("ignore")
 # Check for optional dependencies
 try:
     import statsmodels.api as sm
-    from statsmodels.tsa.stattools import adfuller, coint, grangercausalitytests  # noqa: F401
+    from statsmodels.tsa.stattools import (
+        adfuller,
+        coint,
+    )
     from statsmodels.tsa.vector_ar.vecm import coint_johansen
 
     STATSMODELS_AVAILABLE = True

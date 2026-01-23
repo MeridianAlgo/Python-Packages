@@ -17,44 +17,6 @@ from .optimization import (
     RiskParityOptimizer,
 )
 
-try:
-    from .risk_management import RiskManager, RiskMetrics, StressTester, VaRCalculator  # noqa: F401
-
-    RISK_MANAGEMENT_AVAILABLE = True
-except ImportError:
-    RISK_MANAGEMENT_AVAILABLE = False
-
-try:
-    from .performance import AttributionAnalyzer, FactorAnalyzer, PerformanceAnalyzer  # noqa: F401
-
-    PERFORMANCE_AVAILABLE = True
-except ImportError:
-    PERFORMANCE_AVAILABLE = False
-
-try:
-    from .transaction_costs import (  # noqa: F401
-        LinearImpactModel,
-        SquareRootImpactModel,
-        TaxLossHarvester,
-        TransactionCostOptimizer,
-    )
-
-    TRANSACTION_COSTS_AVAILABLE = True
-except ImportError:
-    TRANSACTION_COSTS_AVAILABLE = False
-
-try:
-    from .rebalancing import (  # noqa: F401
-        CalendarRebalancer,
-        OptimalRebalancer,
-        Rebalancer,
-        ThresholdRebalancer,
-    )
-
-    REBALANCING_AVAILABLE = True
-except ImportError:
-    REBALANCING_AVAILABLE = False
-
 __all__ = [
     # Optimization
     "PortfolioOptimizer",
@@ -65,14 +27,42 @@ __all__ = [
     "OptimizationResult",
 ]
 
-# Add available modules to __all__
-if RISK_MANAGEMENT_AVAILABLE:
+# Risk Management
+try:
+    from .risk_management import (  # noqa: F401
+        RiskManager,
+        RiskMetrics,
+        StressTester,
+        VaRCalculator,
+    )
+
     __all__.extend(["RiskManager", "VaRCalculator", "StressTester", "RiskMetrics"])
+    RISK_MANAGEMENT_AVAILABLE = True
+except ImportError:
+    RISK_MANAGEMENT_AVAILABLE = False
 
-if PERFORMANCE_AVAILABLE:
+# Performance Analysis
+try:
+    from .performance import (  # noqa: F401
+        AttributionAnalyzer,
+        FactorAnalyzer,
+        PerformanceAnalyzer,
+    )
+
     __all__.extend(["PerformanceAnalyzer", "AttributionAnalyzer", "FactorAnalyzer"])
+    PERFORMANCE_AVAILABLE = True
+except ImportError:
+    PERFORMANCE_AVAILABLE = False
 
-if TRANSACTION_COSTS_AVAILABLE:
+# Transaction Costs
+try:
+    from .transaction_costs import (  # noqa: F401
+        LinearImpactModel,
+        SquareRootImpactModel,
+        TaxLossHarvester,
+        TransactionCostOptimizer,
+    )
+
     __all__.extend(
         [
             "TransactionCostOptimizer",
@@ -81,8 +71,22 @@ if TRANSACTION_COSTS_AVAILABLE:
             "SquareRootImpactModel",
         ]
     )
+    TRANSACTION_COSTS_AVAILABLE = True
+except ImportError:
+    TRANSACTION_COSTS_AVAILABLE = False
 
-if REBALANCING_AVAILABLE:
+# Rebalancing
+try:
+    from .rebalancing import (  # noqa: F401
+        CalendarRebalancer,
+        OptimalRebalancer,
+        Rebalancer,
+        ThresholdRebalancer,
+    )
+
     __all__.extend(
         ["Rebalancer", "CalendarRebalancer", "ThresholdRebalancer", "OptimalRebalancer"]
     )
+    REBALANCING_AVAILABLE = True
+except ImportError:
+    REBALANCING_AVAILABLE = False

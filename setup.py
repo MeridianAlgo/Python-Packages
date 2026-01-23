@@ -188,6 +188,7 @@ setup(
         ],
     },
     include_package_data=True,
+    license_files = [],   # ← this disables the automatic license-file metadata
     zip_safe=False,
     license="MIT",
 )
