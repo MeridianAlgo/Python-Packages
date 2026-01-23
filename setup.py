@@ -190,5 +190,4 @@ setup(
     include_package_data=True,
     zip_safe=False,
     license="MIT",
-    license_files=["LICENSE"],
 )
