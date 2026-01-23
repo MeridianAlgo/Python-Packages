@@ -14,7 +14,6 @@ from .advanced_signals import (
     information_coefficient,
 )
 from .execution_algorithms import (
-    AlmanacExecution,
     ImplementationShortfall,
     POV,
     TWAP,
@@ -74,7 +73,6 @@ __all__ = [
     "TWAP",
     "POV",
     "ImplementationShortfall",
-    "AlmanacExecution",
     # High Frequency
     "LatencyArbitrage",
     "MarketMaking",
