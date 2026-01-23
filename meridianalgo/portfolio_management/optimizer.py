@@ -29,7 +29,7 @@ class PortfolioOptimizer:
         method: str = "sharpe",
         target_return: float = None,
         risk_free_rate: float = 0.02,
-        **kwargs
+        **kwargs,
     ) -> Dict[str, float]:
         """
         Optimize portfolio using specified method.

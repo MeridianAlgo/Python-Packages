@@ -708,7 +708,7 @@ class AutoRetrainer:
         try:
             active_version, _ = self.registry.get_active_model(model_name)
             performance = self.monitor.get_model_performance(
-                active_version,                 hours_back=24
+                active_version, hours_back=24
             )
         except Exception:
             return False

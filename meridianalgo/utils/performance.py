@@ -69,7 +69,9 @@ def parallelize(n_jobs: Optional[int] = None, backend: str = "loky"):
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            actual_n_jobs = n_jobs if n_jobs is not None else multiprocessing.cpu_count()
+            actual_n_jobs = (
+                n_jobs if n_jobs is not None else multiprocessing.cpu_count()
+            )
 
             if "iterables" in kwargs:
                 iterables = kwargs.pop("iterables")

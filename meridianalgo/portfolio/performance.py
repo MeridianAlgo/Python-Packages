@@ -601,7 +601,9 @@ class PerformanceAnalyzer:
 
         # 4. Rolling analysis
         results["rolling_analysis"] = self._rolling_analysis(
-            portfolio_returns, benchmark_returns, window=252  # 1 year rolling
+            portfolio_returns,
+            benchmark_returns,
+            window=252,  # 1 year rolling
         )
 
         return results

@@ -437,12 +437,8 @@ class AlternativeInvestmentAnalyzer:
             Portfolio allocation results
         """
         # Calculate risk-adjusted returns
-        (traditional_returns.mean() * 252) / (
-            traditional_returns.std() * np.sqrt(252)
-        )
-        (alternative_returns.mean() * 252) / (
-            alternative_returns.std() * np.sqrt(252)
-        )
+        (traditional_returns.mean() * 252) / (traditional_returns.std() * np.sqrt(252))
+        (alternative_returns.mean() * 252) / (alternative_returns.std() * np.sqrt(252))
 
         # Optimize allocation (simplified)
         n_alternatives = len(alternative_returns.columns)

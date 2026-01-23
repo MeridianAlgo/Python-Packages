@@ -297,7 +297,6 @@ class CandlestickPatterns:
                 > data["Low"].iloc[i - 1]
                 > data["Low"].iloc[i - 2]
             ):
-
                 confidence = 0.7
                 results.append(
                     PatternResult(
@@ -321,7 +320,6 @@ class CandlestickPatterns:
                 < data["High"].iloc[i - 1]
                 < data["High"].iloc[i - 2]
             ):
-
                 confidence = 0.7
                 results.append(
                     PatternResult(
@@ -498,7 +496,6 @@ class ChartPatterns:
                     and peak_heights[1] > peak_heights[2]
                     and abs(peak_heights[0] - peak_heights[2]) / peak_heights[1] < 0.05
                 ):
-
                     confidence = 0.8
                     results.append(
                         PatternResult(
@@ -671,7 +668,6 @@ class ChartPatterns:
             if (high_slope > 0 and low_slope > 0 and high_slope < low_slope) or (
                 high_slope < 0 and low_slope < 0 and high_slope > low_slope
             ):
-
                 wedge_type = "rising" if high_slope > 0 else "falling"
                 direction = "bearish" if wedge_type == "rising" else "bullish"
                 confidence = 0.6
@@ -717,16 +713,19 @@ class ChartPatterns:
                 and abs(high_r) > 0.7
                 and abs(low_r) > 0.7
             ):
-
                 channel_type = (
                     "ascending"
                     if high_slope > 0.001
-                    else "descending" if high_slope < -0.001 else "horizontal"
+                    else "descending"
+                    if high_slope < -0.001
+                    else "horizontal"
                 )
                 direction = (
                     "bullish"
                     if channel_type == "ascending"
-                    else "bearish" if channel_type == "descending" else "neutral"
+                    else "bearish"
+                    if channel_type == "descending"
+                    else "neutral"
                 )
                 confidence = min(abs(high_r), abs(low_r))
 

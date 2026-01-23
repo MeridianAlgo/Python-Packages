@@ -677,7 +677,7 @@ class StressTesting:
 
             # Calculate extreme quantiles
             extreme_var = threshold - (scale_param / shape_param) * (
-                ((len(returns) / len(excesses) * (1 - 0.01)) ** (-shape_param) - 1)
+                (len(returns) / len(excesses) * (1 - 0.01)) ** (-shape_param) - 1
             )
 
         else:  # GEV method

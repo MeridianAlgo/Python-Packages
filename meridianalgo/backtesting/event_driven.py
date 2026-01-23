@@ -45,12 +45,12 @@ class Event:
 class MarketDataEvent(Event):
     """Market data event."""
 
-    symbol: str
-    open_price: float
-    high_price: float
-    low_price: float
-    close_price: float
-    volume: int
+    symbol: str = ""
+    open_price: float = 0.0
+    high_price: float = 0.0
+    low_price: float = 0.0
+    close_price: float = 0.0
+    volume: int = 0
     bid_price: Optional[float] = None
     ask_price: Optional[float] = None
 
@@ -74,9 +74,9 @@ class MarketDataEvent(Event):
 class SignalEvent(Event):
     """Trading signal event."""
 
-    symbol: str
-    signal_type: str  # 'BUY', 'SELL', 'HOLD'
-    strength: float  # Signal strength (0-1)
+    symbol: str = ""
+    signal_type: str = ""  # 'BUY', 'SELL', 'HOLD'
+    strength: float = 0.0  # Signal strength (0-1)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self):
@@ -136,7 +136,7 @@ class Order:
 class OrderEvent(Event):
     """Order event."""
 
-    order: Order
+    order: Order = None
 
     def __post_init__(self):
         self.event_type = EventType.ORDER
@@ -171,7 +171,7 @@ class Fill:
 class FillEvent(Event):
     """Fill event."""
 
-    fill: Fill
+    fill: Fill = None
 
     def __post_init__(self):
         self.event_type = EventType.FILL
@@ -198,7 +198,6 @@ class MarketSimulator:
         latency_model: str = "fixed",
         base_latency: float = 0.001,
     ):  # 1ms
-
         self.spread_model = spread_model
         self.base_spread = base_spread
         self.impact_model = impact_model
@@ -694,7 +693,6 @@ class BacktestEngine:
         portfolio: Portfolio,
         market_simulator: MarketSimulator = None,
     ):
-
         self.data_handler = data_handler
         self.strategy = strategy
         self.portfolio = portfolio

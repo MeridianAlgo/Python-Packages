@@ -552,8 +552,8 @@ class RiskManager:
             tail_returns = portfolio_returns[portfolio_returns <= -var]
             cvar = -np.mean(tail_returns) if len(tail_returns) > 0 else var
 
-            results[f"VaR_{int(confidence_level*100)}"] = var
-            results[f"CVaR_{int(confidence_level*100)}"] = cvar
+            results[f"VaR_{int(confidence_level * 100)}"] = var
+            results[f"CVaR_{int(confidence_level * 100)}"] = cvar
 
         results["worst_case"] = portfolio_returns.min()
         results["best_case"] = portfolio_returns.max()
@@ -609,12 +609,12 @@ class RiskManager:
                     else:
                         tail_var = threshold + scale * np.log(1 / p)
 
-                    results[f"tail_var_{int(confidence_level*100)}"] = -tail_var
+                    results[f"tail_var_{int(confidence_level * 100)}"] = -tail_var
 
                     # Tail CVaR
                     if shape < 1:
                         tail_cvar = tail_var + (scale + shape * tail_var) / (1 - shape)
-                        results[f"tail_cvar_{int(confidence_level*100)}"] = -tail_cvar
+                        results[f"tail_cvar_{int(confidence_level * 100)}"] = -tail_cvar
 
             return results
 

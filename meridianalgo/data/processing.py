@@ -160,7 +160,6 @@ class DataValidator(DataProcessor):
                     col in data.columns.get_level_values(0)
                     for col in ["Open", "High", "Low", "Close"]
                 ):
-
                     high = data[("High", symbol)]
                     low = data[("Low", symbol)]
                     data[("Open", symbol)]

@@ -349,7 +349,7 @@ class TechnicalChart:
 
         # Create subplot titles
         subplot_titles = [
-            config.get("title", f"Subplot {i+1}")
+            config.get("title", f"Subplot {i + 1}")
             for i, config in enumerate(subplot_config)
         ]
 
@@ -915,9 +915,7 @@ class InteractiveDashboard:
         self.data_sources[symbol] = data
 
         # Update symbol dropdown options
-        [
-            {"label": symbol, "value": symbol} for symbol in self.data_sources.keys()
-        ]
+        [{"label": symbol, "value": symbol} for symbol in self.data_sources.keys()]
 
         # This would need to be handled differently in a real implementation
         # as we can't directly update component properties from here
@@ -1485,7 +1483,6 @@ class AdvancedDashboard(InteractiveDashboard):
             indicators,
             realtime,
         ):
-
             if not selected_symbol or selected_symbol not in self.data_sources:
                 return self._create_empty_chart(), self._create_empty_chart()
 
@@ -1846,7 +1843,9 @@ class AdvancedDashboard(InteractiveDashboard):
                     line_color = (
                         "red"
                         if level in [70, 80]
-                        else "green" if level in [20, 30] else "gray"
+                        else "green"
+                        if level in [20, 30]
+                        else "gray"
                     )
                     fig.add_hline(
                         y=level, line_dash="dash", line_color=line_color, opacity=0.5

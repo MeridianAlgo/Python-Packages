@@ -538,7 +538,7 @@ class AdvancedStatistics:
         factor_loadings = fa.fit_transform(returns_clean.T)
 
         # Create results
-        factor_names = [f"Factor_{i+1}" for i in range(n_factors)]
+        factor_names = [f"Factor_{i + 1}" for i in range(n_factors)]
         loadings_df = pd.DataFrame(
             fa.components_.T, index=returns_clean.columns, columns=factor_names
         )
@@ -570,7 +570,7 @@ class AdvancedStatistics:
         principal_components = pca.fit_transform(returns_clean)
 
         # Create results
-        component_names = [f"PC_{i+1}" for i in range(pca.n_components_)]
+        component_names = [f"PC_{i + 1}" for i in range(pca.n_components_)]
 
         return {
             "components": pd.DataFrame(

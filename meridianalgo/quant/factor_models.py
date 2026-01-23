@@ -175,20 +175,20 @@ class APTModel:
         self.factors = pd.DataFrame(
             factor_returns,
             index=return_matrix.index,
-            columns=[f"Factor{i+1}" for i in range(self.n_factors)],
+            columns=[f"Factor{i + 1}" for i in range(self.n_factors)],
         )
 
         # Factor loadings
         self.factor_loadings = pd.DataFrame(
             self.pca.components_.T,
             index=return_matrix.columns,
-            columns=[f"Factor{i+1}" for i in range(self.n_factors)],
+            columns=[f"Factor{i + 1}" for i in range(self.n_factors)],
         )
 
         # Explained variance
         explained_var = pd.Series(
             self.pca.explained_variance_ratio_,
-            index=[f"Factor{i+1}" for i in range(self.n_factors)],
+            index=[f"Factor{i + 1}" for i in range(self.n_factors)],
         )
 
         return {
@@ -400,7 +400,7 @@ class FactorRiskDecomposition:
         for i in range(factor_exposures.shape[1]):
             exposure_i = portfolio_exposures[i]
             var_i = exposure_i**2 * factor_covariance[i, i]
-            factor_contributions[f"Factor{i+1}"] = (
+            factor_contributions[f"Factor{i + 1}"] = (
                 var_i / total_variance if total_variance > 0 else 0
             )
 

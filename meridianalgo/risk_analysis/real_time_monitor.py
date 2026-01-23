@@ -325,8 +325,8 @@ class RealTimeRiskMonitor:
 
             for confidence_level in self.var_confidence_levels:
                 for method in self.var_methods:
-                    var_key = f"var_{int(confidence_level*100)}_{method}"
-                    es_key = f"es_{int(confidence_level*100)}_{method}"
+                    var_key = f"var_{int(confidence_level * 100)}_{method}"
+                    es_key = f"es_{int(confidence_level * 100)}_{method}"
 
                     try:
                         var_value = RiskMetricCalculator.calculate_var(
@@ -617,29 +617,29 @@ class RiskDashboard:
         <body>
             <div class="header">
                 <h1>Risk Monitoring Dashboard</h1>
-                <p>Last Update: {dashboard_data['last_update']}</p>
-                <p>Status: {dashboard_data['monitoring_status']}</p>
+                <p>Last Update: {dashboard_data["last_update"]}</p>
+                <p>Status: {dashboard_data["monitoring_status"]}</p>
             </div>
             
             <h2>Risk Metrics</h2>
             <div class="metric-box">
                 <h3>Portfolio Value</h3>
-                <p>${dashboard_data['risk_metrics'].get('total_market_value', 0):,.2f}</p>
+                <p>${dashboard_data["risk_metrics"].get("total_market_value", 0):,.2f}</p>
             </div>
             
             <div class="metric-box">
                 <h3>Unrealized P&L</h3>
-                <p>${dashboard_data['risk_metrics'].get('total_unrealized_pnl', 0):,.2f}</p>
+                <p>${dashboard_data["risk_metrics"].get("total_unrealized_pnl", 0):,.2f}</p>
             </div>
             
             <div class="metric-box">
                 <h3>VaR (95%)</h3>
-                <p>${dashboard_data['risk_metrics'].get('var_95_historical_dollar', 0):,.2f}</p>
+                <p>${dashboard_data["risk_metrics"].get("var_95_historical_dollar", 0):,.2f}</p>
             </div>
             
             <div class="metric-box">
                 <h3>Max Drawdown</h3>
-                <p>{dashboard_data['risk_metrics'].get('current_drawdown', 0):.2%}</p>
+                <p>{dashboard_data["risk_metrics"].get("current_drawdown", 0):.2%}</p>
             </div>
             
             <h2>Recent Alerts</h2>
@@ -649,7 +649,7 @@ class RiskDashboard:
             alert_class = alert.severity
             html += f"""
             <div class="alert {alert_class}">
-                <strong>{alert.severity.upper()}</strong> - {alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')}<br>
+                <strong>{alert.severity.upper()}</strong> - {alert.timestamp.strftime("%Y-%m-%d %H:%M:%S")}<br>
                 {alert.message}
             </div>
             """

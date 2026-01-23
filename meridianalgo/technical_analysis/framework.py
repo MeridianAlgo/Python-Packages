@@ -409,8 +409,8 @@ class CustomIndicatorFramework:
             # Default optimization metric (maximize absolute mean)
             def optimization_metric(x):
                 return (
-                            abs(x.mean()) if isinstance(x, pd.Series) else abs(x.mean().mean())
-                        )
+                    abs(x.mean()) if isinstance(x, pd.Series) else abs(x.mean().mean())
+                )
 
         if method == "grid_search":
             return self._grid_search_optimization(

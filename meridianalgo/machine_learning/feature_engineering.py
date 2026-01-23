@@ -89,9 +89,7 @@ class TechnicalIndicatorFeatures(BaseFeatureGenerator):
         data["High"].values
         data["Low"].values
         close = data["Close"].values
-        (
-            data["Volume"].values if "Volume" in data.columns else np.ones_like(close)
-        )
+        (data["Volume"].values if "Volume" in data.columns else np.ones_like(close))
         data["Open"].values if "Open" in data.columns else close
 
         # Moving Averages

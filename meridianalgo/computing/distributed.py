@@ -297,7 +297,6 @@ class IntelligentCache:
         redis_db: int = 0,
         default_ttl: int = 3600,
     ):
-
         self.redis_host = redis_host
         self.redis_port = redis_port
         self.redis_db = redis_db

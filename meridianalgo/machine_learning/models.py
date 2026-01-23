@@ -23,11 +23,9 @@ except ImportError:
     warnings.warn("PyTorch not available. Deep learning models will be limited.")
 
 try:
-    from sklearn.ensemble import (GradientBoostingRegressor,
-                                  RandomForestRegressor)
+    from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
     from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, Ridge
-    from sklearn.metrics import (mean_absolute_error, mean_squared_error,
-                                 r2_score)
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     from sklearn.preprocessing import StandardScaler
     from sklearn.svm import SVR
 
@@ -656,7 +654,7 @@ class EnsembleModel(BaseFinancialModel):
         """Fit all models in the ensemble."""
 
         for i, model in enumerate(self.models):
-            logger.info(f"Training model {i+1}/{len(self.models)}: {model.name}")
+            logger.info(f"Training model {i + 1}/{len(self.models)}: {model.name}")
             model.fit(X, y, **kwargs)
 
         self.is_fitted = True

@@ -641,12 +641,12 @@ class LSTMPredictor:
 
             if patience_counter >= self.early_stopping_patience:
                 if verbose:
-                    print(f"Early stopping at epoch {epoch+1}")
+                    print(f"Early stopping at epoch {epoch + 1}")
                 break
 
             if verbose and (epoch + 1) % 10 == 0:
                 print(
-                    f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}"
+                    f"Epoch {epoch + 1}/{self.epochs}, Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}"
                 )
 
         # Load best model

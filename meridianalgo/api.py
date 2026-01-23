@@ -310,7 +310,6 @@ def get_market_data(
     return api.get_market_data(symbols, start_date, end_date)
 
 
-
 def optimize_portfolio(
     returns: pd.DataFrame, method: str = "sharpe", **kwargs
 ) -> Dict[str, float]:
