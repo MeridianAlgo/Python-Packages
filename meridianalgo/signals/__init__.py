@@ -27,6 +27,7 @@ from .indicators import (
 )
 
 from .generator import SignalGenerator, TechnicalAnalyzer
+from .evaluation import SignalEvaluator
 
 __all__ = [
     # Trend
@@ -49,6 +50,6 @@ __all__ = [
     # S/R
     'PivotPoints', 'FibonacciRetracement', 'FibonacciExtension',
     
-    # Generators
-    'SignalGenerator', 'TechnicalAnalyzer'
+    # Generators/Evaluation
+    'SignalGenerator', 'TechnicalAnalyzer', 'SignalEvaluator'
 ]

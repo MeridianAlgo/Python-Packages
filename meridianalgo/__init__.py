@@ -645,14 +645,14 @@ def _show_welcome():
     available = summary['available']
     total = summary['total']
     
-    print(f"🚀 MeridianAlgo v{__version__} - The Complete Quantitative Finance Platform")
-    print(f"⚡ Institutional-grade algorithms for professional quants")
-    print(f"📊 {available}/{total} modules loaded successfully")
+    print(f"MeridianAlgo v{__version__} - The Complete Quantitative Finance Platform")
+    print(f"Institutional-grade algorithms for professional quants")
+    print(f"Status: {available}/{total} modules loaded successfully")
     
     if Config.get('debug_mode'):
         unavailable = ModuleRegistry.get_unavailable()
         if unavailable:
-            print(f"⚠️  Unavailable modules: {', '.join(unavailable.keys())}")
+            print(f"Warning: Unavailable modules: {', '.join(unavailable.keys())}")
 
 
 # Show welcome on import

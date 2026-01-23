@@ -12,6 +12,7 @@ from .execution_algorithms import *
 from .high_frequency import *
 from .factor_models import *
 from .regime_detection import *
+from .advanced_signals import *
 
 __all__ = [
     # Market Microstructure
@@ -55,4 +56,11 @@ __all__ = [
     'StructuralBreakDetection',
     'MarketStateClassifier',
     'VolatilityRegimeDetector',
+    
+    # Advanced Signals
+    'hurst_exponent',
+    'fractional_difference',
+    'calculate_z_score',
+    'get_half_life',
+    'information_coefficient',
 ]
