@@ -5,8 +5,8 @@ Complete installation guide for MeridianAlgo.
 ##  System Requirements
 
 ### Python Version
-- **Python 3.7+** (tested on 3.7, 3.8, 3.9, 3.10, 3.11, 3.12)
-- **Python 3.8+** recommended for best performance
+- **Python 3.10+** (tested on 3.10, 3.11, 3.12)
+- **Python 3.11+** recommended for best performance
 
 ### Operating Systems
 - **Windows** 10/11
@@ -72,8 +72,7 @@ pip install seaborn>=0.11.0
 # Install optional ML dependencies
 pip install torch>=2.0.0
 pip install statsmodels>=0.13.0
-pip install ta>=0.10.0
-pip install pandas-ta>=0.3.14
+pip install ta>=0.11.0
 ```
 
 ### 3. Install MeridianAlgo

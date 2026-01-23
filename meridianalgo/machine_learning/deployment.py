@@ -8,14 +8,12 @@ import json
 import logging
 import pickle
 import warnings
-from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import pandas as pd
 
 try:
     import joblib
@@ -612,8 +610,7 @@ class ModelMonitor:
         # Return recent alerts (last 24 hours)
         cutoff_time = datetime.now() - timedelta(hours=24)
         return [alert for alert in alerts if alert.timestamp > cutoff_time]
-c
-lass AutoRetrainer:
+class AutoRetrainer:
     """Automated model retraining system."""
     
     def __init__(self, registry: ModelRegistry, monitor: ModelMonitor):

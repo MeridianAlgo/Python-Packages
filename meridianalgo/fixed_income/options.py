@@ -4,14 +4,12 @@ Comprehensive options pricing models with Greeks calculation.
 
 import logging
 import warnings
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
-from scipy.optimize import brentq, minimize_scalar
+from scipy.optimize import minimize_scalar
 from scipy.stats import norm
 
 logger = logging.getLogger(__name__)
@@ -573,8 +571,7 @@ class OptionPortfolio:
                 })
         
         return pd.DataFrame(results)
-cl
-ass FiniteDifferenceModel:
+class FiniteDifferenceModel:
     """Finite difference methods for option pricing."""
     
     def __init__(self, n_space: int = 100, n_time: int = 100):

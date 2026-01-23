@@ -68,7 +68,6 @@ setup(
         "seaborn>=0.12.0",
         # Technical analysis
         "ta>=0.11.0",
-        "pandas-ta>=0.3.14b0",
         # Utilities
         "tqdm>=4.66.0",
         "joblib>=1.3.0",

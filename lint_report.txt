@@ -1,0 +1,243 @@
+meridianalgo\__init__.py:47:37: F401 `typing.Optional` imported but unused
+meridianalgo\__init__.py:329:53: F401 `.analytics.create_position_tear_sheet` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:331:29: F401 `.analytics.create_round_trip_tear_sheet` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:341:29: F401 `.portfolio.MaxDiversificationPortfolio` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:341:58: F401 `.portfolio.MaxSharpePortfolio` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:342:29: F401 `.portfolio.MeanVarianceOptimizer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:342:52: F401 `.portfolio.MinimumVariancePortfolio` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:351:58: F401 `.risk.RiskMetrics` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:352:54: F401 `.risk.TailRiskAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:361:24: F401 `.data.DataAggregator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:361:40: F401 `.data.DataCleaner` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:370:31: F401 `.derivatives.BinomialTree` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:371:50: F401 `.derivatives.MonteCarloPricer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:371:68: F401 `.derivatives.OptionChain` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:380:46: F401 `.execution.AdaptiveExecution` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:381:29: F401 `.execution.ExecutionAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:389:52: F401 `.factors.FactorRiskDecomposition` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:390:39: F401 `.factors.StyleAnalysis` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:398:29: F401 `.liquidity.VPIN` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:399:48: F401 `.liquidity.SpreadAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:399:64: F401 `.liquidity.VolumeProfile` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:407:40: F401 `.backtesting.EventDrivenBacktest` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:408:43: F401 `.backtesting.Portfolio` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:409:40: F401 `.backtesting.VectorizedBacktest` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:418:25: F401 `.quant.MeanReversionStrategy` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:427:27: F401 `.signals.ADX` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:427:32: F401 `.signals.ATR` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:428:27: F401 `.signals.SignalGenerator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:428:44: F401 `.signals.Stochastic` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:428:56: F401 `.signals.TechnicalAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:429:27: F401 `.signals.WilliamsR` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:446:44: F401 `.fixed_income.CreditAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:446:60: F401 `.fixed_income.DurationCalculator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\__init__.py:447:32: F401 `.fixed_income.SwapPricer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\advanced_risk.py:23:36: F401 `sklearn.covariance.EmpiricalCovariance` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\advanced_risk.py:23:57: F401 `sklearn.covariance.LedoitWolf` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\advanced_risk.py:24:39: F401 `sklearn.decomposition.PCA` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\advanced_risk.py:215:9: F841 Local variable `n_assets` is assigned to but never used
+meridianalgo\advanced_risk.py:898:13: F841 Local variable `portfolio_var` is assigned to but never used
+meridianalgo\algorithmic_trading.py:30:33: F401 `matplotlib.pyplot` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\algorithmic_trading.py:867:17: F841 Local variable `mm_signals` is assigned to but never used
+meridianalgo\alternative_assets.py:522:9: F841 Local variable `remaining_capital` is assigned to but never used
+meridianalgo\alternative_assets.py:765:9: E722 Do not use bare `except`
+meridianalgo\analytics\attribution.py:244:9: E722 Do not use bare `except`
+meridianalgo\analytics\attribution.py:246:13: F841 Local variable `residuals` is assigned to but never used
+meridianalgo\analytics\risk_analytics.py:476:13: E722 Do not use bare `except`
+meridianalgo\analytics\tear_sheets.py:166:13: F841 Local variable `aligned` is assigned to but never used
+meridianalgo\api.py:96:9: F811 Redefinition of unused `get_market_data` from line 22: `get_market_data` redefined here
+meridianalgo\api.py:243:16: F821 Undefined name `TECHNICAL_AVAILABLE`
+meridianalgo\api.py:257:16: F821 Undefined name `TECHNICAL_AVAILABLE`
+meridianalgo\api.py:292:5: F811 Redefinition of unused `get_market_data` from line 22: `get_market_data` redefined here
+meridianalgo\backtesting\events.py:237:1: E402 Module level import not at top of file
+meridianalgo\backtesting\events.py:238:1: E402 Module level import not at top of file
+meridianalgo\backtesting\order_management.py:581:9: F841 Local variable `realized_pnl` is assigned to but never used
+meridianalgo\backtesting\performance_analytics.py:597:9: E722 Do not use bare `except`
+meridianalgo\backtesting\performance_analytics.py:605:9: E722 Do not use bare `except`
+meridianalgo\computing\distributed.py:16:42: F401 `dask.distributed.as_completed` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\core.py:545:13: E722 Do not use bare `except`
+meridianalgo\core.py:684:9: F841 Local variable `n_assets` is assigned to but never used
+meridianalgo\core.py:742:9: F841 Local variable `n_assets` is assigned to but never used
+meridianalgo\core.py:1005:13: F841 Local variable `cov_matrix` is assigned to but never used
+meridianalgo\core\portfolio\optimization.py:93:9: F841 Local variable `n_assets` is assigned to but never used
+meridianalgo\core\risk\metrics.py:121:5: F841 Local variable `excess_returns` is assigned to but never used
+meridianalgo\core\statistics\__init__.py:7:26: F401 `typing.List` imported but unused
+meridianalgo\core\statistics\__init__.py:7:32: F401 `typing.Optional` imported but unused
+meridianalgo\core\statistics\__init__.py:7:42: F401 `typing.Tuple` imported but unused
+meridianalgo\core\statistics\__init__.py:12:19: F401 `scipy.stats` imported but unused
+meridianalgo\crypto.py:27:12: F401 `requests` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\crypto.py:34:33: F401 `sklearn.cluster.KMeans` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\crypto.py:35:39: F401 `sklearn.preprocessing.StandardScaler` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\crypto.py:345:9: F841 Local variable `linkage_matrix` is assigned to but never used
+meridianalgo\crypto_expanded.py:20:12: F401 `requests` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\crypto_expanded.py:27:34: F401 `sklearn.ensemble.IsolationForest` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\crypto_expanded.py:28:39: F401 `sklearn.preprocessing.StandardScaler` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\data\processing.py:166:21: F841 Local variable `open_price` is assigned to but never used
+meridianalgo\data\processing.py:167:21: F841 Local variable `close` is assigned to but never used
+meridianalgo\data\storage.py:248:17: E722 Do not use bare `except`
+meridianalgo\data\streaming.py:291:9: E722 Do not use bare `except`
+meridianalgo\data\streaming.py:314:13: E722 Do not use bare `except`
+meridianalgo\derivatives.py:27:33: F401 `matplotlib.pyplot` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\diversification.py:440:9: F841 Local variable `traditional_sharpe` is assigned to but never used
+meridianalgo\diversification.py:443:9: F841 Local variable `alternative_sharpe` is assigned to but never used
+meridianalgo\docs\source\conf.py:23:1: E402 Module level import not at top of file
+meridianalgo\fixed_income.py:224:13: F841 Local variable `time_in_years` is assigned to but never used
+meridianalgo\fixed_income.py:917:13: F841 Local variable `attachment` is assigned to but never used
+meridianalgo\fixed_income.py:918:13: F841 Local variable `detachment` is assigned to but never used
+meridianalgo\fixed_income\bonds.py:519:5: invalid-syntax: Simple statements must be separated by newlines or semicolons
+meridianalgo\fixed_income\bonds.py:519:20: invalid-syntax: Expected an expression
+meridianalgo\fixed_income\bonds.py:520:1: invalid-syntax: Unexpected indentation
+meridianalgo\fixed_income\bonds.py:550:1: invalid-syntax: Expected a statement
+meridianalgo\fixed_income\options.py:577:5: invalid-syntax: Simple statements must be separated by newlines or semicolons
+meridianalgo\fixed_income\options.py:577:27: invalid-syntax: Expected an expression
+meridianalgo\fixed_income\options.py:578:1: invalid-syntax: Unexpected indentation
+meridianalgo\fixed_income\options.py:754:1: invalid-syntax: Expected a statement
+meridianalgo\forex.py:27:12: F401 `requests` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\liquidity\impact.py:231:9: E722 Do not use bare `except`
+meridianalgo\liquidity\impact.py:243:9: E722 Do not use bare `except`
+meridianalgo\liquidity\impact.py:266:9: E722 Do not use bare `except`
+meridianalgo\liquidity\impact.py:348:9: F841 Local variable `tau` is assigned to but never used
+meridianalgo\liquidity\metrics.py:329:5: E722 Do not use bare `except`
+meridianalgo\liquidity\volume.py:144:9: F841 Local variable `poc_idx` is assigned to but never used
+meridianalgo\machine_learning\deployment.py:616:6: invalid-syntax: Simple statements must be separated by newlines or semicolons
+meridianalgo\machine_learning\deployment.py:616:20: invalid-syntax: Expected an expression
+meridianalgo\machine_learning\deployment.py:617:1: invalid-syntax: Unexpected indentation
+meridianalgo\machine_learning\deployment.py:808:1: invalid-syntax: Expected a statement
+meridianalgo\machine_learning\feature_engineering.py:23:39: F401 `sklearn.decomposition.PCA` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\machine_learning\feature_engineering.py:23:44: F401 `sklearn.decomposition.FastICA` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\machine_learning\feature_engineering.py:24:34: F401 `sklearn.ensemble.RandomForestRegressor` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\machine_learning\feature_engineering.py:87:9: F841 Local variable `high` is assigned to but never used
+meridianalgo\machine_learning\feature_engineering.py:88:9: F841 Local variable `low` is assigned to but never used
+meridianalgo\machine_learning\feature_engineering.py:90:9: F841 Local variable `volume` is assigned to but never used
+meridianalgo\machine_learning\feature_engineering.py:93:9: F841 Local variable `open_price` is assigned to but never used
+meridianalgo\machine_learning\feature_engineering.py:202:9: F841 Local variable `close` is assigned to but never used
+meridianalgo\machine_learning\models.py:31:39: F401 `sklearn.preprocessing.MinMaxScaler` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\machine_learning\models.py:147:9: F811 Redefinition of unused `get_feature_importance` from line 129: `get_feature_importance` redefined here
+meridianalgo\machine_learning\models.py:935:7: F811 Redefinition of unused `LSTMModel` from line 152: `LSTMModel` redefined here
+meridianalgo\machine_learning\models.py:1035:7: F811 Redefinition of unused `LSTMNetwork` from line 283: `LSTMNetwork` redefined here
+meridianalgo\machine_learning\models.py:1066:7: F811 Redefinition of unused `GRUModel` from line 321: `GRUModel` redefined here
+meridianalgo\machine_learning\models.py:1166:7: F811 Redefinition of unused `GRUNetwork` from line 442: `GRUNetwork` redefined here
+meridianalgo\machine_learning\models.py:1197:7: F811 Redefinition of unused `TransformerModel` from line 472: `TransformerModel` redefined here
+meridianalgo\machine_learning\models.py:1296:7: F811 Redefinition of unused `TransformerNetwork` from line 587: `TransformerNetwork` redefined here
+meridianalgo\machine_learning\models.py:1339:7: F811 Redefinition of unused `PositionalEncoding` from line 637: `PositionalEncoding` redefined here
+meridianalgo\machine_learning\models.py:1786:7: F811 Redefinition of unused `ModelFactory` from line 807: `ModelFactory` redefined here
+meridianalgo\machine_learning\validation.py:17:41: F401 `sklearn.model_selection.BaseCrossValidator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\machine_learning\validation.py:488:9: E722 Do not use bare `except`
+meridianalgo\ml\__init__.py:11:44: F401 `..machine_learning.models.GRUModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:11:54: F401 `..machine_learning.models.LSTMModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:11:65: F401 `..machine_learning.models.ModelFactory` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:12:44: F401 `..machine_learning.models.ModelTrainer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:12:58: F401 `..machine_learning.models.TraditionalMLModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:13:44: F401 `..machine_learning.models.TransformerModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:14:48: F401 `..machine_learning.validation.CombinatorialPurgedCV` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\__init__.py:17:48: F401 `..machine_learning.validation.TimeSeriesValidator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\ml\core.py:49:40: F401 `sklearn.neural_network.MLPRegressor` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:11:53: F401 `.optimization.FactorModelOptimizer` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+meridianalgo\portfolio\__init__.py:16:35: F401 `.risk_management.RiskManager` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:16:48: F401 `.risk_management.RiskMetrics` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:16:61: F401 `.risk_management.StressTester` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:17:35: F401 `.risk_management.VaRCalculator` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:24:31: F401 `.performance.AttributionAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:24:52: F401 `.performance.FactorAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:25:31: F401 `.performance.PerformanceAnalyzer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:32:37: F401 `.transaction_costs.LinearImpactModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:32:56: F401 `.transaction_costs.SquareRootImpactModel` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:33:37: F401 `.transaction_costs.TaxLossHarvester` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:33:55: F401 `.transaction_costs.TransactionCostOptimizer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:40:31: F401 `.rebalancing.CalendarRebalancer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:40:51: F401 `.rebalancing.OptimalRebalancer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:41:31: F401 `.rebalancing.Rebalancer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\__init__.py:41:43: F401 `.rebalancing.ThresholdRebalancer` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\optimization.py:141:9: F841 Local variable `n_assets` is assigned to but never used
+meridianalgo\portfolio\optimization.py:955:9: F841 Local variable `risk_aversion` is assigned to but never used
+meridianalgo\portfolio\performance_attribution.py:258:9: F841 Local variable `factor_names` is assigned to but never used
+meridianalgo\portfolio\risk_management.py:16:22: F401 `arch.arch_model` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\portfolio\risk_management.py:165:13: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:93:9: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:121:9: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:149:9: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:183:9: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:230:13: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:289:9: E722 Do not use bare `except`
+meridianalgo\portfolio_management\optimizer.py:313:9: E722 Do not use bare `except`
+meridianalgo\quant\__init__.py:9:1: F403 `from .advanced_signals import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:10:1: F403 `from .execution_algorithms import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:11:1: F403 `from .factor_models import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:12:1: F403 `from .high_frequency import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:13:1: F403 `from .market_microstructure import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:14:1: F403 `from .regime_detection import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:15:1: F403 `from .statistical_arbitrage import *` used; unable to detect undefined names
+meridianalgo\quant\__init__.py:19:5: F405 `OrderFlowImbalance` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:20:5: F405 `VolumeWeightedSpread` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:21:5: F405 `RealizedVolatility` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:22:5: F405 `MarketImpactModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:23:5: F405 `TickDataAnalyzer` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:25:5: F405 `PairsTrading` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:26:5: F405 `CointegrationAnalyzer` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:27:5: F405 `OrnsteinUhlenbeck` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:28:5: F405 `MeanReversionTester` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:29:5: F405 `SpreadAnalyzer` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:31:5: F405 `VWAP` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:32:5: F405 `TWAP` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:33:5: F405 `POV` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:34:5: F405 `ImplementationShortfall` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:35:5: F405 `AlmanacExecution` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:37:5: F405 `LatencyArbitrage` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:38:5: F405 `MarketMaking` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:39:5: F405 `LiquidityProvision` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:40:5: F405 `HFTSignalGenerator` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:41:5: F405 `MicropriceEstimator` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:43:5: F405 `FamaFrenchModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:44:5: F405 `APTModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:45:5: F405 `CustomFactorModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:46:5: F405 `FactorRiskDecomposition` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:47:5: F405 `AlphaCapture` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:49:5: F405 `HiddenMarkovModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:50:5: F405 `RegimeSwitchingModel` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:51:5: F405 `StructuralBreakDetection` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:52:5: F405 `MarketStateClassifier` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:53:5: F405 `VolatilityRegimeDetector` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:55:5: F405 `hurst_exponent` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:56:5: F405 `fractional_difference` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:57:5: F405 `calculate_z_score` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:58:5: F405 `get_half_life` may be undefined, or defined from star imports
+meridianalgo\quant\__init__.py:59:5: F405 `information_coefficient` may be undefined, or defined from star imports
+meridianalgo\quant\execution_algorithms.py:371:9: F841 Local variable `tau` is assigned to but never used
+meridianalgo\quant\high_frequency.py:476:13: F841 Local variable `price_change` is assigned to but never used
+meridianalgo\quant\market_microstructure.py:53:9: F841 Local variable `delta_bid_price` is assigned to but never used
+meridianalgo\quant\market_microstructure.py:54:9: F841 Local variable `delta_ask_price` is assigned to but never used
+meridianalgo\quant\market_microstructure.py:241:9: F841 Local variable `n` is assigned to but never used
+meridianalgo\quant\market_microstructure.py:461:9: F841 Local variable `cumulative_volume` is assigned to but never used
+meridianalgo\quant\market_microstructure.py:462:9: F841 Local variable `bucket_volume` is assigned to but never used
+meridianalgo\quant\regime_detection.py:58:9: F841 Local variable `n_obs` is assigned to but never used
+meridianalgo\quant\regime_detection.py:439:13: F841 Local variable `possible_breaks` is assigned to but never used
+meridianalgo\quant\statistical_arbitrage.py:412:9: F841 Local variable `S_yy` is assigned to but never used
+meridianalgo\statistics.py:25:44: F401 `statsmodels.tsa.stattools.grangercausalitytests` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\statistics.py:440:13: E722 Do not use bare `except`
+meridianalgo\statistics.py:951:5: F822 Undefined name `calculate_value_at_risk` in `__all__`
+meridianalgo\statistics.py:952:5: F822 Undefined name `calculate_expected_shortfall` in `__all__`
+meridianalgo\statistics.py:953:5: F822 Undefined name `calculate_rolling_volatility` in `__all__`
+meridianalgo\statistics.py:954:5: F822 Undefined name `calculate_metrics` in `__all__`
+meridianalgo\technical_analysis\framework.py:15:12: F401 `numba` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\framework.py:16:34: F401 `numba.types` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\framework.py:17:37: F401 `numba.typed.Dict` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\framework.py:410:13: E731 Do not assign a `lambda` expression, use a `def`
+meridianalgo\technical_analysis\indicators.py:16:12: F401 `numba` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\indicators.py:484:13: F841 Local variable `talib_func` is assigned to but never used
+meridianalgo\technical_analysis\indicators.py:496:9: E722 Do not use bare `except`
+meridianalgo\technical_analysis\patterns.py:17:12: F401 `numba` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\visualization.py:13:30: F401 `plotly.express` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\visualization.py:15:30: F401 `plotly.offline` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\visualization.py:21:5: F821 Undefined name `logger`
+meridianalgo\technical_analysis\visualization.py:26:44: F401 `dash.callback` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_analysis\visualization.py:918:9: F841 Local variable `options` is assigned to but never used
+meridianalgo\technical_indicators\__init__.py:18:9: F401 `..technical_analysis.ta_integration.TAIntegration` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:18:24: F401 `..technical_analysis.ta_integration.add_all_ta_features` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:18:45: F401 `..technical_analysis.ta_integration.get_all_ta_indicators` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:19:9: F401 `..technical_analysis.ta_integration.get_ta_momentum_indicators` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:19:37: F401 `..technical_analysis.ta_integration.get_ta_trend_indicators` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:20:9: F401 `..technical_analysis.ta_integration.get_ta_volatility_indicators` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\technical_indicators\__init__.py:20:39: F401 `..technical_analysis.ta_integration.get_ta_volume_indicators` imported but unused; consider using `importlib.util.find_spec` to test for availability
+meridianalgo\utils\performance.py:72:16: F823 Local variable `n_jobs` referenced before assignment
+Found 241 errors.
+No fixes available (43 hidden fixes can be enabled with the `--unsafe-fixes` option).

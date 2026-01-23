@@ -3,16 +3,14 @@ Comprehensive bond pricing and yield curve construction system.
 """
 
 import logging
-import warnings
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
 from scipy.interpolate import CubicSpline, interp1d
-from scipy.optimize import brentq, minimize_scalar
+from scipy.optimize import minimize_scalar
 
 logger = logging.getLogger(__name__)
 
@@ -515,8 +513,7 @@ class BondPortfolio:
             'portfolio_duration': duration,
             'portfolio_convexity': convexity
         }
-cl
-ass ZeroCouponBond:
+class ZeroCouponBond:
     """Zero-coupon bond pricing and analytics."""
     
     def __init__(self, face_value: float = 100.0, maturity_date: datetime = None):
