@@ -8,7 +8,7 @@ Version 4.1.0 (2025-11-25)
 
 Major restructuring and enhancement release.
 
-### 🚀 New Features
+### New Features
 
 #### Core Restructuring
 - Complete modular reorganization of the package
@@ -48,7 +48,7 @@ Major restructuring and enhancement release.
 - Integration and unit tests
 - CI/CD ready configuration
 
-### 🔄 Changes
+### Changes
 
 #### Breaking Changes
 - Restructured imports - some import paths have changed
@@ -59,13 +59,13 @@ Major restructuring and enhancement release.
 - Old module structure will be removed in v5.0.0
 - Some legacy functions marked for deprecation
 
-### 🐛 Bug Fixes
+### Bug Fixes
 - Fixed correlation matrix calculation for edge cases
 - Improved handling of missing data in time series
 - Fixed memory leaks in large dataset processing
 - Better error messages for invalid inputs
 
-### 📈 Improvements
+### Improvements
 - 50%+ performance improvement in portfolio optimization
 - Reduced memory usage by 30% for large datasets
 - Better numerical stability in risk calculations
@@ -74,37 +74,37 @@ Major restructuring and enhancement release.
 Version 4.0.2 (2025-11-20)
 --------------------------
 
-### 🐛 Bug Fixes
+### Bug Fixes
 - Fixed issue with Yahoo Finance API rate limiting
 - Resolved memory leak in LSTM models
 - Fixed timezone handling in market data
 
-### 📈 Improvements
+### Improvements
 - Better error messages for data loading failures
 - Improved handling of missing data points
 
 Version 4.0.1 (2025-11-10)
 --------------------------
 
-### 🐛 Bug Fixes
+### Bug Fixes
 - Fixed installation issues with optional dependencies
 - Resolved import errors on some platforms
 - Fixed documentation build errors
 
-### 📈 Improvements
+### Improvements
 - Updated dependencies to latest stable versions
 - Improved test coverage
 
 Version 4.0.0 (2025-11-01)
 --------------------------
 
-### 🚀 Major Release
+### Major Release
 - Complete rewrite of the package
 - New modular architecture
 - Enhanced ML capabilities
 - Improved performance
 
-### 🔄 Breaking Changes
+### Breaking Changes
 - New API design
 - Changed import structure
 - Updated function signatures
@@ -112,7 +112,7 @@ Version 4.0.0 (2025-11-01)
 Version 3.2.0 (2025-09-15)
 --------------------------
 
-### 🚀 New Features
+### New Features
 - Added support for cryptocurrency data
 - New technical indicators
 - Enhanced backtesting capabilities
@@ -120,7 +120,7 @@ Version 3.2.0 (2025-09-15)
 Version 3.1.0 (2025-08-01)
 --------------------------
 
-### 🚀 New Features
+### New Features
 - LSTM models for time series prediction
 - Feature engineering tools
 - Model evaluation metrics
@@ -128,7 +128,7 @@ Version 3.1.0 (2025-08-01)
 Version 3.0.0 (2025-07-01)
 --------------------------
 
-### 🚀 Major Release
+### Major Release
 - Introduced machine learning module
 - Portfolio optimization improvements
 - Risk analysis enhancements
@@ -136,7 +136,7 @@ Version 3.0.0 (2025-07-01)
 Version 2.5.0 (2025-05-15)
 --------------------------
 
-### 🚀 New Features
+### New Features
 - Technical indicators library
 - Chart pattern recognition
 - Volume analysis tools
@@ -144,7 +144,7 @@ Version 2.5.0 (2025-05-15)
 Version 2.0.0 (2025-03-01)
 --------------------------
 
-### 🚀 Major Release
+### Major Release
 - Complete API redesign
 - Better performance
 - More data sources
@@ -152,7 +152,7 @@ Version 2.0.0 (2025-03-01)
 Version 1.0.0 (2025-01-01)
 --------------------------
 
-### 🎉 Initial Release
+### Initial Release
 - Basic portfolio optimization
 - Risk analysis tools
 - Market data loading

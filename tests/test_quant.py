@@ -11,7 +11,6 @@ Tests all quantitative algorithms including:
 """
 
 import os
-
 # Import quant modules
 import sys
 
@@ -21,44 +20,27 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from meridianalgo.quant.execution_algorithms import (
-    POV,
-    TWAP,
-    VWAP,
-    ImplementationShortfall,
-)
-from meridianalgo.quant.factor_models import (
-    APTModel,
-    CustomFactorModel,
-    FactorRiskDecomposition,
-    FamaFrenchModel,
-)
-from meridianalgo.quant.high_frequency import (
-    LatencyArbitrage,
-    MarketMaking,
-    MicropriceEstimator,
-    OrderBook,
-    OrderBookLevel,
-)
-from meridianalgo.quant.market_microstructure import (
-    MarketImpactModel,
-    OrderFlowImbalance,
-    RealizedVolatility,
-    calculate_microprice,
-)
-from meridianalgo.quant.regime_detection import (
-    HiddenMarkovModel,
-    MarketStateClassifier,
-    RegimeSwitchingModel,
-    StructuralBreakDetection,
-    VolatilityRegimeDetector,
-)
-from meridianalgo.quant.statistical_arbitrage import (
-    CointegrationAnalyzer,
-    MeanReversionTester,
-    OrnsteinUhlenbeck,
-    PairsTrading,
-)
+from meridianalgo.quant.execution_algorithms import (POV, TWAP, VWAP,
+                                                     ImplementationShortfall)
+from meridianalgo.quant.factor_models import (APTModel, CustomFactorModel,
+                                              FactorRiskDecomposition,
+                                              FamaFrenchModel)
+from meridianalgo.quant.high_frequency import (LatencyArbitrage, MarketMaking,
+                                               MicropriceEstimator, OrderBook,
+                                               OrderBookLevel)
+from meridianalgo.quant.market_microstructure import (MarketImpactModel,
+                                                      OrderFlowImbalance,
+                                                      RealizedVolatility,
+                                                      calculate_microprice)
+from meridianalgo.quant.regime_detection import (HiddenMarkovModel,
+                                                 MarketStateClassifier,
+                                                 RegimeSwitchingModel,
+                                                 StructuralBreakDetection,
+                                                 VolatilityRegimeDetector)
+from meridianalgo.quant.statistical_arbitrage import (CointegrationAnalyzer,
+                                                      MeanReversionTester,
+                                                      OrnsteinUhlenbeck,
+                                                      PairsTrading)
 
 
 class TestMarketMicrostructure:

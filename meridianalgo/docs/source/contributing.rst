@@ -218,4 +218,4 @@ If you need help:
 3. Create a new issue with details
 4. Join our Discord/Slack community
 
-Thank you for contributing to MeridianAlgo! 🚀
+Thank you for contributing to MeridianAlgo!

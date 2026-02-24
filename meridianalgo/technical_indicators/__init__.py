@@ -9,19 +9,15 @@ from .momentum import ROC, RSI, Momentum, Stochastic, WilliamsR
 from .overlay import FibonacciRetracement, PivotPoints, SupportResistance
 from .trend import ADX, EMA, MACD, SMA, Aroon, Ichimoku, ParabolicSAR
 from .volatility import ATR, BollingerBands, DonchianChannels, KeltnerChannels
-from .volume import OBV, ADLine, ChaikinOscillator, EaseOfMovement, MoneyFlowIndex
+from .volume import (OBV, ADLine, ChaikinOscillator, EaseOfMovement,
+                     MoneyFlowIndex)
 
 # Import TA library integration
 try:
     from ..technical_analysis.ta_integration import (  # noqa: F401
-        TAIntegration,
-        add_all_ta_features,
-        get_all_ta_indicators,
-        get_ta_momentum_indicators,
-        get_ta_trend_indicators,
-        get_ta_volatility_indicators,
-        get_ta_volume_indicators,
-    )
+        TAIntegration, add_all_ta_features, get_all_ta_indicators,
+        get_ta_momentum_indicators, get_ta_trend_indicators,
+        get_ta_volatility_indicators, get_ta_volume_indicators)
 
     TA_INTEGRATION_AVAILABLE = True
 except ImportError:

@@ -310,25 +310,14 @@ def _lazy_import(module_name: str, items: List[str] = None):
 # ============================================================================
 # Core functionality
 try:
-    from .core import (  # noqa: F401
-        PortfolioOptimizer,
-        StatisticalArbitrage,
-        TimeSeriesAnalyzer,
-        calculate_autocorrelation,
-        calculate_calmar_ratio,
-        calculate_correlation_matrix,
-        calculate_expected_shortfall,
-        calculate_half_life,
-        calculate_hurst_exponent,
-        calculate_max_drawdown,
-        calculate_metrics,
-        calculate_rolling_correlation,
-        calculate_sortino_ratio,
-        calculate_value_at_risk,
-        get_market_data,
-        hurst_exponent,
-        rolling_volatility,
-    )
+    from .core import (PortfolioOptimizer, StatisticalArbitrage,  # noqa: F401
+                       TimeSeriesAnalyzer, calculate_autocorrelation,
+                       calculate_calmar_ratio, calculate_correlation_matrix,
+                       calculate_expected_shortfall, calculate_half_life,
+                       calculate_hurst_exponent, calculate_max_drawdown,
+                       calculate_metrics, calculate_rolling_correlation,
+                       calculate_sortino_ratio, calculate_value_at_risk,
+                       get_market_data, hurst_exponent, rolling_volatility)
 
     ModuleRegistry.register("core", True)
 except ImportError as e:
@@ -336,15 +325,11 @@ except ImportError as e:
 
 # Analytics (pyfolio-style)
 try:
-    from .analytics import (  # noqa: F401
-        PerformanceAnalyzer,
-        RiskAnalyzer,
-        TearSheet,
-        create_full_tear_sheet,
-        create_position_tear_sheet,
-        create_returns_tear_sheet,
-        create_round_trip_tear_sheet,
-    )
+    from .analytics import (PerformanceAnalyzer, RiskAnalyzer,  # noqa: F401
+                            TearSheet, create_full_tear_sheet,
+                            create_position_tear_sheet,
+                            create_returns_tear_sheet,
+                            create_round_trip_tear_sheet)
 
     ModuleRegistry.register("analytics", True)
 except ImportError as e:
@@ -352,16 +337,11 @@ except ImportError as e:
 
 # Portfolio optimization
 try:
-    from .portfolio import (  # noqa: F401
-        BlackLitterman,
-        EfficientFrontier,
-        HierarchicalRiskParity,
-        MaxDiversificationPortfolio,
-        MaxSharpePortfolio,
-        MeanVarianceOptimizer,
-        MinimumVariancePortfolio,
-        RiskParity,
-    )
+    from .portfolio import (BlackLitterman, EfficientFrontier,  # noqa: F401
+                            HierarchicalRiskParity,
+                            MaxDiversificationPortfolio, MaxSharpePortfolio,
+                            MeanVarianceOptimizer, MinimumVariancePortfolio,
+                            RiskParity)
 
     ModuleRegistry.register("portfolio", True)
 except ImportError as e:
@@ -369,15 +349,9 @@ except ImportError as e:
 
 # Risk management
 try:
-    from .risk import (  # noqa: F401
-        CVaRCalculator,
-        DrawdownAnalyzer,
-        RiskMetrics,
-        ScenarioAnalyzer,
-        StressTest,
-        TailRiskAnalyzer,
-        VaRCalculator,
-    )
+    from .risk import (CVaRCalculator, DrawdownAnalyzer,  # noqa: F401
+                       RiskMetrics, ScenarioAnalyzer, StressTest,
+                       TailRiskAnalyzer, VaRCalculator)
 
     ModuleRegistry.register("risk", True)
 except ImportError as e:
@@ -385,12 +359,8 @@ except ImportError as e:
 
 # Data management
 try:
-    from .data import (  # noqa: F401
-        DataAggregator,
-        DataCleaner,
-        DataManager,
-        MarketData,
-    )
+    from .data import (DataAggregator, DataCleaner, DataManager,  # noqa: F401
+                       MarketData)
 
     ModuleRegistry.register("data", True)
 except ImportError as e:
@@ -398,16 +368,10 @@ except ImportError as e:
 
 # Derivatives
 try:
-    from .derivatives import (  # noqa: F401
-        BinomialTree,
-        BlackScholes,
-        GreeksCalculator,
-        ImpliedVolatility,
-        MonteCarloPricer,
-        OptionChain,
-        OptionsPricer,
-        VolatilitySurface,
-    )
+    from .derivatives import (BinomialTree, BlackScholes,  # noqa: F401
+                              GreeksCalculator, ImpliedVolatility,
+                              MonteCarloPricer, OptionChain, OptionsPricer,
+                              VolatilitySurface)
 
     ModuleRegistry.register("derivatives", True)
 except ImportError as e:
@@ -415,14 +379,8 @@ except ImportError as e:
 
 # Execution algorithms
 try:
-    from .execution import (  # noqa: F401
-        POV,
-        TWAP,
-        VWAP,
-        AdaptiveExecution,
-        ExecutionAnalyzer,
-        ImplementationShortfall,
-    )
+    from .execution import (POV, TWAP, VWAP, AdaptiveExecution,  # noqa: F401
+                            ExecutionAnalyzer, ImplementationShortfall)
 
     ModuleRegistry.register("execution", True)
 except ImportError as e:
@@ -430,13 +388,8 @@ except ImportError as e:
 
 # Factor models
 try:
-    from .factors import (  # noqa: F401
-        AlphaModel,
-        FactorModel,
-        FactorRiskDecomposition,
-        FamaFrench,
-        StyleAnalysis,
-    )
+    from .factors import (AlphaModel, FactorModel,  # noqa: F401
+                          FactorRiskDecomposition, FamaFrench, StyleAnalysis)
 
     ModuleRegistry.register("factors", True)
 except ImportError as e:
@@ -444,14 +397,9 @@ except ImportError as e:
 
 # Liquidity analysis
 try:
-    from .liquidity import (  # noqa: F401
-        VPIN,
-        LiquidityAnalyzer,
-        MarketImpact,
-        OrderBookAnalyzer,
-        SpreadAnalyzer,
-        VolumeProfile,
-    )
+    from .liquidity import (VPIN, LiquidityAnalyzer,  # noqa: F401
+                            MarketImpact, OrderBookAnalyzer, SpreadAnalyzer,
+                            VolumeProfile)
 
     ModuleRegistry.register("liquidity", True)
 except ImportError as e:
@@ -469,15 +417,10 @@ except ImportError as e:
 
 # Quant strategies
 try:
-    from .quant import (  # noqa: F401
-        CointegrationAnalyzer,
-        HiddenMarkovModel,
-        MeanReversionStrategy,
-        OrnsteinUhlenbeck,
-        PairsTrading,
-        RegimeDetector,
-        StatisticalArbitrage as StatArb,
-    )
+    from .quant import (CointegrationAnalyzer, HiddenMarkovModel,
+                        MeanReversionStrategy, OrnsteinUhlenbeck, PairsTrading,
+                        RegimeDetector)
+    from .quant import StatisticalArbitrage as StatArb  # noqa: F401
 
     ModuleRegistry.register("quant", True)
 except ImportError as e:
@@ -485,19 +428,9 @@ except ImportError as e:
 
 # Technical signals
 try:
-    from .signals import (  # noqa: F401
-        ADX,
-        ATR,
-        EMA,
-        MACD,
-        RSI,
-        SMA,
-        BollingerBands,
-        SignalGenerator,
-        Stochastic,
-        TechnicalAnalyzer,
-        WilliamsR,
-    )
+    from .signals import (ADX, ATR, EMA, MACD, RSI, SMA,  # noqa: F401
+                          BollingerBands, SignalGenerator, Stochastic,
+                          TechnicalAnalyzer, WilliamsR)
 
     ModuleRegistry.register("signals", True)
 except ImportError as e:
@@ -505,14 +438,9 @@ except ImportError as e:
 
 # Machine learning
 try:
-    from .ml import (  # noqa: F401
-        FeatureEngineer,
-        LSTMPredictor,
-        ModelSelector,
-        TimeSeriesCV,
-        WalkForwardOptimizer,
-        prepare_data_for_lstm,
-    )
+    from .ml import (FeatureEngineer, LSTMPredictor,  # noqa: F401
+                     ModelSelector, TimeSeriesCV, WalkForwardOptimizer,
+                     prepare_data_for_lstm)
 
     ModuleRegistry.register("ml", True)
 except ImportError as e:
@@ -520,13 +448,8 @@ except ImportError as e:
 
 # Fixed income
 try:
-    from .fixed_income import (  # noqa: F401
-        BondPricer,
-        CreditAnalyzer,
-        DurationCalculator,
-        SwapPricer,
-        YieldCurve,
-    )
+    from .fixed_income import (BondPricer, CreditAnalyzer,  # noqa: F401
+                               DurationCalculator, SwapPricer, YieldCurve)
 
     ModuleRegistry.register("fixed_income", True)
 except ImportError as e:

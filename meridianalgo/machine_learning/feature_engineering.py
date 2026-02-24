@@ -22,12 +22,10 @@ except ImportError:
 try:
     from sklearn.decomposition import PCA, FastICA  # noqa: F401
     from sklearn.ensemble import RandomForestRegressor  # noqa: F401
-    from sklearn.feature_selection import (
-        SelectKBest,
-        f_regression,
-        mutual_info_regression,
-    )
-    from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
+    from sklearn.feature_selection import (SelectKBest, f_regression,
+                                           mutual_info_regression)
+    from sklearn.preprocessing import (MinMaxScaler, RobustScaler,
+                                       StandardScaler)
 
     SKLEARN_AVAILABLE = True
 except ImportError:

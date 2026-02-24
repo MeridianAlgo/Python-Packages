@@ -2,11 +2,11 @@
 Event system for event-driven backtesting architecture.
 """
 
+import queue
 from abc import ABC, abstractmethod
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, Optional, List
-import queue
+from typing import Any, Dict, List, Optional
 
 
 class EventType(Enum):

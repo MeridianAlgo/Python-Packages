@@ -13,22 +13,20 @@ This file demonstrates the new quantitative finance algorithms including:
 import numpy as np
 import pandas as pd
 
-from meridianalgo.quant.execution_algorithms import TWAP, VWAP, ImplementationShortfall
-from meridianalgo.quant.factor_models import FactorRiskDecomposition, FamaFrenchModel
+from meridianalgo.quant.execution_algorithms import (TWAP, VWAP,
+                                                     ImplementationShortfall)
+from meridianalgo.quant.factor_models import (FactorRiskDecomposition,
+                                              FamaFrenchModel)
 from meridianalgo.quant.high_frequency import HFTSignalGenerator, MarketMaking
-
 # Import MeridianAlgo quant modules
-from meridianalgo.quant.market_microstructure import (
-    MarketImpactModel,
-    OrderFlowImbalance,
-    RealizedVolatility,
-)
-from meridianalgo.quant.regime_detection import HiddenMarkovModel, MarketStateClassifier
-from meridianalgo.quant.statistical_arbitrage import (
-    CointegrationAnalyzer,
-    OrnsteinUhlenbeck,
-    PairsTrading,
-)
+from meridianalgo.quant.market_microstructure import (MarketImpactModel,
+                                                      OrderFlowImbalance,
+                                                      RealizedVolatility)
+from meridianalgo.quant.regime_detection import (HiddenMarkovModel,
+                                                 MarketStateClassifier)
+from meridianalgo.quant.statistical_arbitrage import (CointegrationAnalyzer,
+                                                      OrnsteinUhlenbeck,
+                                                      PairsTrading)
 
 
 def example_market_microstructure():

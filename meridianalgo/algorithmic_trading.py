@@ -17,7 +17,8 @@ warnings.filterwarnings("ignore")
 
 # Check for optional dependencies
 try:
-    from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+    from sklearn.ensemble import (GradientBoostingClassifier,
+                                  RandomForestClassifier)
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
 

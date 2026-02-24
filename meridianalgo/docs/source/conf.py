@@ -9,6 +9,7 @@
 import os
 import sys
 from datetime import datetime
+
 from meridianalgo import __version__
 
 # Add the project root to the Python path

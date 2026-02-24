@@ -64,9 +64,8 @@ def test_feature_engineering():
     print("Testing Financial Feature Engineering...")
 
     try:
-        from meridianalgo.machine_learning.feature_engineering import (
-            TechnicalIndicatorFeatures,
-        )
+        from meridianalgo.machine_learning.feature_engineering import \
+            TechnicalIndicatorFeatures
 
         data = create_sample_price_data()
         generator = TechnicalIndicatorFeatures(periods=[5, 10, 20])
@@ -92,7 +91,8 @@ def test_ml_models():
     print("\nTesting ML Models...")
 
     try:
-        from meridianalgo.machine_learning.models import ModelConfig, ModelFactory
+        from meridianalgo.machine_learning.models import (ModelConfig,
+                                                          ModelFactory)
 
         X, y = create_sample_data()
 
@@ -121,7 +121,8 @@ def test_time_series_validation():
     print("\nTesting Time-Series Validation...")
 
     try:
-        from meridianalgo.machine_learning.validation import WalkForwardValidator
+        from meridianalgo.machine_learning.validation import \
+            WalkForwardValidator
 
         X, y = create_sample_data()
 

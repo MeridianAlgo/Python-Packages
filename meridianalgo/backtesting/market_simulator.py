@@ -10,7 +10,8 @@ from typing import Any, Dict, List
 
 import numpy as np
 
-from .events import FillEvent, FillStatus, MarketEvent, OrderEvent, OrderSide, OrderType
+from .events import (FillEvent, FillStatus, MarketEvent, OrderEvent, OrderSide,
+                     OrderType)
 
 logger = logging.getLogger(__name__)
 

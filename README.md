@@ -1,4 +1,4 @@
-# MeridianAlgo
+# MeridianAlgo Quant Packages
 
 ## The Complete Quantitative Finance Platform
 
@@ -55,136 +55,184 @@ pip install meridianalgo[all]
 
 ---
 
-## Quick Start
+## Quick Start Examples
 
-### Portfolio Analytics
+### 1. Portfolio Analytics
+
+Calculate comprehensive performance metrics including Sharpe Ratio, Drawdowns, and Value at Risk.
 
 ```python
 import meridianalgo as ma
 import pandas as pd
-
-# Load returns data
-returns = pd.read_csv('returns.csv', index_col=0, parse_dates=True)
-
-# Calculate comprehensive metrics
 from meridianalgo.analytics import PerformanceAnalyzer
 
+# Load your returns data
+# Format: DateTime Index, Columns are asset returns
+returns = pd.read_csv('returns.csv', index_col=0, parse_dates=True)
+
+# Initialize analyzer
 analyzer = PerformanceAnalyzer(returns)
+
+# Get summary statistics
 metrics = analyzer.summary()
 
 print(f"Sharpe Ratio: {metrics['sharpe_ratio']:.2f}")
 print(f"Max Drawdown: {metrics['max_drawdown']:.1%}")
 print(f"Calmar Ratio: {metrics['calmar_ratio']:.2f}")
+print(f"Sortino Ratio: {metrics['sortino_ratio']:.2f}")
+print(f"Value at Risk (95%): {metrics['var_95']:.2%}")
 ```
 
-### Backtesting
+### 2. Backtesting a Strategy
+
+Run an event-driven backtest with realistic slippage and commission models.
 
 ```python
-from meridianalgo.backtesting import Backtest, SimpleMovingAverageStrategy
+from meridianalgo.backtesting import BacktestEngine
 import yfinance as yf
 
-# Get data
+# 1. Get Market Data
 data = yf.download('AAPL', start='2020-01-01', end='2023-12-31')
 
-# Create and run backtest
-strategy = SimpleMovingAverageStrategy(short_window=20, long_window=50)
-backtest = Backtest(data, strategy, initial_capital=100000)
-results = backtest.run()
+# 2. Initialize Engine
+engine = BacktestEngine(
+    initial_capital=100000,
+    commission=0.001,  # 0.1% commission
+    slippage=0.0005    # 0.05% slippage
+)
 
-print(f"Total Return: {results['total_return']:.1%}")
-print(f"Sharpe Ratio: {results['sharpe_ratio']:.2f}")
+# 3. Simulate Strategy (Simple Moving Average Crossover)
+short_window = 20
+long_window = 50
+
+# Calculate indicators
+data['SMA_Short'] = data['Close'].rolling(window=short_window).mean()
+data['SMA_Long'] = data['Close'].rolling(window=long_window).mean()
+
+# Run Simulation
+for i in range(long_window, len(data)):
+    price = data['Close'].iloc[i]
+    date = data.index[i]
+    
+    # Update engine time
+    engine.update_time(date)
+    
+    # Check signals
+    if data['SMA_Short'].iloc[i] > data['SMA_Long'].iloc[i]:
+        # Buy Signal
+        quantity = int(engine.cash / price)
+        if quantity > 0:
+            engine.execute_order('AAPL', 'market', 'buy', quantity, price)
+            
+    elif data['SMA_Short'].iloc[i] < data['SMA_Long'].iloc[i]:
+        # Sell Signal
+        if 'AAPL' in engine.positions:
+            quantity = engine.positions['AAPL']
+            engine.execute_order('AAPL', 'market', 'sell', quantity, price)
+            
+    # Record daily snapshot
+    engine.record_snapshot({'AAPL': price})
+
+# 4. Analyze Results
+metrics = engine.get_performance_metrics()
+print(f"Total Return: {metrics['total_return']:.2%}")
+print(f"Sharpe Ratio: {metrics['sharpe_ratio']:.2f}")
+print(f"Max Drawdown: {metrics['max_drawdown']:.2%}")
 ```
 
-### Execution Algorithms
+### 3. Execution Algorithms (VWAP)
+
+Simulate an optimal execution schedule using Volume Weighted Average Price.
 
 ```python
-from meridianalgo.quant.execution_algorithms import VWAP, TWAP, POV
+from meridianalgo.quant.execution_algorithms import VWAP
 
-# VWAP execution
-vwap = VWAP(total_quantity=100000, start_time='09:30', end_time='16:00')
-schedule = vwap.calculate_schedule(historical_volume)
+# Initialize VWAP Algo
+vwap = VWAP(
+    total_quantity=100000,
+    start_time='09:30',
+    end_time='16:00'
+)
 
-# TWAP execution
-twap = TWAP(total_quantity=100000, duration_minutes=480, slice_interval_minutes=5)
-for i in range(twap.n_slices):
-    execution = twap.execute_slice(market_price=150.0, available_liquidity=500000)
-    print(f"Execute {execution['quantity']} shares at {execution['price']}")
+# Calculate optimal schedule based on historical volume profile
+historical_volume_profile = [...] # List or array of volume fractions
+schedule = vwap.calculate_schedule(historical_volume_profile)
 
-# POV execution
-pov = POV(total_quantity=100000, target_pov=0.10)
-result = pov.execute(market_volume=1000000, market_price=150.0, time_remaining_pct=0.5)
+print("Execution Schedule:")
+for slice_info in schedule:
+    print(f"Time: {slice_info['time']} | Quantity: {slice_info['quantity']}")
 ```
 
-### Market Microstructure
+### 4. Market Microstructure Analysis
+
+Analyze order book depth and liquidity metrics.
 
 ```python
-from meridianalgo.liquidity import OrderBook, VPIN, MarketImpact
+from meridianalgo.liquidity import OrderBook, VPIN
 
-# Order book analysis
+# Order Book Analysis
 ob = OrderBook()
 ob.add_bid(price=100.0, quantity=1000)
 ob.add_ask(price=100.1, quantity=1000)
 
 print(f"Spread: {ob.spread():.4f}")
 print(f"Mid Price: {ob.mid_price():.2f}")
-print(f"Depth: {ob.depth(levels=5)}")
+print(f"Market Depth (5 levels): {ob.depth(levels=5)}")
 
-# Volume-Synchronized PIN
+# VPIN (Volume-Synchronized Probability of Informed Trading)
+# Used to detect toxic order flow
 vpin = VPIN(trades_data)
-print(f"Current VPIN: {vpin.current_vpin():.3f}")
-print(f"Toxicity Regime: {vpin.toxicity_regime()}")
+current_vpin = vpin.current_vpin()
+print(f"Current VPIN: {current_vpin:.3f}")
 
-# Market impact estimation
-impact = MarketImpact()
-cost = impact.estimate_total_cost(quantity=10000, volatility=0.02, volume=1000000)
-print(f"Estimated Impact Cost: {cost:.4f}")
+if vpin.toxicity_regime() == 'HIGH':
+    print("Warning: High Toxic Order Flow Detected")
 ```
 
-### Statistical Arbitrage
+### 5. Statistical Arbitrage (Pairs Trading)
+
+Identify and trade cointegrated pairs.
 
 ```python
 from meridianalgo.quant.statistical_arbitrage import PairsTrading, CointegrationAnalyzer
 
-# Pairs trading
-pairs = PairsTrading(asset1_prices, asset2_prices)
-signals = pairs.generate_signals(z_score_threshold=2.0)
-
-# Cointegration analysis
+# Test for Cointegration
 analyzer = CointegrationAnalyzer(asset1_prices, asset2_prices)
 result = analyzer.test_cointegration()
-print(f"Cointegration p-value: {result['p_value']:.4f}")
-print(f"Is cointegrated: {result['is_cointegrated']}")
+
+if result['is_cointegrated']:
+    print(f"Pairs are cointegrated (p-value: {result['p_value']:.4f})")
+    
+    # Generate Signals
+    pairs = PairsTrading(asset1_prices, asset2_prices)
+    signals = pairs.generate_signals(
+        entry_z_score=2.0,
+        exit_z_score=0.5
+    )
+    
+    print(f"Latest Signal: {signals.iloc[-1]}")
 ```
 
-### Factor Models
+### 6. Factor Risk Models
+
+Decompose portfolio risk into factor contributions.
 
 ```python
 from meridianalgo.quant.factor_models import FamaFrenchModel, FactorRiskDecomposition
 
-# Fama-French 3-factor model
-ff = FamaFrenchModel(returns, market_excess_returns, smb, hml)
-alpha, beta_market, beta_smb, beta_hml = ff.fit()
+# Fama-French 3-Factor Model
+ff = FamaFrenchModel(portfolio_returns, market_excess, smb, hml)
+alpha, beta_mkt, beta_smb, beta_hml = ff.fit()
 
-# Factor risk decomposition
-decomp = FactorRiskDecomposition(returns, factors)
+print(f"Alpha: {alpha:.4f}")
+print(f"Market Beta: {beta_mkt:.2f}")
+
+# Risk Decomposition
+decomp = FactorRiskDecomposition(portfolio_returns, factor_returns_df)
 risk_contrib = decomp.factor_contribution_to_risk()
-print(f"Factor Risk Contributions: {risk_contrib}")
-```
 
-### Technical Analysis
-
-```python
-from meridianalgo.signals import RSI, MACD, BollingerBands, TechnicalAnalyzer
-
-# Individual indicators
-rsi = RSI(prices, period=14)
-macd = MACD(prices, fast=12, slow=26, signal=9)
-bb = BollingerBands(prices, period=20, std_dev=2)
-
-# Comprehensive technical analysis
-analyzer = TechnicalAnalyzer(prices)
-signals = analyzer.calculate_all()
-summary = analyzer.summary()
+print("Risk Contribution by Factor:")
+print(risk_contrib)
 ```
 
 ---
@@ -195,7 +243,7 @@ summary = analyzer.summary()
 - **PerformanceAnalyzer**: 50+ metrics (Sharpe, Sortino, Calmar, Information Ratio, etc.)
 - **RiskAnalyzer**: VaR, CVaR, stress testing, scenario analysis
 - **DrawdownAnalyzer**: Drawdown analysis, underwater plots, recovery metrics
-- **TearSheet**: Pyfolio-style comprehensive performance reports
+- **TearSheet**: Comprehensive performance reports
 
 ### Backtesting (`meridianalgo.backtesting`)
 - **Event-driven engine**: Realistic market simulation with bid-ask spreads
@@ -306,64 +354,3 @@ MeridianAlgo is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 ## Disclaimer
 
 MeridianAlgo is provided for educational and research purposes. Past performance does not guarantee future results. Always conduct thorough testing and validation before deploying trading strategies in production.
-toxicity = vpin.current_vpin()
-```
-
-### Risk Management
-Institutional risk metrics including VaR, CVaR, and stress testing.
-
-```python
-from meridianalgo.risk import RiskAnalyzer
-
-risk = RiskAnalyzer(returns)
-var_95 = risk.value_at_risk(0.95, method='cornish_fisher')
-stress_results = risk.stress_test({'Market Crash': -0.20})
-```
-
----
-
-## Testing
-
-MeridianAlgo maintains a high standard of code quality with extensive test coverage.
-
-```bash
-# Run the full test suite
-pytest tests/ -v
-
-# Run with coverage report
-pytest tests/ --cov=meridianalgo --cov-report=term
-```
-
----
-
-## Governance and Community
-
-MeridianAlgo is committed to maintaining a professional and secure environment for contributors and users.
-
-- **[Contributing](CONTRIBUTING.md)**: Guidelines for contributing to the project.
-- **[Code of Conduct](CODE_OF_CONDUCT.md)**: Our expectations for community behavior.
-- **[Security Policy](SECURITY.md)**: Procedures for reporting vulnerabilities.
-
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Citation
-
-If you use MeridianAlgo in your research or business, please cite it:
-
-```bibtex
-@software{meridianalgo2026,
-  title = {MeridianAlgo: The Complete Quantitative Finance Platform},
-  author = {Meridian Algorithmic Research Team},
-  year = {2026},
-  version = {6.1.1},
-  url = {https://github.com/MeridianAlgo/Python-Packages}
-}
-```
-
-**MeridianAlgo**  *Empowering Finance for Everyone*

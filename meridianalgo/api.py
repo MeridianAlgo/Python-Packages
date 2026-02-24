@@ -15,17 +15,11 @@ import pandas as pd
 
 from . import __version__
 from .config import get_config, set_config
-
 # Core imports
-from .core import (
-    PortfolioOptimizer,
-    TimeSeriesAnalyzer,
-    calculate_calmar_ratio,
-    calculate_expected_shortfall,
-    calculate_max_drawdown,
-    calculate_sortino_ratio,
-    calculate_value_at_risk,
-)
+from .core import (PortfolioOptimizer, TimeSeriesAnalyzer,
+                   calculate_calmar_ratio, calculate_expected_shortfall,
+                   calculate_max_drawdown, calculate_sortino_ratio,
+                   calculate_value_at_risk)
 from .core.statistics import StatisticalArbitrage
 
 # Set up logging

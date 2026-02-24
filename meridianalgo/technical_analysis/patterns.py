@@ -716,16 +716,12 @@ class ChartPatterns:
                 channel_type = (
                     "ascending"
                     if high_slope > 0.001
-                    else "descending"
-                    if high_slope < -0.001
-                    else "horizontal"
+                    else "descending" if high_slope < -0.001 else "horizontal"
                 )
                 direction = (
                     "bullish"
                     if channel_type == "ascending"
-                    else "bearish"
-                    if channel_type == "descending"
-                    else "neutral"
+                    else "bearish" if channel_type == "descending" else "neutral"
                 )
                 confidence = min(abs(high_r), abs(low_r))
 

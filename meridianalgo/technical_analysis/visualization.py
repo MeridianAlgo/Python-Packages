@@ -1843,9 +1843,7 @@ class AdvancedDashboard(InteractiveDashboard):
                     line_color = (
                         "red"
                         if level in [70, 80]
-                        else "green"
-                        if level in [20, 30]
-                        else "gray"
+                        else "green" if level in [20, 30] else "gray"
                     )
                     fig.add_hline(
                         y=level, line_dash="dash", line_color=line_color, opacity=0.5

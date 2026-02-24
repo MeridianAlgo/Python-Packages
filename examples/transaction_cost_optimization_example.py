@@ -10,16 +10,12 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 import pandas as pd
 
-from meridianalgo.portfolio.optimization import (
-    PortfolioOptimizer,
-    RebalancingOptimizer,
-    TransactionCostAwareOptimizer,
-)
-from meridianalgo.portfolio.transaction_costs import (
-    LinearImpactModel,
-    SquareRootImpactModel,
-    TransactionCostOptimizer,
-)
+from meridianalgo.portfolio.optimization import (PortfolioOptimizer,
+                                                 RebalancingOptimizer,
+                                                 TransactionCostAwareOptimizer)
+from meridianalgo.portfolio.transaction_costs import (LinearImpactModel,
+                                                      SquareRootImpactModel,
+                                                      TransactionCostOptimizer)
 
 
 def demonstrate_execution_algorithms():
