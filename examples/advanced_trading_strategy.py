@@ -194,8 +194,8 @@ def example_risk_analysis():
     for conf in [0.90, 0.95, 0.99]:
         var = ma.calculate_value_at_risk(returns, confidence_level=conf)
         es = ma.calculate_expected_shortfall(returns, confidence_level=conf)
-        print(f"{conf*100:.0f}% VaR: {var:.2%}")
-        print(f"{conf*100:.0f}% ES: {es:.2%}")
+        print(f"{conf * 100:.0f}% VaR: {var:.2%}")
+        print(f"{conf * 100:.0f}% ES: {es:.2%}")
 
     # Rolling volatility
     rolling_vol = ma.rolling_volatility(returns, window=21, annualized=True)

@@ -140,7 +140,7 @@ class PortfolioVisualizer:
         )
 
         # Add labels for each point
-        for i, (vol, ret) in enumerate(zip(annual_vols, annual_returns)):
+        for i, (vol, ret) in enumerate(zip(annual_vols, annual_returns, strict=False)):
             ax.annotate(
                 returns_data.columns[i],
                 (vol, ret),
@@ -422,7 +422,7 @@ class RiskVisualizer:
         )
 
         # Add value labels on bars
-        for bar, value in zip(bars, contributions):
+        for bar, value in zip(bars, contributions, strict=False):
             height = bar.get_height()
             ax.text(
                 bar.get_x() + bar.get_width() / 2.0,
@@ -509,7 +509,7 @@ def create_dashboard(
         values = list(weights.values())
         bars = ax5.bar(assets, values, color=sns.color_palette("viridis", len(assets)))
 
-        for bar, value in zip(bars, values):
+        for bar, value in zip(bars, values, strict=False):
             height = bar.get_height()
             ax5.text(
                 bar.get_x() + bar.get_width() / 2.0,

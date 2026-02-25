@@ -569,7 +569,7 @@ class BondPortfolio:
         weighted_yield = 0
         total_weight = sum(weight for _, weight, _ in self.bonds)
 
-        for bond, weight, ytm in self.bonds:
+        for _bond, weight, ytm in self.bonds:
             weighted_yield += (weight / total_weight) * ytm
 
         return weighted_yield

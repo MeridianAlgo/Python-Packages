@@ -167,7 +167,7 @@ class ForexAnalyzer:
         # Check triangular arbitrage
         for i, curr1 in enumerate(currencies):
             for j, curr2 in enumerate(currencies[i + 1 :], i + 1):
-                for k, curr3 in enumerate(currencies[j + 1 :], j + 1):
+                for _k, curr3 in enumerate(currencies[j + 1 :], j + 1):
                     # Check if we have all three pairs
                     pair12 = f"{curr1}{curr2}"
                     pair21 = f"{curr2}{curr1}"

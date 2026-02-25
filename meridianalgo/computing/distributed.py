@@ -18,7 +18,9 @@ try:
     DASK_AVAILABLE = True
 except ImportError:
     DASK_AVAILABLE = False
-    warnings.warn("Dask not available. Distributed computing will be limited.")
+    warnings.warn(
+        "Dask not available. Distributed computing will be limited.", stacklevel=2
+    )
 
 try:
     import ray
@@ -26,7 +28,7 @@ try:
     RAY_AVAILABLE = True
 except ImportError:
     RAY_AVAILABLE = False
-    warnings.warn("Ray not available. Distributed ML will be limited.")
+    warnings.warn("Ray not available. Distributed ML will be limited.", stacklevel=2)
 
 try:
     import cudf
@@ -35,7 +37,9 @@ try:
     CUPY_AVAILABLE = True
 except ImportError:
     CUPY_AVAILABLE = False
-    warnings.warn("CuPy/cuDF not available. GPU acceleration will be limited.")
+    warnings.warn(
+        "CuPy/cuDF not available. GPU acceleration will be limited.", stacklevel=2
+    )
 
 try:
     import redis
@@ -43,7 +47,7 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
-    warnings.warn("Redis not available. Caching will be limited.")
+    warnings.warn("Redis not available. Caching will be limited.", stacklevel=2)
 
 logger = logging.getLogger(__name__)
 

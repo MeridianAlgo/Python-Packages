@@ -245,7 +245,7 @@ class FactorAttribution:
             betas = np.zeros(X_with_const.shape[1])
 
         self._alpha = betas[0]
-        self._betas = dict(zip(self.factors.columns, betas[1:]))
+        self._betas = dict(zip(self.factors.columns, betas[1:], strict=False))
 
         # Calculate R-squared
         y_pred = X_with_const @ betas

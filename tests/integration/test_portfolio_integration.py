@@ -56,8 +56,7 @@ def test_performance_analytics():
     print("Testing Performance Analytics...")
 
     try:
-        from meridianalgo.backtesting.performance_analytics import \
-            PerformanceAnalyzer
+        from meridianalgo.backtesting.performance_analytics import PerformanceAnalyzer
 
         returns = create_sample_returns()
         analyzer = PerformanceAnalyzer()
@@ -66,9 +65,9 @@ def test_performance_analytics():
         # Basic checks
         assert metrics.total_return != 0, "Total return should not be zero"
         assert metrics.volatility > 0, "Volatility should be positive"
-        assert metrics.trading_days == len(
-            returns
-        ), "Trading days should match data length"
+        assert metrics.trading_days == len(returns), (
+            "Trading days should match data length"
+        )
 
         print(" Performance analytics working correctly")
         print(f"  Total Return: {metrics.total_return:.2%}")
@@ -98,9 +97,9 @@ def test_portfolio_optimization():
             returns_data, method="mean_variance", target_return=0.12
         )
 
-        assert len(weights) == len(
-            returns_data.columns
-        ), "Weights should match number of assets"
+        assert len(weights) == len(returns_data.columns), (
+            "Weights should match number of assets"
+        )
         assert abs(sum(weights.values()) - 1.0) < 1e-6, "Weights should sum to 1"
         assert all(w >= 0 for w in weights.values()), "Weights should be non-negative"
 
@@ -155,8 +154,7 @@ def test_transaction_costs():
     print("\nTesting Transaction Cost Optimization...")
 
     try:
-        from meridianalgo.portfolio.transaction_costs import \
-            TransactionCostOptimizer
+        from meridianalgo.portfolio.transaction_costs import TransactionCostOptimizer
 
         optimizer = TransactionCostOptimizer()
 

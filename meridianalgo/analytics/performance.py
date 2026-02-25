@@ -85,7 +85,8 @@ class PerformanceAnalyzer:
             import warnings
 
             warnings.warn(
-                "Returns contain values > 100%, verify data is in decimal format"
+                "Returns contain values > 100%, verify data is in decimal format",
+                stacklevel=2,
             )
 
         return returns
@@ -317,7 +318,7 @@ class PerformanceAnalyzer:
             ends.append(drawdown.index[-1])
 
         drawdowns = []
-        for start, end in zip(starts, ends):
+        for start, end in zip(starts, ends, strict=False):
             period_dd = drawdown[start:end]
             if len(period_dd) == 0:
                 continue

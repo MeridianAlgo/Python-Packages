@@ -10,12 +10,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 import pandas as pd
 
-from meridianalgo.portfolio.optimization import (PortfolioOptimizer,
-                                                 RebalancingOptimizer,
-                                                 TransactionCostAwareOptimizer)
-from meridianalgo.portfolio.transaction_costs import (LinearImpactModel,
-                                                      SquareRootImpactModel,
-                                                      TransactionCostOptimizer)
+from meridianalgo.portfolio.optimization import (
+    PortfolioOptimizer,
+    RebalancingOptimizer,
+    TransactionCostAwareOptimizer,
+)
+from meridianalgo.portfolio.transaction_costs import (
+    LinearImpactModel,
+    SquareRootImpactModel,
+    TransactionCostOptimizer,
+)
 
 
 def demonstrate_execution_algorithms():
@@ -206,7 +210,9 @@ def demonstrate_transaction_cost_aware_optimization():
     print(f"  Expected Return: {standard_result.expected_return:.4f}")
     print(f"  Volatility: {standard_result.volatility:.4f}")
     print(f"  Sharpe Ratio: {standard_result.sharpe_ratio:.4f}")
-    print(f"  Weights: {dict(zip(assets, standard_result.weights.round(4)))}")
+    print(
+        f"  Weights: {dict(zip(assets, standard_result.weights.round(4), strict=False))}"
+    )
 
     # Calculate transaction costs for standard optimization
     cost_optimizer = TransactionCostOptimizer()
@@ -233,7 +239,7 @@ def demonstrate_transaction_cost_aware_optimization():
     print(f"  Expected Return: {tc_result.expected_return:.4f}")
     print(f"  Volatility: {tc_result.volatility:.4f}")
     print(f"  Sharpe Ratio: {tc_result.sharpe_ratio:.4f}")
-    print(f"  Weights: {dict(zip(assets, tc_result.weights.round(4)))}")
+    print(f"  Weights: {dict(zip(assets, tc_result.weights.round(4), strict=False))}")
     print(
         f"  Transaction Costs: ${tc_result.metadata['transaction_costs']['total_cost']:,.2f}"
     )

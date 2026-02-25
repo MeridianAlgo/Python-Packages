@@ -2,8 +2,13 @@
 Factor modeling module for MeridianAlgo.
 """
 
-from .core import (AlphaModel, FactorModel, FactorRiskDecomposition,
-                   FamaFrenchModel, StyleAnalysis)
+from .core import (
+    AlphaModel,
+    FactorModel,
+    FactorRiskDecomposition,
+    FamaFrenchModel,
+    StyleAnalysis,
+)
 
 # Alias
 FamaFrench = FamaFrenchModel
@@ -13,5 +18,5 @@ __all__ = [
     "FamaFrench",
     "AlphaModel",
     "FactorRiskDecomposition",
-    "StyleAnalysis"
+    "StyleAnalysis",
 ]

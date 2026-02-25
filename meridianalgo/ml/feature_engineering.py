@@ -17,20 +17,26 @@ try:
     TALIB_AVAILABLE = True
 except ImportError:
     TALIB_AVAILABLE = False
-    warnings.warn("TA-Lib not available. Some technical indicators will be limited.")
+    warnings.warn(
+        "TA-Lib not available. Some technical indicators will be limited.", stacklevel=2
+    )
 
 try:
     from sklearn.decomposition import PCA, FastICA  # noqa: F401
     from sklearn.ensemble import RandomForestRegressor  # noqa: F401
-    from sklearn.feature_selection import (SelectKBest, f_regression,
-                                           mutual_info_regression)
-    from sklearn.preprocessing import (MinMaxScaler, RobustScaler,
-                                       StandardScaler)
+    from sklearn.feature_selection import (
+        SelectKBest,
+        f_regression,
+        mutual_info_regression,
+    )
+    from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
-    warnings.warn("Scikit-learn not available. Feature selection will be limited.")
+    warnings.warn(
+        "Scikit-learn not available. Feature selection will be limited.", stacklevel=2
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -84,11 +90,7 @@ class TechnicalIndicatorFeatures(BaseFeatureGenerator):
         features = pd.DataFrame(index=data.index)
 
         # Price data
-        data["High"].values
-        data["Low"].values
         close = data["Close"].values
-        (data["Volume"].values if "Volume" in data.columns else np.ones_like(close))
-        data["Open"].values if "Open" in data.columns else close
 
         # Moving Averages
         for period in self.periods:
@@ -197,7 +199,6 @@ class VolumeFeatures(BaseFeatureGenerator):
             return features
 
         volume = data["Volume"].values
-        data["Close"].values
 
         # Volume moving averages
         for period in self.periods:
@@ -399,7 +400,9 @@ class FeatureSelector:
     def fit_transform(self, X: pd.DataFrame, y: pd.Series) -> pd.DataFrame:
         """Fit feature selector and transform features."""
         if not SKLEARN_AVAILABLE:
-            warnings.warn("Scikit-learn not available. Returning all features.")
+            warnings.warn(
+                "Scikit-learn not available. Returning all features.", stacklevel=2
+            )
             return X
 
         # Remove features with too many NaN values

@@ -2,10 +2,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from meridianalgo.quant.advanced_signals import (calculate_z_score,
-                                                 fractional_difference,
-                                                 get_half_life, hurst_exponent,
-                                                 information_coefficient)
+from meridianalgo.quant.advanced_signals import (
+    calculate_z_score,
+    fractional_difference,
+    get_half_life,
+    hurst_exponent,
+    information_coefficient,
+)
 
 
 class TestAdvancedSignals:
@@ -17,7 +20,7 @@ class TestAdvancedSignals:
         rw = pd.Series(np.cumsum(np.random.randn(n)) + 100)
         # Mean reverting series (OU process like)
         mr = [100]
-        for i in range(n - 1):
+        for _i in range(n - 1):
             mr.append(mr[-1] + 0.1 * (100 - mr[-1]) + np.random.randn())
         mr = pd.Series(mr)
 

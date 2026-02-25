@@ -12,15 +12,15 @@ from typing import Any, Dict, Iterator, List, Optional, Tuple
 import numpy as np
 
 try:
-    from sklearn.metrics import (mean_absolute_error, mean_squared_error,
-                                 r2_score)
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     from sklearn.model_selection import BaseCrossValidator  # noqa: F401
 
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
     warnings.warn(
-        "Scikit-learn not available. Some validation features will be limited."
+        "Scikit-learn not available. Some validation features will be limited.",
+        stacklevel=2,
     )
 
 logger = logging.getLogger(__name__)
@@ -681,7 +681,7 @@ class ModelSelector:
         all_results = []
 
         for param_combination in product(*param_values):
-            params = dict(zip(param_names, param_combination))
+            params = dict(zip(param_names, param_combination, strict=False))
 
             try:
                 # Create model with these parameters

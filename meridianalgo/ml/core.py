@@ -194,7 +194,7 @@ class FeatureEngineer:
         return np.array(X_seq), np.array(y_seq)
 
     def create_lag_features(
-        self, data: pd.DataFrame, lags: List[int] = [1, 2, 3, 5, 10]
+        self, data: pd.DataFrame, lags: List[int] = None
     ) -> pd.DataFrame:
         """
         Create lag features.
@@ -206,6 +206,8 @@ class FeatureEngineer:
         Returns:
             DataFrame with lag features
         """
+        if lags is None:
+            lags = [1, 2, 3, 5, 10]
         lag_features = pd.DataFrame(index=data.index)
 
         for col in data.columns:
@@ -217,8 +219,8 @@ class FeatureEngineer:
     def create_rolling_features(
         self,
         data: pd.DataFrame,
-        windows: List[int] = [5, 10, 20],
-        functions: List[str] = ["mean", "std", "min", "max", "skew", "kurt"],
+        windows: List[int] = None,
+        functions: List[str] = None,
     ) -> pd.DataFrame:
         """
         Create rolling window features.
@@ -231,6 +233,10 @@ class FeatureEngineer:
         Returns:
             DataFrame with rolling features
         """
+        if functions is None:
+            functions = ["mean", "std", "min", "max", "skew", "kurt"]
+        if windows is None:
+            windows = [5, 10, 20]
         rolling_features = pd.DataFrame(index=data.index)
 
         for col in data.columns:
@@ -264,7 +270,7 @@ class FeatureEngineer:
         return rolling_features
 
     def create_fourier_features(
-        self, data: pd.DataFrame, frequencies: List[int] = [1, 2, 3, 4, 5]
+        self, data: pd.DataFrame, frequencies: List[int] = None
     ) -> pd.DataFrame:
         """
         Create Fourier transform features.
@@ -276,6 +282,8 @@ class FeatureEngineer:
         Returns:
             DataFrame with Fourier features
         """
+        if frequencies is None:
+            frequencies = [1, 2, 3, 4, 5]
         fourier_features = pd.DataFrame(index=data.index)
 
         for col in data.columns:
@@ -785,7 +793,7 @@ class EnsemblePredictor:
 
         kf = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(X)):
+        for _fold, (train_idx, val_idx) in enumerate(kf.split(X)):
             X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
             y_train = y.iloc[train_idx]
 
@@ -821,7 +829,7 @@ class EnsemblePredictor:
         else:
             # Weighted ensemble
             predictions = np.zeros(len(X))
-            for model, weight in zip(self.models, self.weights):
+            for model, weight in zip(self.models, self.weights, strict=False):
                 predictions += weight * model.predict(X)
             return predictions
 
@@ -923,7 +931,7 @@ class ModelEvaluator:
         # Feature importance
         if hasattr(model, "feature_importances_") and hasattr(X, "columns"):
             summary_results["feature_importance"] = dict(
-                zip(X.columns, model.feature_importances_)
+                zip(X.columns, model.feature_importances_, strict=False)
             )
         else:
             summary_results["feature_importance"] = None
@@ -1059,7 +1067,7 @@ def prepare_data_for_lstm(
 
 
 def create_ml_models(
-    model_types: List[str] = ["rf", "gb", "xgb", "lgb", "linear"], **kwargs
+    model_types: List[str] = None, **kwargs
 ) -> Dict[str, BaseEstimator]:
     """
     Create a dictionary of ML models.
@@ -1071,6 +1079,8 @@ def create_ml_models(
     Returns:
         Dictionary of models
     """
+    if model_types is None:
+        model_types = ["rf", "gb", "xgb", "lgb", "linear"]
     models = {}
 
     for model_type in model_types:

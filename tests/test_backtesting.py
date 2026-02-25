@@ -300,7 +300,6 @@ class TestBacktesting:
                     and short_ma_prev <= long_ma_prev
                     and position == 0
                 ):
-
                     quantity = int(engine.cash / current_price)
                     if quantity > 0:
                         success = engine.execute_order(
@@ -319,7 +318,6 @@ class TestBacktesting:
                     and short_ma_prev >= long_ma_prev
                     and position > 0
                 ):
-
                     success = engine.execute_order(
                         symbol=symbol,
                         order_type="market",

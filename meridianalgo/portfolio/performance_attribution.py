@@ -290,7 +290,9 @@ class FactorAttributionModel(BaseAttributionModel):
             period_start=common_index[0],
             period_end=common_index[-1],
             metadata={
-                "factor_loadings": dict(zip(factor_returns.columns, factor_loadings)),
+                "factor_loadings": dict(
+                    zip(factor_returns.columns, factor_loadings, strict=False)
+                ),
                 "alpha": alpha,
                 "r_squared": r_squared,
                 "tracking_error": tracking_error,

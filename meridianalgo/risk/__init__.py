@@ -6,19 +6,18 @@ stress testing, and risk budgeting.
 """
 
 # Core metrics and analysis
-from .core import RiskAnalyzer, calculate_risk_metrics
-
 # Advanced risk management
-from .advanced import AdvancedVaR, StressTesting, RiskBudgeting
+from .advanced import AdvancedVaR, RiskBudgeting, StressTesting
+from .core import RiskAnalyzer, calculate_risk_metrics
 
 # Comprehensive exports and aliases for institutional grade usage
 VaRCalculator = RiskAnalyzer
 CVaRCalculator = RiskAnalyzer
-DrawdownAnalyzer = RiskAnalyzer # Integrated in RiskAnalyzer
-RiskMetrics = RiskMetricsResult if 'RiskMetricsResult' in locals() else object # Placeholder/ref
+DrawdownAnalyzer = RiskAnalyzer  # Integrated in RiskAnalyzer
+# Additional Aliases
 ScenarioAnalyzer = StressTesting
 StressTest = StressTesting
-TailRiskAnalyzer = RiskAnalyzer # Integrated in RiskAnalyzer
+TailRiskAnalyzer = RiskAnalyzer  # Integrated in RiskAnalyzer
 
 __all__ = [
     "RiskAnalyzer",
@@ -31,5 +30,5 @@ __all__ = [
     "DrawdownAnalyzer",
     "ScenarioAnalyzer",
     "StressTest",
-    "TailRiskAnalyzer"
+    "TailRiskAnalyzer",
 ]

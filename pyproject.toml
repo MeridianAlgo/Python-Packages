@@ -146,8 +146,10 @@ exclude = ["tests*", "docs*", "examples*"]
 [tool.ruff]
 line-length = 88
 target-version = "py310"
+
+[tool.ruff.lint]
 select = ["E", "F", "B", "I"]
 ignore = ["B008", "E501"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["meridianalgo"]

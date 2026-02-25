@@ -2,8 +2,7 @@
 Derivatives pricing and analysis module for MeridianAlgo.
 """
 
-from .core import (OptionsPricer, VolatilitySurface, ExoticOptions, 
-                   FuturesPricer)
+from .core import ExoticOptions, FuturesPricer, OptionsPricer, VolatilitySurface
 
 # Global instances/aliases for convenience
 pricer = OptionsPricer()
@@ -24,5 +23,5 @@ __all__ = [
     "MonteCarloPricer",
     "GreeksCalculator",
     "ImpliedVolatility",
-    "OptionChain"
+    "OptionChain",
 ]

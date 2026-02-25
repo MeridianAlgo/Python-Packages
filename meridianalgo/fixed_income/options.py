@@ -495,9 +495,9 @@ class OptionPortfolio:
     """Option portfolio analytics."""
 
     def __init__(self):
-        self.positions: List[Tuple[Option, float, str]] = (
-            []
-        )  # (option, quantity, model)
+        self.positions: List[
+            Tuple[Option, float, str]
+        ] = []  # (option, quantity, model)
 
     def add_position(
         self, option: Option, quantity: float, model: str = "black_scholes"
@@ -627,7 +627,8 @@ class FiniteDifferenceModel:
         alpha = 0.5 * sigma**2 * dt / dS**2
         if alpha > 0.5:
             warnings.warn(
-                "Explicit scheme may be unstable. Consider using implicit method."
+                "Explicit scheme may be unstable. Consider using implicit method.",
+                stacklevel=2,
             )
 
         # Initialize grids
@@ -865,9 +866,9 @@ class ExoticOptions:
             for _ in range(n_steps):
                 # Generate correlated random numbers
                 z1 = np.random.normal(0, 1)
-                z2 = correlation * z1 + np.sqrt(
-                    1 - correlation**2
-                ) * np.random.normal(0, 1)
+                z2 = correlation * z1 + np.sqrt(1 - correlation**2) * np.random.normal(
+                    0, 1
+                )
 
                 dW1 = z1 * np.sqrt(dt)
                 dW2 = z2 * np.sqrt(dt)
@@ -964,9 +965,9 @@ class VolatilitySurface:
     """Implied volatility surface construction and analysis."""
 
     def __init__(self):
-        self.data_points: List[Tuple[float, float, float, float]] = (
-            []
-        )  # (strike, expiry, price, vol)
+        self.data_points: List[
+            Tuple[float, float, float, float]
+        ] = []  # (strike, expiry, price, vol)
         self.surface = None
 
     def add_market_data(
@@ -1011,13 +1012,13 @@ class VolatilitySurface:
                 # Fallback to linear interpolation
                 from scipy.interpolate import LinearNDInterpolator
 
-                points = list(zip(strikes, expiries))
+                points = list(zip(strikes, expiries, strict=False))
                 self.surface = LinearNDInterpolator(points, vols)
 
         elif method == "linear":
             from scipy.interpolate import LinearNDInterpolator
 
-            points = list(zip(strikes, expiries))
+            points = list(zip(strikes, expiries, strict=False))
             self.surface = LinearNDInterpolator(points, vols)
 
     def get_volatility(self, strike: float, expiry: float) -> float:

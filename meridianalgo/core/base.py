@@ -210,7 +210,7 @@ class PortfolioOptimizer:
         self.weights = weights.value
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return.value,
             "volatility": np.sqrt(portfolio_risk.value),
             "sharpe_ratio": sharpe.value,
@@ -242,7 +242,7 @@ class PortfolioOptimizer:
         self.weights = weights.flatten()
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
@@ -285,7 +285,7 @@ class PortfolioOptimizer:
         portfolio_volatility = np.sqrt(portfolio_risk.value)
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": (portfolio_return - self.risk_free_rate)
@@ -309,7 +309,7 @@ class PortfolioOptimizer:
         self.weights = weights.flatten()
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
@@ -356,11 +356,13 @@ class PortfolioOptimizer:
         sharpe_ratio = (portfolio_return - self.risk_free_rate) / portfolio_volatility
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
-            "risk_contributions": dict(zip(self.asset_names, risk_contribution.value)),
+            "risk_contributions": dict(
+                zip(self.asset_names, risk_contribution.value, strict=False)
+            ),
             "status": problem.status,
         }
 
@@ -386,11 +388,13 @@ class PortfolioOptimizer:
         self.weights = weights
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
-            "risk_contributions": dict(zip(self.asset_names, risk_contribution)),
+            "risk_contributions": dict(
+                zip(self.asset_names, risk_contribution, strict=False)
+            ),
             "status": "optimal",
         }
 
@@ -423,7 +427,7 @@ class PortfolioOptimizer:
         self.weights = weights
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
@@ -470,7 +474,7 @@ class PortfolioOptimizer:
         self.weights = weights
 
         return {
-            "weights": dict(zip(self.asset_names, self.weights)),
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "expected_return": portfolio_return,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
@@ -596,7 +600,7 @@ class PortfolioOptimizer:
         ) / portfolio_volatility
 
         return {
-            "weights": dict(zip(self.asset_names, weights_value)),
+            "weights": dict(zip(self.asset_names, weights_value, strict=False)),
             "expected_return": portfolio_return.value,
             "volatility": portfolio_volatility,
             "sharpe_ratio": sharpe_ratio,
@@ -702,7 +706,7 @@ class PortfolioOptimizer:
         ).sum(axis=1)
 
         metrics = {
-            "weights": dict(zip(self.returns.columns, weights)),
+            "weights": dict(zip(self.returns.columns, weights, strict=False)),
             "diversification_ratio": self._calculate_diversification_ratio(weights),
             "concentration_ratio": self._calculate_concentration_ratio(weights),
             "effective_number_bets": self._calculate_effective_number_bets(weights),
@@ -860,7 +864,7 @@ class PortfolioOptimizer:
                 }
 
         return {
-            "weights": dict(zip(available_assets, weights)),
+            "weights": dict(zip(available_assets, weights, strict=False)),
             "portfolio_return": portfolio_returns.mean() * 252,
             "portfolio_volatility": portfolio_returns.std() * np.sqrt(252),
             "sharpe_ratio": (portfolio_returns.mean() * 252 - self.risk_free_rate)
@@ -968,7 +972,7 @@ class PortfolioOptimizer:
             top_n = min(5, len(ranked_assets))  # Top 5 assets
             weights = np.zeros(len(returns_clean.columns))
 
-            for j, asset in enumerate(ranked_assets.head(top_n).index):
+            for _j, asset in enumerate(ranked_assets.head(top_n).index):
                 asset_idx = returns_clean.columns.get_loc(asset)
                 weights[asset_idx] = 1 / top_n
 
@@ -1546,7 +1550,10 @@ def calculate_rsi(data: pd.Series, window: int = 14) -> pd.Series:
 
 
 def calculate_macd(
-    data: pd.Series, fast_period: int = 12, slow_period: int = 26, signal_period: int = 9
+    data: pd.Series,
+    fast_period: int = 12,
+    slow_period: int = 26,
+    signal_period: int = 9,
 ) -> Dict[str, pd.Series]:
     """Top-level stub for TimeSeriesAnalyzer.calculate_macd."""
     if isinstance(data, pd.Series):

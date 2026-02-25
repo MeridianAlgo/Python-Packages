@@ -102,7 +102,7 @@ class ParquetStorage:
                 return str(file_path)
 
         except Exception as e:
-            raise DataError(f"Failed to store data for {symbol}: {e}")
+            raise DataError(f"Failed to store data for {symbol}: {e}") from e
 
     def load_data(
         self,
@@ -185,7 +185,7 @@ class ParquetStorage:
             return df
 
         except Exception as e:
-            raise DataError(f"Failed to load data for {symbol}: {e}")
+            raise DataError(f"Failed to load data for {symbol}: {e}") from e
 
     def list_symbols(self, data_type: str = "ohlcv") -> List[str]:
         """List available symbols for a data type."""
@@ -223,7 +223,7 @@ class ParquetStorage:
             if partition_path.exists():
                 info["partitioned"] = True
                 # Get partition info
-                for root, dirs, files in os.walk(partition_path):
+                for root, _dirs, files in os.walk(partition_path):
                     for file in files:
                         if file.endswith(".parquet"):
                             file_path = Path(root) / file

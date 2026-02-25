@@ -92,7 +92,7 @@ class RiskAnalyzer:
             try:
                 from scipy.stats import norm
             except ImportError:
-                raise ImportError("scipy required for parametric VaR")
+                raise ImportError("scipy required for parametric VaR") from None
 
             z = norm.ppf(1 - confidence)
             var = returns.mean() + z * returns.std()
@@ -101,7 +101,7 @@ class RiskAnalyzer:
             try:
                 from scipy.stats import norm
             except ImportError:
-                raise ImportError("scipy required for Cornish-Fisher VaR")
+                raise ImportError("scipy required for Cornish-Fisher VaR") from None
 
             z = norm.ppf(1 - confidence)
             s = returns.skew()
@@ -154,7 +154,7 @@ class RiskAnalyzer:
             try:
                 from scipy.stats import norm
             except ImportError:
-                raise ImportError("scipy required for gaussian CVaR")
+                raise ImportError("scipy required for gaussian CVaR") from None
 
             mu = returns.mean()
             sigma = returns.std()
@@ -265,7 +265,7 @@ class RiskAnalyzer:
         try:
             from arch import arch_model
         except ImportError:
-            raise ImportError("arch package required for GARCH volatility")
+            raise ImportError("arch package required for GARCH volatility") from None
 
         returns = self.returns if not self.is_portfolio else self.returns.mean(axis=1)
         returns = returns * 100  # Scale for numerical stability
@@ -379,7 +379,7 @@ class RiskAnalyzer:
         try:
             from scipy.stats import jarque_bera
         except ImportError:
-            raise ImportError("scipy required for Jarque-Bera test")
+            raise ImportError("scipy required for Jarque-Bera test") from None
 
         returns = self.returns if not self.is_portfolio else self.returns.mean(axis=1)
         stat, pvalue = jarque_bera(returns)

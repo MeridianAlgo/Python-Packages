@@ -670,7 +670,7 @@ class ExecutionAnalyzer:
         return {
             "average_price": avg_price,
             "total_quantity": total_qty,
-            "count": len(df)
+            "count": len(df),
         }
 
 

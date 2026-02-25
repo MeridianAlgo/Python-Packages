@@ -11,6 +11,7 @@ import pandas as pd
 import requests
 
 from .exceptions import ProviderError
+
 # Import existing functionality
 from .models import DataRequest, DataResponse, FundamentalData
 from .providers import DataProvider
@@ -76,7 +77,7 @@ class YahooFinanceFreeProvider(DataProvider):
             # Fallback to direct API calls if yfinance not available
             return self._direct_yahoo_api(request)
         except Exception as e:
-            raise ProviderError(f"Yahoo Finance Free error: {str(e)}")
+            raise ProviderError(f"Yahoo Finance Free error: {str(e)}") from e
 
     def _direct_yahoo_api(self, request: DataRequest) -> DataResponse:
         """Direct Yahoo Finance API calls without yfinance."""
@@ -241,9 +242,9 @@ class YahooFinanceFreeProvider(DataProvider):
             )
 
         except ImportError:
-            raise ProviderError("yfinance package required for free real-time data")
+            raise ProviderError("yfinance package required for free real-time data") from None
         except Exception as e:
-            raise ProviderError(f"Yahoo Finance Free real-time error: {str(e)}")
+            raise ProviderError(f"Yahoo Finance Free real-time error: {str(e)}") from e
 
     def get_fundamental_data(self, symbols: List[str]) -> Dict[str, FundamentalData]:
         """Get fundamental data using free Yahoo Finance."""
@@ -276,7 +277,7 @@ class YahooFinanceFreeProvider(DataProvider):
             return fundamentals
 
         except ImportError:
-            raise ProviderError("yfinance package required for free fundamental data")
+            raise ProviderError("yfinance package required for free fundamental data") from None
 
 
 class FREDFreeProvider(DataProvider):
@@ -358,7 +359,7 @@ class FREDFreeProvider(DataProvider):
             return df
 
         except Exception as e:
-            raise ProviderError(f"FRED Free error for {series_id}: {str(e)}")
+            raise ProviderError(f"FRED Free error for {series_id}: {str(e)}") from e
 
     def get_real_time_data(self, symbols: List[str]) -> DataResponse:
         """FRED doesn't provide real-time data."""
@@ -553,7 +554,7 @@ class FreeDataProviderManager:
 
         # Insert in priority order
         inserted = False
-        for i, (existing_name, existing_priority) in enumerate(self.provider_priority):
+        for i, (_existing_name, existing_priority) in enumerate(self.provider_priority):
             if priority < existing_priority:
                 self.provider_priority.insert(i, (provider.name, priority))
                 inserted = True
@@ -567,7 +568,7 @@ class FreeDataProviderManager:
 
         last_error = None
 
-        for provider_name, priority in self.provider_priority:
+        for provider_name, _priority in self.provider_priority:
             provider = self.providers[provider_name]
 
             try:

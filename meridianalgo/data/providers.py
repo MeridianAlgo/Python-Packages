@@ -12,11 +12,11 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import pandas as pd
 import requests
+
 # Import existing yfinance functionality
 import yfinance as yf
 
-from .exceptions import (AuthenticationError, NetworkError, ProviderError,
-                         RateLimitError)
+from .exceptions import AuthenticationError, NetworkError, ProviderError, RateLimitError
 from .models import DataRequest, DataResponse, FundamentalData
 
 logger = logging.getLogger(__name__)
@@ -75,13 +75,13 @@ class DataProvider(ABC):
             return response
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 429:
-                raise RateLimitError(f"Rate limit exceeded for {self.name}")
+                raise RateLimitError(f"Rate limit exceeded for {self.name}") from e
             elif e.response.status_code == 401:
-                raise AuthenticationError(f"Authentication failed for {self.name}")
+                raise AuthenticationError(f"Authentication failed for {self.name}") from e
             else:
-                raise ProviderError(f"HTTP error {e.response.status_code}: {e}")
+                raise ProviderError(f"HTTP error {e.response.status_code}: {e}") from e
         except requests.exceptions.RequestException as e:
-            raise NetworkError(f"Network error for {self.name}: {e}")
+            raise NetworkError(f"Network error for {self.name}: {e}") from e
 
 
 class YahooFinanceProvider(DataProvider):
@@ -134,7 +134,7 @@ class YahooFinanceProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"Yahoo Finance error: {str(e)}")
+            raise ProviderError(f"Yahoo Finance error: {str(e)}") from e
 
     def get_real_time_data(self, symbols: List[str]) -> DataResponse:
         """Get real-time data from Yahoo Finance."""
@@ -170,7 +170,7 @@ class YahooFinanceProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"Yahoo Finance real-time error: {str(e)}")
+            raise ProviderError(f"Yahoo Finance real-time error: {str(e)}") from e
 
     def get_fundamental_data(self, symbols: List[str]) -> Dict[str, FundamentalData]:
         """Get fundamental data from Yahoo Finance."""
@@ -492,7 +492,7 @@ class QuandlProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"Quandl error: {str(e)}")
+            raise ProviderError(f"Quandl error: {str(e)}") from e
 
     def get_real_time_data(self, symbols: List[str]) -> DataResponse:
         """Quandl doesn't provide real-time data."""
@@ -520,7 +520,7 @@ class QuandlProvider(DataProvider):
                     columns = data_json["dataset_data"]["column_names"]
 
                     # Create a dict from the data
-                    data_dict = dict(zip(columns, data_row))
+                    data_dict = dict(zip(columns, data_row, strict=False))
 
                     fundamentals[symbol] = FundamentalData(
                         symbol=symbol,
@@ -667,7 +667,7 @@ class IEXCloudProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"IEX Cloud error: {str(e)}")
+            raise ProviderError(f"IEX Cloud error: {str(e)}") from e
 
     def get_real_time_data(self, symbols: List[str]) -> DataResponse:
         """Get real-time quotes from IEX Cloud."""
@@ -705,7 +705,7 @@ class IEXCloudProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"IEX Cloud real-time error: {str(e)}")
+            raise ProviderError(f"IEX Cloud real-time error: {str(e)}") from e
 
     def get_fundamental_data(self, symbols: List[str]) -> Dict[str, FundamentalData]:
         """Get fundamental data from IEX Cloud."""
@@ -940,7 +940,7 @@ class FREDProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"FRED error: {str(e)}")
+            raise ProviderError(f"FRED error: {str(e)}") from e
 
     def get_real_time_data(self, symbols: List[str]) -> DataResponse:
         """FRED doesn't provide real-time data in the traditional sense."""
@@ -986,7 +986,7 @@ class FREDProvider(DataProvider):
             )
 
         except Exception as e:
-            raise ProviderError(f"FRED latest data error: {str(e)}")
+            raise ProviderError(f"FRED latest data error: {str(e)}") from e
 
     def get_fundamental_data(self, symbols: List[str]) -> Dict[str, FundamentalData]:
         """FRED doesn't provide traditional fundamental data."""

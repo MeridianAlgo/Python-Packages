@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive test runner for MeridianAlgo v4.0.0.
+Comprehensive test runner for MeridianAlgo v6.2.2.
 
 This script runs all tests including unit tests, integration tests, and performance benchmarks.
 """
@@ -17,9 +17,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 def run_test_suite(test_name, test_file):
     """Run a specific test suite and return results."""
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"Running {test_name}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
     start_time = time.time()
 
@@ -53,9 +53,9 @@ def run_test_suite(test_name, test_file):
 
 def run_integration_tests():
     """Run integration tests."""
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("Running Integration Tests")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
     integration_dir = Path(__file__).parent / "integration"
     if integration_dir.exists():
@@ -83,7 +83,7 @@ def run_integration_tests():
 
 def main():
     """Run all tests and generate summary report."""
-    print(" MeridianAlgo v4.0.0 - Comprehensive Test Suite")
+    print(" MeridianAlgo v6.2.2 - Comprehensive Test Suite")
     print("=" * 80)
 
     # Define test suites
@@ -118,15 +118,15 @@ def main():
     integration_success = run_integration_tests()
 
     # Generate summary report
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("TEST SUMMARY REPORT")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
 
     passed_tests = 0
     failed_tests = 0
     skipped_tests = 0
 
-    for test_name, success, duration, output in results:
+    for test_name, success, duration, _output in results:
         if success is True:
             status = " PASSED"
             passed_tests += 1
@@ -147,13 +147,13 @@ def main():
         print(f"{'Integration Tests':<40} {' FAILED':<12}")
         failed_tests += 1
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("FINAL RESULTS:")
     print(f"   Passed: {passed_tests}")
     print(f"   Failed: {failed_tests}")
     print(f"    Skipped: {skipped_tests}")
     print(f"    Total Duration: {total_duration:.2f}s")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
 
     # Overall result
     if failed_tests == 0:

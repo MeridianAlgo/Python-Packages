@@ -2,9 +2,8 @@
 Fixed Income module for MeridianAlgo.
 """
 
-from .valuation import (BondPricer, YieldCurveModel, CreditRiskModel, 
-                        StructuredProducts)
-from .bonds import Bond, YieldCurve, CreditSpreadAnalyzer
+from .bonds import Bond, CreditSpreadAnalyzer, YieldCurve
+from .valuation import BondPricer, CreditRiskModel, StructuredProducts, YieldCurveModel
 
 __all__ = [
     "BondPricer",
@@ -13,5 +12,5 @@ __all__ = [
     "StructuredProducts",
     "Bond",
     "YieldCurve",
-    "CreditSpreadAnalyzer"
+    "CreditSpreadAnalyzer",
 ]

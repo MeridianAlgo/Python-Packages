@@ -8,9 +8,14 @@ This module provides comprehensive portfolio management capabilities including:
 - Performance attribution and factor analysis
 """
 
-from .optimization import (BlackLittermanOptimizer, FactorModelOptimizer,
-                           HierarchicalRiskParityOptimizer, OptimizationResult,
-                           PortfolioOptimizer, RiskParityOptimizer)
+from .optimization import (
+    BlackLittermanOptimizer,
+    FactorModelOptimizer,
+    HierarchicalRiskParityOptimizer,
+    OptimizationResult,
+    PortfolioOptimizer,
+    RiskParityOptimizer,
+)
 
 # Aliases for package-wide consistency
 BlackLitterman = BlackLittermanOptimizer
@@ -36,8 +41,12 @@ __all__ = [
 
 # Risk Management
 try:
-    from .risk_management import (RiskManager, RiskMetrics,  # noqa: F401
-                                  StressTester, VaRCalculator)
+    from .risk_management import (  # noqa: F401
+        RiskManager,
+        RiskMetrics,
+        StressTester,
+        VaRCalculator,
+    )
 
     __all__.extend(["RiskManager", "VaRCalculator", "StressTester", "RiskMetrics"])
     RISK_MANAGEMENT_AVAILABLE = True
@@ -46,8 +55,11 @@ except ImportError:
 
 # Performance Analysis
 try:
-    from .performance import (AttributionAnalyzer,  # noqa: F401
-                              FactorAnalyzer, PerformanceAnalyzer)
+    from .performance import (  # noqa: F401
+        AttributionAnalyzer,
+        FactorAnalyzer,
+        PerformanceAnalyzer,
+    )
 
     __all__.extend(["PerformanceAnalyzer", "AttributionAnalyzer", "FactorAnalyzer"])
     PERFORMANCE_AVAILABLE = True
@@ -56,9 +68,12 @@ except ImportError:
 
 # Transaction Costs
 try:
-    from .transaction_costs import (LinearImpactModel,  # noqa: F401
-                                    SquareRootImpactModel, TaxLossHarvester,
-                                    TransactionCostOptimizer)
+    from .transaction_costs import (  # noqa: F401
+        LinearImpactModel,
+        SquareRootImpactModel,
+        TaxLossHarvester,
+        TransactionCostOptimizer,
+    )
 
     __all__.extend(
         [
@@ -74,9 +89,12 @@ except ImportError:
 
 # Rebalancing
 try:
-    from .rebalancing import (CalendarRebalancer,  # noqa: F401
-                              OptimalRebalancer, Rebalancer,
-                              ThresholdRebalancer)
+    from .rebalancing import (  # noqa: F401
+        CalendarRebalancer,
+        OptimalRebalancer,
+        Rebalancer,
+        ThresholdRebalancer,
+    )
 
     __all__.extend(
         ["Rebalancer", "CalendarRebalancer", "ThresholdRebalancer", "OptimalRebalancer"]

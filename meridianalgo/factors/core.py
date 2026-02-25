@@ -81,7 +81,7 @@ class FamaFrenchModel:
         model.fit(X, y)
 
         self.alpha = model.intercept_
-        self.coefficients = dict(zip(factor_names, model.coef_))
+        self.coefficients = dict(zip(factor_names, model.coef_, strict=False))
 
         # Calculate R-squared
         predictions = model.predict(X)
@@ -107,7 +107,7 @@ class FamaFrenchModel:
             "coefficients": self.coefficients,
             "r_squared": self.r_squared,
             "alpha_t_stat": alpha_t_stat,
-            "t_stats": dict(zip(factor_names, t_stats)),
+            "t_stats": dict(zip(factor_names, t_stats, strict=False)),
             "significant_alpha": abs(alpha_t_stat) > 1.96,  # 95% confidence
         }
 
@@ -225,7 +225,7 @@ class APTModel:
         model.fit(X, y)
 
         alpha = model.intercept_
-        betas = dict(zip(self.factors.columns, model.coef_))
+        betas = dict(zip(self.factors.columns, model.coef_, strict=False))
 
         # Calculate R-squared
         predictions = model.predict(X)
@@ -297,7 +297,7 @@ class CustomFactorModel:
             model.fit(X, y)
 
             alpha = model.intercept_
-            betas = dict(zip(self.factor_names, model.coef_))
+            betas = dict(zip(self.factor_names, model.coef_, strict=False))
 
             # Calculate metrics
             predictions = model.predict(X)
@@ -581,7 +581,7 @@ class AlphaCapture:
             neg_sharpe, x0, method="SLSQP", bounds=bounds, constraints=constraints
         )
 
-        optimal_tilts = dict(zip(factor_names, result.x))
+        optimal_tilts = dict(zip(factor_names, result.x, strict=False))
 
         return optimal_tilts
 

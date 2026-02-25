@@ -14,11 +14,21 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.technical_indicators import (ATR, EMA, MACD, OBV, ROC,
-                                                   RSI, SMA, BollingerBands,
-                                                   FibonacciRetracement,
-                                                   MoneyFlowIndex, PivotPoints,
-                                                   Stochastic, WilliamsR)
+    from meridianalgo.technical_indicators import (
+        ATR,
+        EMA,
+        MACD,
+        OBV,
+        ROC,
+        RSI,
+        SMA,
+        BollingerBands,
+        FibonacciRetracement,
+        MoneyFlowIndex,
+        PivotPoints,
+        Stochastic,
+        WilliamsR,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -242,8 +252,7 @@ class TestTechnicalIndicators:
 def test_technical_indicators_import():
     """Test that technical indicators can be imported."""
     try:
-        from meridianalgo.technical_indicators import (EMA, MACD,  # noqa: F401
-                                                       RSI, SMA)
+        from meridianalgo.technical_indicators import EMA, MACD, RSI, SMA  # noqa: F401
 
         print(" Technical indicators import test passed")
         return True

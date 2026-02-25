@@ -14,10 +14,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.portfolio_management import (BlackLitterman,
-                                                   EfficientFrontier,
-                                                   PortfolioOptimizer,
-                                                   RiskParity)
+    from meridianalgo.portfolio_management import (
+        BlackLitterman,
+        EfficientFrontier,
+        PortfolioOptimizer,
+        RiskParity,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -341,7 +343,9 @@ def test_portfolio_management_import():
     """Test that portfolio management can be imported."""
     try:
         from meridianalgo.portfolio_management import (  # noqa: F401
-            EfficientFrontier, PortfolioOptimizer)
+            EfficientFrontier,
+            PortfolioOptimizer,
+        )
 
         print(" Portfolio management import test passed")
         return True

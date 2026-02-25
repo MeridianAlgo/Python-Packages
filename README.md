@@ -1,4 +1,4 @@
-# 🌌 MeridianAlgo
+# MeridianAlgo
 ## The Institutional-Grade Quantitative Finance Platform for Professional Developers
 
 [![PyPI version](https://img.shields.io/pypi/v/meridianalgo.svg?style=flat-square&color=blue)](https://pypi.org/project/meridianalgo/)
@@ -10,38 +10,38 @@
 
 ---
 
-## 💎 Institutional Modules
+## Institutional Modules
 
 MeridianAlgo is built on a modular "Enterprise Foundation" where every component is optimized for performance and reliability.
 
-### 📈 Core Financial Primitives
+### Core Financial Primitives
 The bedrock of the platform, providing high-performance implementations of essential financial calculations.
 - **Statistical Arbitrage Engine**: Cointegration analysis, Hurst exponent calculation, and Half-life estimation.
 - **Advanced Technical Indicators**: Vectorized RSI, MACD, Bollinger Bands, and 50+ other institutional indicators.
 - **Robust Market Data**: Unified API for multi-vendor data acquisition with built-in cleaning and alignment.
 
-### 🏗 Portfolio Management & Optimization
+### Portfolio Management & Optimization
 Beyond standard Mean-Variance optimization, we implement robust allocation strategies.
 - **Modern Portfolio Theory+**: MVO, Black-Litterman, and Risk Parity (ERC).
 - **Hierarchical Risk Parity (HRP)**: Machine-learning based diversification that handles high correlations.
 - **Nested Clustered Optimization (NCO)**: Addressing the instability of quadratic programming in financial datasets.
 - **Transaction Cost Optimization**: Incorporating market impact and slippage directly into the allocation process.
 
-### 🛡 Risk Management & Analytics
+### Risk Management & Analytics
 Comprehensive risk assessment and performance monitoring.
 - **Multi-Method VaR**: Parametric (Delta-Normal), Historical Simulation, and Monte Carlo models.
 - **Conditional VaR (CVaR)**: Expected Shortfall with tail risk decomposition.
 - **Cornish-Fisher Adjustments**: Accounting for non-normality in returns (skewness/kurtosis).
 - **Stress Testing Engine**: Scenario analysis for historical crashes (2008, 2020) and custom macroeconomic shocks.
 
-### 🤖 Financial Machine Learning
+### Financial Machine Learning
 Productionizing ML for time-series without the common pitfalls of overfitting.
 - **Deep Learning Architectures**: High-fidelity LSTM, GRU, and Transformer models for financial time-series.
 - **Purged Cross-Validation**: Preventing information leakage across overlapping time intervals.
 - **Feature Engineering Pipeline**: 500+ alpha factors with built-in feature selection (Mutual Information, RF importance).
 - **Walk-Forward Validation**: Simulating realistic model retraining and deployment cycles.
 
-### ⚡ Optimal Execution
+### Optimal Execution
 Production-grade algorithms to minimize market impact.
 - **Standard Algos**: VWAP, TWAP, and Percentage of Volume (POV) with adaptive participation.
 - **Implementation Shortfall**: Almgren-Chriss optimal trajectory for risk-averse liquidation.
@@ -49,7 +49,7 @@ Production-grade algorithms to minimize market impact.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Unified API Access
 MeridianAlgo provides a clean "one-stop" API for baseline quantitative tasks.
@@ -92,7 +92,7 @@ delta = GreeksCalculator.delta('call', S=100, K=105, T=0.5, r=0.05, sigma=0.2)
 
 ---
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 *Tested on Intel i9-12900K, 64GB RAM, Ubuntu 22.04*
 
 | Operation | Scale | Latency | Efficiency |
@@ -104,7 +104,7 @@ delta = GreeksCalculator.delta('call', S=100, K=105, T=0.5, r=0.05, sigma=0.2)
 
 ---
 
-## 🛠 Enterprise Configuration
+## Enterprise Configuration
 
 ### Logging & Auditing
 Standardized logging for production environments to ensure every trade decision is auditable.
@@ -122,12 +122,12 @@ DataValidator.validate_timeseries(raw_data) # Validates index, continuity, and N
 
 ---
 
-## 📖 Documentation
+## Documentation
 Visit [docs.meridianalgo.com](https://meridianalgo.readthedocs.io) for full API documentation, mathematical derivations, and research notebooks.
 
 ---
 
-## ⚖️ Legal Disclaimer
+## Legal Disclaimer
 *MeridianAlgo is a research and development platform. Trading financial instruments involves significant risk. The authors provide no warranties and are not responsible for financial losses incurred through the use of this software.*
 
 ---

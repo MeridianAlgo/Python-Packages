@@ -14,8 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.ml import (FeatureEngineer, LSTMPredictor,
-                                 prepare_data_for_lstm)
+    from meridianalgo.ml import FeatureEngineer, LSTMPredictor, prepare_data_for_lstm
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -408,8 +407,7 @@ class TestMachineLearning:
 def test_machine_learning_import():
     """Test that machine learning can be imported."""
     try:
-        from meridianalgo.ml import (FeatureEngineer,  # noqa: F401
-                                     LSTMPredictor)
+        from meridianalgo.ml import FeatureEngineer, LSTMPredictor  # noqa: F401
 
         print(" Machine learning import test passed")
         return True

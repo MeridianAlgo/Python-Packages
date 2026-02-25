@@ -448,7 +448,7 @@ class TearSheet:
         ax.axhline(0, color="black", linewidth=0.5)
 
         # Add value labels
-        for bar, val in zip(bars, yearly.values):
+        for bar, val in zip(bars, yearly.values, strict=False):
             height = bar.get_height()
             ax.annotate(
                 f"{val:.1%}",

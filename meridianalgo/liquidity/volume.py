@@ -269,7 +269,7 @@ class InstitutionalFlow:
         clusters = []
         current_cluster = []
 
-        for idx, row in trades.iterrows():
+        for _idx, row in trades.iterrows():
             if not current_cluster:
                 current_cluster.append(row)
             else:

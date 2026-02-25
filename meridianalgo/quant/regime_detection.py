@@ -55,7 +55,6 @@ class HiddenMarkovModel:
         Dict
             Model parameters
         """
-        len(returns)
         returns_array = returns.values
 
         # Initialize parameters
@@ -68,7 +67,7 @@ class HiddenMarkovModel:
 
         log_likelihood_old = -np.inf
 
-        for iteration in range(max_iter):
+        for _iteration in range(max_iter):
             # E-step: Forward-Backward algorithm
             alpha, beta, log_likelihood = self._forward_backward(returns_array)
 
@@ -104,9 +103,19 @@ class HiddenMarkovModel:
         self.states = self._viterbi(returns_array)
 
         return {
-            "means": dict(zip([f"State{i}" for i in range(self.n_states)], self.means)),
+            "means": dict(
+                zip(
+                    [f"State{i}" for i in range(self.n_states)],
+                    self.means,
+                    strict=False,
+                )
+            ),
             "std_devs": dict(
-                zip([f"State{i}" for i in range(self.n_states)], self.std_devs)
+                zip(
+                    [f"State{i}" for i in range(self.n_states)],
+                    self.std_devs,
+                    strict=False,
+                )
             ),
             "transition_matrix": pd.DataFrame(
                 self.transition_matrix,
@@ -114,7 +123,7 @@ class HiddenMarkovModel:
                 columns=[f"State{i}" for i in range(self.n_states)],
             ),
             "log_likelihood": log_likelihood,
-            "n_iterations": iteration + 1,
+            "n_iterations": _iteration + 1,
         }
 
     def _forward_backward(
@@ -309,7 +318,7 @@ class RegimeSwitchingModel:
         forecasts = []
         state = current_state
 
-        for t in range(n_steps):
+        for _t in range(n_steps):
             state = state @ self.transition_probs.values
             forecasts.append(state.copy())
 
@@ -436,7 +445,6 @@ class StructuralBreakDetection:
         # Try different numbers of breaks
         for n_breaks in range(1, min(max_breaks + 1, n // min_segment)):
             # Grid search for break points
-            range(min_segment, n - min_segment)
 
             # For simplicity, use equal spacing
             break_spacing = (n - 2 * min_segment) // (n_breaks + 1)

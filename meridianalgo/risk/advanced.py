@@ -522,7 +522,9 @@ class StressTesting:
             # Calculate portfolio impact
             portfolio_shock = sum(
                 correlated_shocks.get(asset, 0) * weight
-                for asset, weight in zip(base_returns.columns, portfolio_weights)
+                for asset, weight in zip(
+                    base_returns.columns, portfolio_weights, strict=False
+                )
             )
 
             portfolio_value_change = current_portfolio_value * portfolio_shock
@@ -900,7 +902,7 @@ class RiskBudgeting:
 
             # Calculate factor contributions to portfolio risk
             factor_contributions = []
-            for i, factor in enumerate(factor_returns.columns):
+            for i, _factor in enumerate(factor_returns.columns):
                 factor_loading = factor_loadings.iloc[:, i].values
                 factor_contrib = (weights @ factor_loading) ** 2 * factor_cov.iloc[i, i]
                 factor_contributions.append(factor_contrib)
@@ -926,7 +928,7 @@ class RiskBudgeting:
             # Calculate factor risk contributions
             portfolio_var = weights @ asset_cov @ weights
             factor_contributions = []
-            for i, factor in enumerate(factor_returns.columns):
+            for i, _factor in enumerate(factor_returns.columns):
                 factor_loading = factor_loadings.iloc[:, i].values
                 factor_contrib = (weights @ factor_loading) ** 2 * factor_cov.iloc[i, i]
                 factor_contributions.append(factor_contrib)

@@ -14,11 +14,16 @@ import numpy as np
 import pandas as pd
 
 import meridianalgo as ma
-from meridianalgo.analytics import (DrawdownAnalyzer, PerformanceAnalyzer,
-                                    RiskAnalyzer)
+from meridianalgo.analytics import DrawdownAnalyzer, PerformanceAnalyzer, RiskAnalyzer
 from meridianalgo.liquidity import VPIN, MarketImpact, OrderBook
-from meridianalgo.signals import (ATR, MACD, RSI, BollingerBands,
-                                  SignalGenerator, TechnicalAnalyzer)
+from meridianalgo.signals import (
+    ATR,
+    MACD,
+    RSI,
+    BollingerBands,
+    SignalGenerator,
+    TechnicalAnalyzer,
+)
 
 print("=" * 70)
 print("MeridianAlgo v6.2.1 - Comprehensive Examples")
@@ -334,8 +339,11 @@ print("8. QUANTITATIVE STRATEGIES")
 print("=" * 70)
 
 try:
-    from meridianalgo.quant import (CointegrationAnalyzer, OrnsteinUhlenbeck,
-                                    PairsTrading)
+    from meridianalgo.quant import (
+        CointegrationAnalyzer,
+        OrnsteinUhlenbeck,
+        PairsTrading,
+    )
 
     # Create cointegrated pairs
     np.random.seed(123)

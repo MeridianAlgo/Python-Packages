@@ -482,9 +482,10 @@ class Strategy(ABC):
         for signal in signals:
             self.event_queue.put(signal)
 
+    @abstractmethod
     def on_fill(self, fill_event: FillEvent):
         """Handle fill event."""
-        pass  # Override in subclass if needed
+        pass
 
 
 class SimpleMovingAverageStrategy(Strategy):
@@ -565,6 +566,10 @@ class SimpleMovingAverageStrategy(Strategy):
             self.signals[symbol] = "SELL"
 
         return signals
+
+    def on_fill(self, fill_event: FillEvent):
+        """Handle fill event for SMA strategy (no specific logic needed)."""
+        pass
 
 
 class Portfolio:
@@ -918,7 +923,7 @@ class BacktestEngine:
         for trade in self.portfolio.trades:
             positions[trade["symbol"]].append(trade)
 
-        for symbol, symbol_trades in positions.items():
+        for _symbol, symbol_trades in positions.items():
             # Simple FIFO P&L calculation
             buys = [t for t in symbol_trades if t["side"] == "BUY"]
             sells = [t for t in symbol_trades if t["side"] == "SELL"]

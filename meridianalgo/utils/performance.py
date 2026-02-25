@@ -237,6 +237,7 @@ class MemoryManager:
                     warnings.warn(
                         f"High memory usage before function: {memory_before['percent']:.1f}%",
                         UserWarning,
+                        stacklevel=2,
                     )
 
                 result = func(*args, **kwargs)
@@ -247,6 +248,7 @@ class MemoryManager:
                     warnings.warn(
                         f"High memory usage after function: {memory_after['percent']:.1f}%",
                         UserWarning,
+                        stacklevel=2,
                     )
 
                 return result

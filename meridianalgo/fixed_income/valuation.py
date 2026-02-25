@@ -436,16 +436,16 @@ class YieldCurveModel:
         zcb_prices = np.ones(len(all_times))
 
         # Bootstrap iteratively
-        for i, (price, cf_times, cf_amounts) in enumerate(
-            zip(bond_prices, cash_flow_times, cash_flows)
+        for _i, (price, cf_times, cf_amounts) in enumerate(
+            zip(bond_prices, cash_flow_times, cash_flows, strict=False)
         ):
             for j, time in enumerate(cf_times):
                 time_idx = all_times.index(time)
 
                 # Calculate present value of known cash flows
                 pv_known = 0.0
-                for k, (cf_time, cf_amount) in enumerate(
-                    zip(cf_times[:j], cf_amounts[:j])
+                for _k, (cf_time, cf_amount) in enumerate(
+                    zip(cf_times[:j], cf_amounts[:j], strict=False)
                 ):
                     if cf_time < time:
                         time_idx_known = all_times.index(cf_time)

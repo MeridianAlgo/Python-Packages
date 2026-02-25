@@ -14,9 +14,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.risk_analysis import (ExpectedShortfall, HistoricalVaR,
-                                            MonteCarloVaR, ParametricVaR,
-                                            VaRCalculator)
+    from meridianalgo.risk_analysis import (
+        ExpectedShortfall,
+        HistoricalVaR,
+        MonteCarloVaR,
+        ParametricVaR,
+        VaRCalculator,
+    )
 except ImportError as e:
     pytest.skip(f"Could not import meridianalgo: {e}", allow_module_level=True)
 
@@ -344,7 +348,9 @@ def test_risk_analysis_import():
     """Test that risk analysis can be imported."""
     try:
         from meridianalgo.risk_analysis import (  # noqa: F401
-            ExpectedShortfall, VaRCalculator)
+            ExpectedShortfall,
+            VaRCalculator,
+        )
 
         print(" Risk analysis import test passed")
         return True

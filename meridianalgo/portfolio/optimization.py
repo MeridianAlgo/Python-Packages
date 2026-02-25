@@ -20,7 +20,7 @@ try:
     TRANSACTION_COSTS_AVAILABLE = True
 except ImportError:
     TRANSACTION_COSTS_AVAILABLE = False
-    warnings.warn("Transaction cost optimization not available.")
+    warnings.warn("Transaction cost optimization not available.", stacklevel=2)
 
 try:
     import cvxpy as cp
@@ -28,7 +28,9 @@ try:
     CVXPY_AVAILABLE = True
 except ImportError:
     CVXPY_AVAILABLE = False
-    warnings.warn("CVXPY not available. Some optimization features will be limited.")
+    warnings.warn(
+        "CVXPY not available. Some optimization features will be limited.", stacklevel=2
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +81,9 @@ class BaseOptimizer(ABC):
         # Check for positive semi-definite covariance matrix
         eigenvals = np.linalg.eigvals(covariance_matrix.values)
         if np.any(eigenvals < -1e-8):
-            warnings.warn("Covariance matrix is not positive semi-definite")
+            warnings.warn(
+                "Covariance matrix is not positive semi-definite", stacklevel=2
+            )
 
     def calculate_portfolio_metrics(
         self,

@@ -579,8 +579,12 @@ class MicropriceEstimator:
             return order_book.get_mid_price()
 
         # Weighted average
-        bid_contribution = sum(p * v for p, v in zip(bid_prices, bid_volumes))
-        ask_contribution = sum(p * v for p, v in zip(ask_prices, ask_volumes))
+        bid_contribution = sum(
+            p * v for p, v in zip(bid_prices, bid_volumes, strict=False)
+        )
+        ask_contribution = sum(
+            p * v for p, v in zip(ask_prices, ask_volumes, strict=False)
+        )
 
         microprice = (
             bid_contribution * total_ask_volume + ask_contribution * total_bid_volume

@@ -20,21 +20,24 @@ try:
     PYTORCH_AVAILABLE = True
 except ImportError:
     PYTORCH_AVAILABLE = False
-    warnings.warn("PyTorch not available. Deep learning models will be limited.")
+    warnings.warn(
+        "PyTorch not available. Deep learning models will be limited.", stacklevel=2
+    )
 
 try:
-    from sklearn.ensemble import (GradientBoostingRegressor,
-                                  RandomForestRegressor)
+    from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
     from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, Ridge
-    from sklearn.metrics import (mean_absolute_error, mean_squared_error,
-                                 r2_score)
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     from sklearn.preprocessing import StandardScaler
     from sklearn.svm import SVR
 
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
-    warnings.warn("Scikit-learn not available. Traditional ML models will be limited.")
+    warnings.warn(
+        "Scikit-learn not available. Traditional ML models will be limited.",
+        stacklevel=2,
+    )
 
 try:
     import xgboost as xgb
@@ -42,7 +45,7 @@ try:
     XGBOOST_AVAILABLE = True
 except ImportError:
     XGBOOST_AVAILABLE = False
-    warnings.warn("XGBoost not available.")
+    warnings.warn("XGBoost not available.", stacklevel=2)
 
 try:
     import lightgbm as lgb
@@ -50,7 +53,7 @@ try:
     LIGHTGBM_AVAILABLE = True
 except ImportError:
     LIGHTGBM_AVAILABLE = False
-    warnings.warn("LightGBM not available.")
+    warnings.warn("LightGBM not available.", stacklevel=2)
 
 logger = logging.getLogger(__name__)
 
@@ -777,11 +780,11 @@ class TraditionalMLModel(BaseFinancialModel):
 
         if hasattr(self.model, "feature_importances_"):
             importance = self.model.feature_importances_
-            return dict(zip(self.feature_names, importance))
+            return dict(zip(self.feature_names, importance, strict=False))
         elif hasattr(self.model, "coef_"):
             # For linear models, use absolute coefficients
             importance = np.abs(self.model.coef_)
-            return dict(zip(self.feature_names, importance))
+            return dict(zip(self.feature_names, importance, strict=False))
         else:
             return None
 
@@ -1200,7 +1203,7 @@ class EnsembleModel(BaseFinancialModel):
         ensemble_pred = np.zeros(len(X))
         total_weight = 0
 
-        for pred, weight in zip(predictions, self.weights):
+        for pred, weight in zip(predictions, self.weights, strict=False):
             if len(pred) == len(X):  # Ensure prediction length matches
                 ensemble_pred += pred * weight
                 total_weight += weight
@@ -1214,7 +1217,7 @@ class EnsembleModel(BaseFinancialModel):
         """Get aggregated feature importance from ensemble models."""
         importance_dict = {}
 
-        for model, weight in zip(self.models, self.weights):
+        for model, weight in zip(self.models, self.weights, strict=False):
             model_importance = model.get_feature_importance()
             if model_importance:
                 for feature, importance in model_importance.items():
@@ -1280,7 +1283,7 @@ class EnhancedRandomForest(BaseFinancialModel):
             return None
 
         importance = self.model.feature_importances_
-        return dict(zip(self.feature_names, importance))
+        return dict(zip(self.feature_names, importance, strict=False))
 
 
 class XGBoostModel(BaseFinancialModel):
@@ -1334,7 +1337,7 @@ class XGBoostModel(BaseFinancialModel):
             return None
 
         importance = self.model.feature_importances_
-        return dict(zip(self.feature_names, importance))
+        return dict(zip(self.feature_names, importance, strict=False))
 
 
 if __name__ == "__main__":

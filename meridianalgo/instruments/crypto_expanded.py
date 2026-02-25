@@ -1436,7 +1436,7 @@ class DeFiYieldOptimizer:
         )
 
         # Calculate risk-adjusted yields
-        for name, opp in opportunities["opportunities"].items():
+        for _name, opp in opportunities["opportunities"].items():
             blockchain = opp["blockchain"]
             gas_cost = self.gas_prices.get(blockchain.lower(), 1.0)
 

@@ -14,8 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 try:
     from meridianalgo.technical_analysis.framework import BaseIndicator
-    from meridianalgo.technical_analysis.indicators import (MACD, RSI,
-                                                            BollingerBands)
+    from meridianalgo.technical_analysis.indicators import MACD, RSI, BollingerBands
     from meridianalgo.technical_analysis.patterns import CandlestickPatterns
 
     TECHNICAL_ANALYSIS_AVAILABLE = True
@@ -24,13 +23,10 @@ except ImportError:
 
 # Also test legacy indicators
 try:
-    from meridianalgo.technical_indicators import EMA
+    from meridianalgo.technical_indicators import EMA, SMA, Stochastic
     from meridianalgo.technical_indicators import MACD as LegacyMACD
     from meridianalgo.technical_indicators import RSI as LegacyRSI
-    from meridianalgo.technical_indicators import SMA
-    from meridianalgo.technical_indicators import \
-        BollingerBands as LegacyBollingerBands
-    from meridianalgo.technical_indicators import Stochastic
+    from meridianalgo.technical_indicators import BollingerBands as LegacyBollingerBands
 
     LEGACY_INDICATORS_AVAILABLE = True
 except ImportError:

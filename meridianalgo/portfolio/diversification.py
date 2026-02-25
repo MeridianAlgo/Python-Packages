@@ -112,7 +112,9 @@ class DiversificationAnalyzer:
         return {
             "clusters": clusters,
             "cluster_stats": cluster_stats,
-            "cluster_labels": dict(zip(self.returns.columns, cluster_labels)),
+            "cluster_labels": dict(
+                zip(self.returns.columns, cluster_labels, strict=False)
+            ),
         }
 
     def calculate_diversification_ratio(
@@ -287,7 +289,7 @@ class DiversificationAnalyzer:
         ).sum(axis=1)
 
         return {
-            "weights": dict(zip(self.returns.columns, weights)),
+            "weights": dict(zip(self.returns.columns, weights, strict=False)),
             "diversification_ratio": self.calculate_diversification_ratio(weights),
             "effective_number_bets": self.calculate_effective_number_bets(weights),
             "portfolio_return": portfolio_returns.mean() * 252,
@@ -462,10 +464,10 @@ class AlternativeInvestmentAnalyzer:
 
         return {
             "traditional_weights": dict(
-                zip(traditional_returns.columns, traditional_weights)
+                zip(traditional_returns.columns, traditional_weights, strict=False)
             ),
             "alternative_weights": dict(
-                zip(alternative_returns.columns, alternative_weights)
+                zip(alternative_returns.columns, alternative_weights, strict=False)
             ),
             "portfolio_return": portfolio_returns.mean() * 252,
             "portfolio_volatility": portfolio_returns.std() * np.sqrt(252),

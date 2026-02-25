@@ -13,20 +13,22 @@ This file demonstrates the new quantitative finance algorithms including:
 import numpy as np
 import pandas as pd
 
-from meridianalgo.quant.execution_algorithms import (TWAP, VWAP,
-                                                     ImplementationShortfall)
-from meridianalgo.quant.factor_models import (FactorRiskDecomposition,
-                                              FamaFrenchModel)
+from meridianalgo.quant.execution_algorithms import TWAP, VWAP, ImplementationShortfall
+from meridianalgo.quant.factor_models import FactorRiskDecomposition, FamaFrenchModel
 from meridianalgo.quant.high_frequency import HFTSignalGenerator, MarketMaking
+
 # Import MeridianAlgo quant modules
-from meridianalgo.quant.market_microstructure import (MarketImpactModel,
-                                                      OrderFlowImbalance,
-                                                      RealizedVolatility)
-from meridianalgo.quant.regime_detection import (HiddenMarkovModel,
-                                                 MarketStateClassifier)
-from meridianalgo.quant.statistical_arbitrage import (CointegrationAnalyzer,
-                                                      OrnsteinUhlenbeck,
-                                                      PairsTrading)
+from meridianalgo.quant.market_microstructure import (
+    MarketImpactModel,
+    OrderFlowImbalance,
+    RealizedVolatility,
+)
+from meridianalgo.quant.regime_detection import HiddenMarkovModel, MarketStateClassifier
+from meridianalgo.quant.statistical_arbitrage import (
+    CointegrationAnalyzer,
+    OrnsteinUhlenbeck,
+    PairsTrading,
+)
 
 
 def example_market_microstructure():
@@ -63,7 +65,7 @@ def example_market_microstructure():
     impact = impact_model.square_root_law(
         order_size=10000, daily_volume=500000, sigma=0.02
     )
-    print(f"   Expected market impact: {impact:.4f} ({impact*10000:.2f} bps)")
+    print(f"   Expected market impact: {impact:.4f} ({impact * 10000:.2f} bps)")
 
     # Realized Volatility
     print("\n4. Realized Volatility")
@@ -232,7 +234,7 @@ def example_high_frequency_trading():
     print(f"   Optimal Bid: ${bid_price:.2f} (size: {bid_size})")
     print(f"   Optimal Ask: ${ask_price:.2f} (size: {ask_size})")
     print(
-        f"   Spread: ${ask_price - bid_price:.2f} ({(ask_price - bid_price)/mid_price * 10000:.1f} bps)"
+        f"   Spread: ${ask_price - bid_price:.2f} ({(ask_price - bid_price) / mid_price * 10000:.1f} bps)"
     )
     print(f"   Current Inventory: {mm.position}")
 
@@ -294,7 +296,7 @@ def example_factor_models():
     results = ff.fit(returns, factor_data)
 
     print("\n   Regression Results:")
-    print(f"   Alpha: {results['alpha']:.6f} ({results['alpha']*252:.4%} annualized)")
+    print(f"   Alpha: {results['alpha']:.6f} ({results['alpha'] * 252:.4%} annualized)")
     print(f"   Alpha t-stat: {results['alpha_t_stat']:.2f}")
     print(f"   Significant Alpha: {results['significant_alpha']}")
     print(f"   R-squared: {results['r_squared']:.4f}")
@@ -403,7 +405,7 @@ def example_regime_detection():
     regime_counts = vol_regime.value_counts()
     print("\n   Regime Distribution:")
     for regime, count in regime_counts.items():
-        print(f"   {regime:20s}: {count:3d} periods ({count/len(vol_regime):.1%})")
+        print(f"   {regime:20s}: {count:3d} periods ({count / len(vol_regime):.1%})")
 
 
 def main():

@@ -287,7 +287,7 @@ class CointegrationAnalyzer:
                 "significance_level": significance_level,
             }
         except Exception as e:
-            warnings.warn(f"Cointegration test failed: {e}")
+            warnings.warn(f"Cointegration test failed: {e}", stacklevel=2)
             return {
                 "test_statistic": np.nan,
                 "pvalue": 1.0,
@@ -330,7 +330,7 @@ class CointegrationAnalyzer:
                 "eigenvalues": result.eig,
             }
         except Exception as e:
-            warnings.warn(f"Johansen test failed: {e}")
+            warnings.warn(f"Johansen test failed: {e}", stacklevel=2)
             return {"error": str(e)}
 
     @staticmethod
@@ -545,7 +545,7 @@ class MeanReversionTester:
         }
 
     @staticmethod
-    def variance_ratio_test(returns: pd.Series, lags: List[int] = [2, 5, 10]) -> Dict:
+    def variance_ratio_test(returns: pd.Series, lags: List[int] = None) -> Dict:
         """
         Variance ratio test for random walk hypothesis.
 
@@ -565,6 +565,8 @@ class MeanReversionTester:
         Dict
             Variance ratios and test statistics
         """
+        if lags is None:
+            lags = [2, 5, 10]
         results = {}
 
         for k in lags:

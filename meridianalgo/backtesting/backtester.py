@@ -11,9 +11,20 @@ from typing import Any, Dict, Iterator, List, Optional
 import numpy as np
 import pandas as pd
 
-from .events import (Event, EventDispatcher, EventQueue, EventType, FillEvent,
-                     FillStatus, MarketEvent, OrderEvent, OrderSide, OrderType,
-                     SignalEvent, SignalType)
+from .events import (
+    Event,
+    EventDispatcher,
+    EventQueue,
+    EventType,
+    FillEvent,
+    FillStatus,
+    MarketEvent,
+    OrderEvent,
+    OrderSide,
+    OrderType,
+    SignalEvent,
+    SignalType,
+)
 from .market_simulator import MarketSimulator
 
 logger = logging.getLogger(__name__)
@@ -182,6 +193,7 @@ class Strategy(ABC):
         """Handle market event and generate signals."""
         pass
 
+    @abstractmethod
     def on_fill_event(self, fill_event: FillEvent) -> None:
         """Handle fill event (optional override)."""
         pass
@@ -645,6 +657,10 @@ class BuyAndHoldStrategy(Strategy):
             self.bought.add(market_event.symbol)
 
         return signals
+
+    def on_fill_event(self, fill_event: FillEvent) -> None:
+        """Handle fill event for BuyAndHold strategy."""
+        pass
 
 
 if __name__ == "__main__":

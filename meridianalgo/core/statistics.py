@@ -916,7 +916,7 @@ def calculate_half_life(series: pd.Series) -> float:
 
 def perform_statistical_tests(
     returns: pd.DataFrame,
-    tests: List[str] = ["normality", "autocorrelation", "stationarity"],
+    tests: List[str] = None,
 ) -> Dict[str, Any]:
     """
     Perform comprehensive statistical tests.
@@ -928,6 +928,8 @@ def perform_statistical_tests(
     Returns:
         Dictionary with test results
     """
+    if tests is None:
+        tests = ["normality", "autocorrelation", "stationarity"]
     stats_analyzer = AdvancedStatistics(returns)
     results = {}
 

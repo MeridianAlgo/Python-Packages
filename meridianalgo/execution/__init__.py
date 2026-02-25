@@ -4,8 +4,14 @@ Execution module for MeridianAlgo.
 Provides optimal execution algorithms including VWAP, TWAP, POV, and IS.
 """
 
-from .core import (POV, TWAP, VWAP, AdaptiveExecution,
-                   ExecutionAnalyzer, ImplementationShortfall)
+from .core import (
+    POV,
+    TWAP,
+    VWAP,
+    AdaptiveExecution,
+    ExecutionAnalyzer,
+    ImplementationShortfall,
+)
 
 __all__ = [
     "VWAP",
@@ -13,5 +19,5 @@ __all__ = [
     "POV",
     "ImplementationShortfall",
     "AdaptiveExecution",
-    "ExecutionAnalyzer"
+    "ExecutionAnalyzer",
 ]

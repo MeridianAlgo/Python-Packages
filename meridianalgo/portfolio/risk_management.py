@@ -18,7 +18,9 @@ try:
     ARCH_AVAILABLE = True
 except ImportError:
     ARCH_AVAILABLE = False
-    warnings.warn("ARCH package not available. GARCH models will be limited.")
+    warnings.warn(
+        "ARCH package not available. GARCH models will be limited.", stacklevel=2
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -267,7 +269,7 @@ class MonteCarloVaR(BaseRiskModel):
 
                 for _ in range(self.n_simulations):
                     path = [0]
-                    for t in range(self.time_horizon):
+                    for _t in range(self.time_horizon):
                         dW = np.random.normal(0, np.sqrt(dt))
                         path.append(path[-1] + mu * dt + sigma * dW)
 
@@ -321,7 +323,7 @@ class MonteCarloVaR(BaseRiskModel):
 
                 for _ in range(self.n_simulations):
                     path = [0]
-                    for t in range(self.time_horizon):
+                    for _t in range(self.time_horizon):
                         dW = np.random.normal(0, np.sqrt(dt))
                         path.append(path[-1] + mu * dt + sigma * dW)
 
@@ -351,9 +353,11 @@ class RiskManager:
         self,
         returns: pd.Series,
         benchmark_returns: pd.Series = None,
-        confidence_levels: List[float] = [0.95, 0.99],
+        confidence_levels: List[float] = None,
     ) -> RiskMetrics:
         """Calculate comprehensive risk metrics for a portfolio."""
+        if confidence_levels is None:
+            confidence_levels = [0.95, 0.99]
         if len(returns) < 2:
             return RiskMetrics(0, 0, 0, 0, 0, 0, 0, 0)
 
@@ -520,9 +524,11 @@ class RiskManager:
         weights: pd.Series,
         covariance_matrix: pd.DataFrame,
         n_simulations: int = 1000,
-        confidence_levels: List[float] = [0.95, 0.99],
+        confidence_levels: List[float] = None,
     ) -> Dict[str, Any]:
         """Perform Monte Carlo stress testing."""
+        if confidence_levels is None:
+            confidence_levels = [0.95, 0.99]
         n_assets = len(weights)
 
         # Generate random scenarios using multivariate normal distribution

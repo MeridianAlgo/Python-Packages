@@ -187,7 +187,7 @@ class CryptoAnalyzer:
 
     def identify_crypto_arbitrage_opportunities(
         self,
-        exchanges: List[str] = ["binance", "coinbase", "kraken"],
+        exchanges: List[str] = None,
         threshold: float = 0.005,
     ) -> List[Dict[str, Any]]:
         """
@@ -200,6 +200,8 @@ class CryptoAnalyzer:
         Returns:
             List of arbitrage opportunities
         """
+        if exchanges is None:
+            exchanges = ["binance", "coinbase", "kraken"]
         opportunities = []
 
         # Simulate exchange price differences
@@ -312,7 +314,7 @@ class CryptoAnalyzer:
         portfolio_returns = (returns_clean * pd.Series(weights)).sum(axis=1)
 
         metrics = {
-            "weights": dict(zip(returns_clean.columns, weights)),
+            "weights": dict(zip(returns_clean.columns, weights, strict=False)),
             "expected_return": portfolio_returns.mean() * 252,
             "volatility": portfolio_returns.std() * np.sqrt(252),
             "sharpe_ratio": (portfolio_returns.mean() * 252 - risk_free_rate)

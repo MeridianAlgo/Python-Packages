@@ -21,7 +21,9 @@ try:
     JOBLIB_AVAILABLE = True
 except ImportError:
     JOBLIB_AVAILABLE = False
-    warnings.warn("Joblib not available. Model serialization will be limited.")
+    warnings.warn(
+        "Joblib not available. Model serialization will be limited.", stacklevel=2
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -933,7 +935,7 @@ class ModelExplainer:
                 feature_names = list(input_features.keys())
                 importances = model.feature_importances_
 
-                feature_importance = dict(zip(feature_names, importances))
+                feature_importance = dict(zip(feature_names, importances, strict=False))
 
                 return {
                     "method": "feature_importance",
@@ -951,11 +953,15 @@ class ModelExplainer:
                 if len(coefficients.shape) > 1:
                     coefficients = coefficients[0]  # Take first class for multi-class
 
-                feature_importance = dict(zip(feature_names, np.abs(coefficients)))
+                feature_importance = dict(
+                    zip(feature_names, np.abs(coefficients), strict=False)
+                )
 
                 return {
                     "method": "linear_coefficients",
-                    "coefficients": dict(zip(feature_names, coefficients)),
+                    "coefficients": dict(
+                        zip(feature_names, coefficients, strict=False)
+                    ),
                     "feature_importance": feature_importance,
                     "top_features": sorted(
                         feature_importance.items(), key=lambda x: x[1], reverse=True
@@ -998,7 +1004,7 @@ class ModelExplainer:
             else:
                 values = shap_values[0, :]  # First sample, all features
 
-            feature_contributions = dict(zip(feature_names, values))
+            feature_contributions = dict(zip(feature_names, values, strict=False))
 
             return {
                 "method": "shap",

@@ -202,7 +202,7 @@ class BacktestEngine:
 
         # Check short selling constraints
         if quantity < 0 and not self.config.short_selling_allowed:
-            warnings.warn(f"Short selling not allowed for {asset}")
+            warnings.warn(f"Short selling not allowed for {asset}", stacklevel=2)
             return
 
         # Execute trade
@@ -213,7 +213,7 @@ class BacktestEngine:
                 self.cash -= total_cost
                 self.positions[asset] = self.positions.get(asset, 0) + quantity
             else:
-                warnings.warn(f"Insufficient cash to buy {asset}")
+                warnings.warn(f"Insufficient cash to buy {asset}", stacklevel=2)
         else:  # Sell
             current_position = self.positions.get(asset, 0)
             if abs(quantity) <= current_position:
@@ -222,7 +222,7 @@ class BacktestEngine:
                 if abs(self.positions[asset]) < 0.01:
                     del self.positions[asset]
             else:
-                warnings.warn(f"Insufficient position to sell {asset}")
+                warnings.warn(f"Insufficient position to sell {asset}", stacklevel=2)
 
         # Record trade
         trade = Trade(
