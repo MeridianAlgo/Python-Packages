@@ -90,18 +90,24 @@ def test_portfolio_optimization():
         from meridianalgo.portfolio.optimization import PortfolioOptimizer
 
         returns_data = create_sample_portfolio_data()
+        expected_returns = returns_data.mean()
+        covariance_matrix = returns_data.cov()
         optimizer = PortfolioOptimizer()
 
         # Test mean-variance optimization
-        weights = optimizer.optimize(
-            returns_data, method="mean_variance", target_return=0.12
+        result = optimizer.optimize(
+            expected_returns,
+            covariance_matrix,
+            objective="max_sharpe",
         )
+        weights = result.weights
 
         assert len(weights) == len(returns_data.columns), (
             "Weights should match number of assets"
         )
-        assert abs(sum(weights.values()) - 1.0) < 1e-6, "Weights should sum to 1"
-        assert all(w >= 0 for w in weights.values()), "Weights should be non-negative"
+        assert result.success, f"Optimization failed: {result.message}"
+        assert abs(weights.sum() - 1.0) < 1e-6, "Weights should sum to 1"
+        assert all(w >= -1e-10 for w in weights.values), "Weights should be non-negative"
 
         print(" Portfolio optimization working correctly")
         print(f"  Optimized weights: {dict(weights)}")
@@ -124,16 +130,15 @@ def test_risk_management():
         risk_manager = RiskManager()
 
         # Test VaR calculation
-        var_95 = risk_manager.calculate_var(returns_data, confidence_level=0.95)
-        var_99 = risk_manager.calculate_var(returns_data, confidence_level=0.99)
+        risk_metrics = risk_manager.calculate_portfolio_risk(returns_data.mean(axis=1))
+        var_95 = -risk_metrics.var_95
+        var_99 = -risk_metrics.var_99
 
         assert var_95 < 0, "VaR should be negative (loss)"
         assert var_99 < var_95, "99% VaR should be more negative than 95% VaR"
 
         # Test Expected Shortfall
-        es_95 = risk_manager.calculate_expected_shortfall(
-            returns_data, confidence_level=0.95
-        )
+        es_95 = -risk_metrics.cvar_95
 
         assert es_95 < var_95, "Expected Shortfall should be more negative than VaR"
 
@@ -166,10 +171,17 @@ def test_transaction_costs():
             [0.3, 0.3, 0.3, 0.1], index=["AAPL", "GOOGL", "MSFT", "TSLA"]
         )
 
+        # Create sample market data
+        market_data = {
+            asset: {"price": 100.0, "volume": 1000000, "volatility": 0.2}
+            for asset in current_weights.index
+        }
+
         # Test cost calculation
-        total_cost = optimizer.calculate_total_cost(
-            current_weights, target_weights, portfolio_value=1000000
+        cost_analysis = optimizer.calculate_rebalancing_costs(
+            current_weights, target_weights, portfolio_value=1000000, market_data=market_data
         )
+        total_cost = cost_analysis["total_cost"]
 
         assert total_cost >= 0, "Transaction costs should be non-negative"
 

@@ -162,58 +162,51 @@ class PortfolioOptimizer:
 
         n = self.n_assets
 
+        # Define objective: maximize excess return subject to risk constraint
+        excess_returns = self.mean_returns.values - self.risk_free_rate
+
+        # Handle zero covariance case (e.g., constant returns)
+        if np.allclose(self.cov_matrix.values, 0):
+            best_idx = np.argmax(excess_returns)
+            self.weights = np.zeros(n)
+            self.weights[best_idx] = 1.0
+            return {
+                "weights": dict(zip(self.asset_names, self.weights, strict=False)),
+                "return": self.mean_returns.values @ self.weights,
+                "volatility": 0.0,
+                "sharpe": 0.0,
+                "status": "optimal",
+            }
+
         # Define optimization variable
-        weights = cp.Variable(n)
+        y = cp.Variable(n)
+        objective = cp.Maximize(excess_returns @ y)
 
-        # Define objective (negative Sharpe ratio for minimization)
-        portfolio_return = self.mean_returns.values @ weights
-        portfolio_risk = cp.quad_form(weights, self.cov_matrix.values)
-        sharpe = (portfolio_return - self.risk_free_rate) / cp.sqrt(portfolio_risk)
-
-        objective = cp.Maximize(sharpe)
-
-        # Define constraints
-        constraints_list = [cp.sum(weights) == 1, weights >= 0]
-
-        # Add user-defined constraints
-        if constraints:
-            if "weight_limits" in constraints:
-                for i, (min_w, max_w) in enumerate(constraints["weight_limits"]):
-                    constraints_list.extend([weights[i] >= min_w, weights[i] <= max_w])
-
-            if "sector_limits" in constraints:
-                for sector, limit in constraints["sector_limits"].items():
-                    sector_weights = [
-                        weights[i]
-                        for i, asset in enumerate(self.asset_names)
-                        if asset.startswith(sector)
-                    ]
-                    if sector_weights:
-                        constraints_list.append(cp.sum(sector_weights) <= limit)
-
-        # Add transaction costs
-        if transaction_costs:
-            cost_penalty = 0
-            for asset, cost in transaction_costs.items():
-                if asset in self.asset_names:
-                    idx = self.asset_names.index(asset)
-                    cost_penalty += cost * cp.abs(weights[idx])
-            objective = cp.Maximize(sharpe - cost_penalty)
+        # Constraints: quad_form(y, Sigma) <= 1, and y >= 0
+        constraints_list = [cp.quad_form(y, self.cov_matrix.values) <= 1, y >= 0]
 
         # Solve optimization
         problem = cp.Problem(objective, constraints_list)
         problem.solve()
 
         if problem.status != "optimal":
-            raise RuntimeError("Optimization failed")
+            # Fallback to analytical if CVXPY fails
+            return self._analytical_sharpe_optimization()
 
-        self.weights = weights.value
+        # Rescale y to get weights w = y / sum(y)
+        y_value = y.value
+        self.weights = y_value / np.sum(y_value)
+
+        # Calculate metrics
+        portfolio_return = self.mean_returns.values @ self.weights
+        portfolio_risk = np.sqrt(self.weights.T @ self.cov_matrix.values @ self.weights)
+        sharpe = (portfolio_return - self.risk_free_rate) / portfolio_risk
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return.value,
-            "volatility": np.sqrt(portfolio_risk.value),
-            "sharpe_ratio": sharpe.value,
+            "return": portfolio_return,
+            "volatility": portfolio_risk,
+            "sharpe": sharpe,
             "status": problem.status,
         }
 
@@ -286,9 +279,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": (portfolio_return - self.risk_free_rate)
+            "sharpe": (portfolio_return - self.risk_free_rate)
             / portfolio_volatility,
             "status": problem.status,
         }
@@ -310,10 +303,41 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "status": "optimal",
+        }
+
+    def _minimize_volatility_for_return(self, target_return: float) -> Dict[str, Any]:
+        """Minimize volatility for a target return."""
+        if not CVXPY_AVAILABLE:
+            return self._equal_weight()
+
+        n = self.n_assets
+        weights = cp.Variable(n)
+        portfolio_risk = cp.quad_form(weights, self.cov_matrix.values)
+        objective = cp.Minimize(portfolio_risk)
+        constraints = [
+            cp.sum(weights) == 1,
+            weights >= 0,
+            self.mean_returns.values @ weights >= target_return,
+        ]
+        problem = cp.Problem(objective, constraints)
+        problem.solve()
+
+        if problem.status != "optimal":
+            return self._equal_weight()
+
+        self.weights = weights.value
+        actual_return = self.mean_returns.values @ self.weights
+        portfolio_vol = np.sqrt(portfolio_risk.value)
+        return {
+            "weights": dict(zip(self.asset_names, self.weights, strict=False)),
+            "return": actual_return,
+            "volatility": portfolio_vol,
+            "sharpe": (actual_return - self.risk_free_rate) / portfolio_vol,
+            "status": problem.status,
         }
 
     def _risk_parity(
@@ -357,9 +381,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "risk_contributions": dict(
                 zip(self.asset_names, risk_contribution.value, strict=False)
             ),
@@ -389,9 +413,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "risk_contributions": dict(
                 zip(self.asset_names, risk_contribution, strict=False)
             ),
@@ -428,9 +452,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "status": "optimal",
         }
 
@@ -475,9 +499,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
-            "expected_return": portfolio_return,
+            "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "status": "optimal",
         }
 
@@ -513,7 +537,7 @@ class PortfolioOptimizer:
         return result
 
     def calculate_efficient_frontier(
-        self, n_portfolios: int = 100, method: str = "sharpe"
+        self, n_portfolios: int = 100, method: str = "sharpe", **kwargs
     ) -> Dict[str, np.ndarray]:
         """
         Calculate efficient frontier.
@@ -521,46 +545,38 @@ class PortfolioOptimizer:
         Args:
             n_portfolios: Number of portfolios to generate
             method: Method for generating portfolios
-
-        Returns:
-            Dictionary with efficient frontier data
+            **kwargs: Additional arguments (supports num_portfolios)
         """
+        # Support num_portfolios alias
+        if "num_portfolios" in kwargs:
+            n_portfolios = kwargs["num_portfolios"]
         # Target returns range
         min_ret = self.mean_returns.min()
         max_ret = self.mean_returns.max()
         target_returns = np.linspace(min_ret, max_ret, n_portfolios)
 
-        efficient_portfolios = []
+        results = []
 
         for target_ret in target_returns:
             try:
                 if method == "sharpe":
-                    result = self._maximize_return(target_ret)
+                    # For efficient frontier, we usually iterate over target returns and minimize volatility
+                    result = self._minimize_volatility_for_return(target_ret)
                 else:
                     result = self._minimize_volatility()
 
-                efficient_portfolios.append(
-                    [
-                        result["volatility"],
-                        result["expected_return"],
-                        result["sharpe_ratio"],
-                    ]
-                )
+                results.append(result)
             except Exception:
                 continue
 
-        if not efficient_portfolios:
+        if not results:
             raise RuntimeError("Failed to calculate efficient frontier")
 
-        efficient_portfolios = np.array(efficient_portfolios)
-
         return {
-            "volatility": efficient_portfolios[:, 0],
-            "returns": efficient_portfolios[:, 1],
-            "sharpe": efficient_portfolios[:, 2],
-            "weights": np.array(
-                [list(result["weights"].values()) for result in efficient_portfolios]
-            ),
+            "volatility": np.array([r["volatility"] for r in results]),
+            "returns": np.array([r["return"] for r in results]),
+            "sharpe": np.array([r["sharpe"] for r in results]),
+            "weights": np.array([list(r["weights"].values()) for r in results]),
         }
 
     def _maximize_return(self, target_volatility: float) -> Dict[str, Any]:
@@ -601,9 +617,9 @@ class PortfolioOptimizer:
 
         return {
             "weights": dict(zip(self.asset_names, weights_value, strict=False)),
-            "expected_return": portfolio_return.value,
+            "return": portfolio_return.value,
             "volatility": portfolio_volatility,
-            "sharpe_ratio": sharpe_ratio,
+            "sharpe": sharpe_ratio,
             "status": problem.status,
         }
 

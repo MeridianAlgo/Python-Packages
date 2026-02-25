@@ -21,13 +21,13 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from meridianalgo.quant.execution_algorithms import (
+from meridianalgo.execution import (
     POV,
     TWAP,
     VWAP,
     ImplementationShortfall,
 )
-from meridianalgo.quant.factor_models import (
+from meridianalgo.factors.core import (
     APTModel,
     CustomFactorModel,
     FactorRiskDecomposition,

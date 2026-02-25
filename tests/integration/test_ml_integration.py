@@ -64,7 +64,7 @@ def test_feature_engineering():
     print("Testing Financial Feature Engineering...")
 
     try:
-        from meridianalgo.machine_learning.feature_engineering import (
+        from meridianalgo.ml.feature_engineering import (
             TechnicalIndicatorFeatures,
         )
 
@@ -92,14 +92,19 @@ def test_ml_models():
     print("\nTesting ML Models...")
 
     try:
-        from meridianalgo.machine_learning.models import ModelConfig, ModelFactory
+        from meridianalgo.ml.models import ModelConfig, ModelFactory
 
         X, y = create_sample_data()
 
         # Test Random Forest
         try:
-            config = ModelConfig(model_type="random_forest", n_estimators=10)
-            model = ModelFactory.create_model(config)
+            config = ModelConfig(
+                model_type="random_forest",
+                hyperparameters={"n_estimators": 10},
+                training_config={},
+                validation_config={},
+            )
+            model = ModelFactory.create_model("random_forest", config)
             model.fit(X, y)
             predictions = model.predict(X)
 
@@ -121,7 +126,7 @@ def test_time_series_validation():
     print("\nTesting Time-Series Validation...")
 
     try:
-        from meridianalgo.machine_learning.validation import WalkForwardValidator
+        from meridianalgo.ml.validation import WalkForwardValidator
 
         X, y = create_sample_data()
 

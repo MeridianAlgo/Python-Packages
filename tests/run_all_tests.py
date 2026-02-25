@@ -88,15 +88,16 @@ def main():
 
     # Define test suites
     test_suites = [
+        ("Core Module Tests", "test_core.py"),
         ("Data Infrastructure Tests", "test_data_infrastructure.py"),
         ("Technical Analysis Tests", "test_technical_analysis.py"),
         ("Portfolio Management Tests", "test_portfolio_management.py"),
-        ("Backtesting Engine Tests", "test_backtesting_engine.py"),
-        ("Machine Learning Tests", "test_ml_framework.py"),
-        ("Fixed Income Tests", "test_fixed_income.py"),
-        ("Risk Management Tests", "test_risk_management.py"),
-        ("HPC Architecture Tests", "test_hpc_architecture.py"),
-        ("API Integration Tests", "test_api_integration.py"),
+        ("Backtesting Engine Tests", "test_backtesting.py"),
+        ("Machine Learning Tests", "test_machine_learning.py"),
+        ("Risk Analysis Tests", "test_risk_analysis.py"),
+        ("Quant Tools Tests", "test_quant.py"),
+        ("Analytics Tests", "test_analytics.py"),
+        ("Comprehensive Tests", "test_meridianalgo_comprehensive.py"),
     ]
 
     results = []

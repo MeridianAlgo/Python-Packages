@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.portfolio_management import (
+    from meridianalgo.portfolio import (
         BlackLitterman,
         EfficientFrontier,
         PortfolioOptimizer,
@@ -69,7 +69,8 @@ class TestPortfolioManagement:
             optimizer = PortfolioOptimizer(sample_returns)
 
             # Test maximum Sharpe ratio optimization
-            weights = optimizer.optimize_portfolio(objective="sharpe")
+            result = optimizer.optimize_portfolio(method="sharpe")
+            weights = result["weights"]
 
             # Weights should sum to 1
             assert abs(sum(weights.values()) - 1.0) < 1e-6
@@ -90,16 +91,15 @@ class TestPortfolioManagement:
             frontier = EfficientFrontier(sample_returns)
 
             # Calculate frontier points
-            target_returns = np.linspace(0.05, 0.25, 10)
-            frontier_data = frontier.calculate_frontier(target_returns)
+            frontier_data = frontier.calculate_efficient_frontier(n_portfolios=10)
 
-            assert isinstance(frontier_data, pd.DataFrame)
-            assert "return" in frontier_data.columns
-            assert "volatility" in frontier_data.columns
-            assert len(frontier_data) == len(target_returns)
+            assert isinstance(frontier_data, dict)
+            assert "returns" in frontier_data
+            assert "volatility" in frontier_data
+            assert len(frontier_data["returns"]) == 10
 
-            # Returns should be monotonically increasing
-            assert all(frontier_data["return"].diff().dropna() >= -1e-6)
+            # Returns should be monotonically increasing (mostly)
+            assert all(np.diff(frontier_data["returns"]) >= -1e-6)
 
             print(" Efficient frontier test passed")
         except Exception as e:
@@ -368,7 +368,8 @@ def test_portfolio_with_real_data():
             if len(returns) > 20:
                 # Test optimization
                 optimizer = ma.PortfolioOptimizer(returns)
-                weights = optimizer.optimize_portfolio()
+                result = optimizer.optimize_portfolio()
+                weights = result["weights"]
 
                 assert len(weights) == len(symbols)
                 assert abs(sum(weights.values()) - 1.0) < 1e-6

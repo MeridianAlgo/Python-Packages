@@ -126,10 +126,15 @@ class Portfolio:
             self.positions[symbol] = Position(symbol)
         return self.positions[symbol]
 
-    def process_fill(self, fill_event: FillEvent) -> None:
-        """Process a fill event and update portfolio."""
+    def process_fill(self, fill_event: FillEvent) -> float:
+        """
+        Process a fill event and update portfolio.
+        
+        Returns:
+            Realized P&L from the fill
+        """
         if fill_event.fill_status == FillStatus.REJECTED:
-            return
+            return 0.0
 
         position = self.get_position(fill_event.symbol)
 
@@ -146,6 +151,8 @@ class Portfolio:
         realized_pnl = position.add_fill(fill_event)
         self.total_realized_pnl += realized_pnl
         self.total_commission += fill_event.commission
+        
+        return realized_pnl
 
     def update_market_values(self, market_prices: Dict[str, float]) -> None:
         """Update market values for all positions."""
@@ -382,6 +389,7 @@ class EventDrivenBacktester:
 
         # Tracking
         self.portfolio_history: List[Dict[str, Any]] = []
+        self.position_history_list: List[Dict[str, Any]] = []
         self.trade_history: List[Dict[str, Any]] = []
         self.current_date: Optional[datetime] = None
 
@@ -473,22 +481,28 @@ class EventDrivenBacktester:
 
     def _handle_fill_event(self, event: FillEvent) -> None:
         """Handle fill event by updating portfolio."""
-        self.portfolio.process_fill(event)
+        realized_pnl = self.portfolio.process_fill(event)
 
         # Notify strategy
         if self.strategy:
             self.strategy.on_fill_event(event)
 
         # Record trade
-        self._record_trade(event)
+        self._record_trade(event, realized_pnl)
 
     def _record_portfolio_state(self) -> None:
         """Record current portfolio state."""
         summary = self.portfolio.get_portfolio_summary()
         summary["timestamp"] = self.current_date
         self.portfolio_history.append(summary)
+        
+        # Record positions
+        positions_snapshot = {"timestamp": self.current_date}
+        for symbol, pos in self.portfolio.positions.items():
+            positions_snapshot[symbol] = pos.quantity
+        self.position_history_list.append(positions_snapshot)
 
-    def _record_trade(self, fill_event: FillEvent) -> None:
+    def _record_trade(self, fill_event: FillEvent, realized_pnl: float = 0.0) -> None:
         """Record trade details."""
         if fill_event.fill_status != FillStatus.REJECTED:
             trade = {
@@ -499,6 +513,7 @@ class EventDrivenBacktester:
                 "price": fill_event.fill_price,
                 "commission": fill_event.commission,
                 "order_id": fill_event.order_id,
+                "pnl": realized_pnl,
             }
             self.trade_history.append(trade)
 
@@ -540,6 +555,11 @@ class EventDrivenBacktester:
         portfolio_df = pd.DataFrame(self.portfolio_history)
         if len(portfolio_df) > 0:
             portfolio_df.set_index("timestamp", inplace=True)
+            
+        position_history = pd.DataFrame(self.position_history_list)
+        if len(position_history) > 0:
+            position_history.set_index("timestamp", inplace=True)
+            position_history = position_history.fillna(0)
 
         trade_df = pd.DataFrame(self.trade_history)
 
@@ -590,13 +610,13 @@ class EventDrivenBacktester:
 
         # Trade statistics
         total_trades = len(trade_df)
-        if total_trades > 0:
-            # Calculate P&L per trade (simplified)
-            winning_trades = 0  # Would need more complex calculation
-            losing_trades = 0
-        else:
-            winning_trades = 0
-            losing_trades = 0
+        winning_trades = 0
+        losing_trades = 0
+        
+        if total_trades > 0 and "pnl" in trade_df.columns:
+            # We count transactions with realized P&L as "trades" for win/loss stats
+            winning_trades = len(trade_df[trade_df["pnl"] > 0])
+            losing_trades = len(trade_df[trade_df["pnl"] < 0])
 
         execution_time = datetime.now() - start_time
 
@@ -617,7 +637,7 @@ class EventDrivenBacktester:
             calmar_ratio=calmar_ratio,
             portfolio_history=portfolio_df,
             trade_history=trade_df,
-            position_history=pd.DataFrame(),  # Would be implemented
+            position_history=position_history,
             daily_returns=daily_returns,
             cumulative_returns=cumulative_returns,
             drawdowns=drawdown,

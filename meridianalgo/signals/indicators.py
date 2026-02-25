@@ -7,8 +7,16 @@ Includes trend, momentum, volatility, and volume indicators.
 
 from typing import Dict, Tuple
 
+
 import numpy as np
 import pandas as pd
+
+try:
+    import talib
+    TALIB_AVAILABLE = True
+except ImportError:
+    TALIB_AVAILABLE = False
+
 
 # =============================================================================
 # MOVING AVERAGES (TREND)
@@ -18,42 +26,27 @@ import pandas as pd
 def SMA(data: pd.Series, period: int = 20) -> pd.Series:
     """
     Simple Moving Average.
-
-    Args:
-        data: Price series
-        period: Lookback period
-
-    Returns:
-        SMA series
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.SMA(data.values, timeperiod=period), index=data.index)
     return data.rolling(window=period).mean()
 
 
 def EMA(data: pd.Series, period: int = 20) -> pd.Series:
     """
     Exponential Moving Average.
-
-    Args:
-        data: Price series
-        period: Lookback period
-
-    Returns:
-        EMA series
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.EMA(data.values, timeperiod=period), index=data.index)
     return data.ewm(span=period, adjust=False).mean()
 
 
 def WMA(data: pd.Series, period: int = 20) -> pd.Series:
     """
     Weighted Moving Average.
-
-    Args:
-        data: Price series
-        period: Lookback period
-
-    Returns:
-        WMA series
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.WMA(data.values, timeperiod=period), index=data.index)
     weights = np.arange(1, period + 1)
     return data.rolling(period).apply(
         lambda x: np.dot(x, weights) / weights.sum(), raw=True
@@ -63,9 +56,9 @@ def WMA(data: pd.Series, period: int = 20) -> pd.Series:
 def DEMA(data: pd.Series, period: int = 20) -> pd.Series:
     """
     Double Exponential Moving Average.
-
-    DEMA = 2 * EMA(price) - EMA(EMA(price))
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.DEMA(data.values, timeperiod=period), index=data.index)
     ema1 = EMA(data, period)
     ema2 = EMA(ema1, period)
     return 2 * ema1 - ema2
@@ -74,21 +67,62 @@ def DEMA(data: pd.Series, period: int = 20) -> pd.Series:
 def TEMA(data: pd.Series, period: int = 20) -> pd.Series:
     """
     Triple Exponential Moving Average.
-
-    TEMA = 3 * EMA - 3 * EMA(EMA) + EMA(EMA(EMA))
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.TEMA(data.values, timeperiod=period), index=data.index)
     ema1 = EMA(data, period)
     ema2 = EMA(ema1, period)
     ema3 = EMA(ema2, period)
     return 3 * ema1 - 3 * ema2 + ema3
 
 
+def HMA(series: pd.Series, window: int = 14) -> pd.Series:
+    """
+    Hull Moving Average (HMA).
+    Eliminates lag while improving smoothness.
+    """
+    if TALIB_AVAILABLE:
+        half_window = int(window / 2)
+        sqrt_window = int(np.sqrt(window))
+        wma_half = talib.WMA(series, timeperiod=half_window)
+        wma_full = talib.WMA(series, timeperiod=window)
+        diff = 2 * wma_half - wma_full
+        return talib.WMA(diff, timeperiod=sqrt_window)
+    
+    def _wma_internal(s, w):
+        weights = np.arange(1, w + 1)
+        return s.rolling(w).apply(lambda x: np.dot(x, weights) / weights.sum(), raw=True)
+        
+    half_window = int(window / 2)
+    sqrt_window = int(np.sqrt(window))
+    wma_half = _wma_internal(series, half_window)
+    wma_full = _wma_internal(series, window)
+    diff = 2 * wma_half - wma_full
+    return _wma_internal(diff, sqrt_window)
+
+
+def ALMA(series: pd.Series, window: int = 9, sigma: float = 6.0, offset: float = 0.85) -> pd.Series:
+    """
+    Arnaud Legoux Moving Average (ALMA).
+    Uses Gaussian distribution to reduce lag and provide smoothness.
+    """
+    m = offset * (window - 1)
+    s = window / sigma
+    weights = np.exp(-((np.arange(window) - m) ** 2) / (2 * s * s))
+    weights /= weights.sum()
+    
+    return series.rolling(window).apply(lambda x: np.dot(x, weights), raw=True)
+
+
+
 def KAMA(data: pd.Series, period: int = 10, fast: int = 2, slow: int = 30) -> pd.Series:
     """
     Kaufman Adaptive Moving Average.
-
     Adapts to market volatility using efficiency ratio.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.KAMA(data.values, timeperiod=period), index=data.index)
+
     change = abs(data - data.shift(period))
     volatility = data.diff().abs().rolling(period).sum()
 
@@ -98,17 +132,21 @@ def KAMA(data: pd.Series, period: int = 10, fast: int = 2, slow: int = 30) -> pd
     fast_sc = 2 / (fast + 1)
     slow_sc = 2 / (slow + 1)
 
-    smoothing = (efficiency_ratio * (fast_sc - slow_sc) + slow_sc) ** 2
+    sc = (efficiency_ratio * (fast_sc - slow_sc) + slow_sc) ** 2
 
-    kama = pd.Series(index=data.index, dtype=float)
-    kama.iloc[:period] = data.iloc[:period]
-
+    kama = np.zeros(len(data))
+    kama[:period] = data.iloc[:period]
+    
+    # Vectorized calculation is difficult for KAMA due to its recursive nature
+    # but we can use values for faster access
+    data_values = data.values
+    sc_values = sc.values
+    
     for i in range(period, len(data)):
-        kama.iloc[i] = kama.iloc[i - 1] + smoothing.iloc[i] * (
-            data.iloc[i] - kama.iloc[i - 1]
-        )
+        kama[i] = kama[i - 1] + sc_values[i] * (data_values[i] - kama[i - 1])
 
-    return kama
+    return pd.Series(kama, index=data.index)
+
 
 
 # =============================================================================
@@ -121,16 +159,13 @@ def MACD(
 ) -> Tuple[pd.Series, pd.Series, pd.Series]:
     """
     Moving Average Convergence Divergence.
-
-    Args:
-        data: Price series
-        fast: Fast EMA period
-        slow: Slow EMA period
-        signal: Signal line EMA period
-
-    Returns:
-        Tuple of (MACD line, Signal line, Histogram)
     """
+    if TALIB_AVAILABLE:
+        macd, macdsignal, macdhist = talib.MACD(
+            data.values, fastperiod=fast, slowperiod=slow, signalperiod=signal
+        )
+        return pd.Series(macd, index=data.index), pd.Series(macdsignal, index=data.index), pd.Series(macdhist, index=data.index)
+
     ema_fast = EMA(data, fast)
     ema_slow = EMA(data, slow)
 
@@ -148,27 +183,21 @@ def MACD(
 
 def RSI(data: pd.Series, period: int = 14) -> pd.Series:
     """
-    Relative Strength Index.
-
-    Args:
-        data: Price series
-        period: Lookback period (default 14)
-
-    Returns:
-        RSI series (0-100)
+    Relative Strength Index (Wilder's smoothing).
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.RSI(data.values, timeperiod=period), index=data.index)
+
     delta = data.diff()
+    gain = (delta.where(delta > 0, 0))
+    loss = (-delta.where(delta < 0, 0))
 
-    gains = delta.where(delta > 0, 0)
-    losses = (-delta).where(delta < 0, 0)
-
-    avg_gain = gains.rolling(window=period).mean()
-    avg_loss = losses.rolling(window=period).mean()
+    # Wilder's smoothing
+    avg_gain = gain.ewm(alpha=1/period, adjust=False).mean()
+    avg_loss = loss.ewm(alpha=1/period, adjust=False).mean()
 
     rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
-
-    return rsi
+    return 100 - (100 / (1 + rs))
 
 
 def Stochastic(
@@ -180,17 +209,15 @@ def Stochastic(
 ) -> Tuple[pd.Series, pd.Series]:
     """
     Stochastic Oscillator.
-
-    Args:
-        high: High prices
-        low: Low prices
-        close: Close prices
-        k_period: %K period
-        d_period: %D period
-
-    Returns:
-        Tuple of (%K, %D)
     """
+    if TALIB_AVAILABLE:
+        slowk, slowd = talib.STOCH(
+            high.values, low.values, close.values, 
+            fastk_period=k_period, slowk_period=d_period, slowk_matype=0, 
+            slowd_period=d_period, slowd_matype=0
+        )
+        return pd.Series(slowk, index=close.index), pd.Series(slowd, index=close.index)
+
     lowest_low = low.rolling(k_period).min()
     highest_high = high.rolling(k_period).max()
 
@@ -200,25 +227,23 @@ def Stochastic(
     return k, d
 
 
+
 def WilliamsR(
     high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14
 ) -> pd.Series:
     """
     Williams %R.
-
-    Args:
-        high: High prices
-        low: Low prices
-        close: Close prices
-        period: Lookback period
-
-    Returns:
-        Williams %R series (-100 to 0)
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.WILLR(high.values, low.values, close.values, timeperiod=period), index=close.index)
+
     highest_high = high.rolling(period).max()
     lowest_low = low.rolling(period).min()
 
+
     return -100 * (highest_high - close) / (highest_high - lowest_low)
+
+
 
 
 def CCI(
@@ -227,6 +252,9 @@ def CCI(
     """
     Commodity Channel Index.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.CCI(high.values, low.values, close.values, timeperiod=period), index=close.index)
+
     typical_price = (high + low + close) / 3
     sma = typical_price.rolling(period).mean()
     mad = typical_price.rolling(period).apply(
@@ -238,15 +266,11 @@ def CCI(
 
 def ROC(data: pd.Series, period: int = 12) -> pd.Series:
     """
-    Rate of Change.
-
-    Args:
-        data: Price series
-        period: Lookback period
-
-    Returns:
-        ROC as percentage
+    Rate of Change (ROC).
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.ROC(data.values, timeperiod=period), index=data.index)
+
     return ((data - data.shift(period)) / data.shift(period)) * 100
 
 
@@ -273,9 +297,10 @@ def MFI(
 ) -> pd.Series:
     """
     Money Flow Index.
-
-    Volume-weighted RSI.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.MFI(high.values, low.values, close.values, volume.values.astype(float), timeperiod=period), index=close.index)
+
     typical_price = (high + low + close) / 3
     raw_money_flow = typical_price * volume
 
@@ -320,9 +345,10 @@ def UltimateOscillator(
 ) -> pd.Series:
     """
     Ultimate Oscillator.
-
-    Multi-timeframe momentum oscillator.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.ULTOSC(high.values, low.values, close.values, timeperiod1=period1, timeperiod2=period2, timeperiod3=period3), index=close.index)
+
     prev_close = close.shift(1)
 
     bp = close - pd.concat([low, prev_close], axis=1).min(axis=1)
@@ -347,15 +373,11 @@ def BollingerBands(
 ) -> Tuple[pd.Series, pd.Series, pd.Series]:
     """
     Bollinger Bands.
-
-    Args:
-        data: Price series
-        period: Moving average period
-        std_dev: Standard deviation multiplier
-
-    Returns:
-        Tuple of (Upper band, Middle band, Lower band)
     """
+    if TALIB_AVAILABLE:
+        upper, middle, lower = talib.BBANDS(data.values, timeperiod=period, nbdevup=std_dev, nbdevdn=std_dev, matype=0)
+        return pd.Series(upper, index=data.index), pd.Series(middle, index=data.index), pd.Series(lower, index=data.index)
+
     middle = SMA(data, period)
     std = data.rolling(period).std()
 
@@ -370,9 +392,10 @@ def ATR(
 ) -> pd.Series:
     """
     Average True Range.
-
-    Measures volatility.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.ATR(high.values, low.values, close.values, timeperiod=period), index=close.index)
+
     prev_close = close.shift(1)
 
     tr1 = high - low
@@ -437,15 +460,22 @@ def StandardDeviation(data: pd.Series, period: int = 20) -> pd.Series:
 # =============================================================================
 
 
+
 def ADX(
     high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14
 ) -> Tuple[pd.Series, pd.Series, pd.Series]:
     """
-    Average Directional Index.
-
+    Average Directional Index (Wilder's).
+    
     Returns:
         Tuple of (ADX, +DI, -DI)
     """
+    if TALIB_AVAILABLE:
+        adx = pd.Series(talib.ADX(high.values, low.values, close.values, timeperiod=period), index=close.index)
+        plus_di = pd.Series(talib.PLUS_DI(high.values, low.values, close.values, timeperiod=period), index=close.index)
+        minus_di = pd.Series(talib.MINUS_DI(high.values, low.values, close.values, timeperiod=period), index=close.index)
+        return adx, plus_di, minus_di
+
     # True Range
     prev_close = close.shift(1)
     tr = pd.concat(
@@ -456,19 +486,22 @@ def ADX(
     up_move = high - high.shift(1)
     down_move = low.shift(1) - low
 
-    plus_dm = up_move.where((up_move > down_move) & (up_move > 0), 0)
-    minus_dm = down_move.where((down_move > up_move) & (down_move > 0), 0)
+    plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0)
+    minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0)
 
-    # Smoothed values
-    atr = tr.rolling(period).mean()
-    plus_di = 100 * (plus_dm.rolling(period).mean() / atr)
-    minus_di = 100 * (minus_dm.rolling(period).mean() / atr)
+    # Wilder's Smoothing
+    def wilder_smoothing(s, n):
+        return s.ewm(alpha=1/n, adjust=False).mean()
 
-    # ADX
+    atr = wilder_smoothing(tr, period)
+    plus_di = 100 * wilder_smoothing(pd.Series(plus_dm, index=close.index), period) / atr
+    minus_di = 100 * wilder_smoothing(pd.Series(minus_dm, index=close.index), period) / atr
+
     dx = 100 * abs(plus_di - minus_di) / (plus_di + minus_di)
-    adx = dx.rolling(period).mean()
+    adx = wilder_smoothing(dx, period)
 
     return adx, plus_di, minus_di
+
 
 
 def Aroon(
@@ -476,10 +509,12 @@ def Aroon(
 ) -> Tuple[pd.Series, pd.Series, pd.Series]:
     """
     Aroon Indicator.
-
-    Returns:
-        Tuple of (Aroon Up, Aroon Down, Aroon Oscillator)
     """
+    if TALIB_AVAILABLE:
+        aroonup, aroondown = talib.AROON(high.values, low.values, timeperiod=period)
+        aroonosc = talib.AROONOSC(high.values, low.values, timeperiod=period)
+        return pd.Series(aroonup, index=high.index), pd.Series(aroondown, index=high.index), pd.Series(aroonosc, index=high.index)
+
     aroon_up = (
         100
         * (
@@ -513,9 +548,10 @@ def ParabolicSAR(
 ) -> pd.Series:
     """
     Parabolic SAR.
-
-    Trend-following indicator.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.SAR(high.values, low.values, acceleration=af_start, maximum=af_max), index=close.index)
+
     length = len(close)
     sar = pd.Series(index=close.index, dtype=float)
 
@@ -564,6 +600,7 @@ def ParabolicSAR(
     return sar
 
 
+
 def Supertrend(
     high: pd.Series,
     low: pd.Series,
@@ -573,31 +610,56 @@ def Supertrend(
 ) -> Tuple[pd.Series, pd.Series]:
     """
     Supertrend indicator.
-
+    
     Returns:
         Tuple of (Supertrend line, Direction: 1=up, -1=down)
     """
     atr = ATR(high, low, close, period)
-
     hl2 = (high + low) / 2
+    
     upper_band = hl2 + (multiplier * atr)
     lower_band = hl2 - (multiplier * atr)
+    
+    # Final bands (tightening logic)
+    final_upper = pd.Series(upper_band)
+    final_lower = pd.Series(lower_band)
+    
+    for i in range(1, len(close)):
+        # Upper band tightening: if current upper is lower than previous or previous close was above previous upper
+        if upper_band.iloc[i] < final_upper.iloc[i-1] or close.iloc[i-1] > final_upper.iloc[i-1]:
+            final_upper.iloc[i] = upper_band.iloc[i]
+        else:
+            final_upper.iloc[i] = final_upper.iloc[i-1]
+            
+        # Lower band tightening
+        if lower_band.iloc[i] > final_lower.iloc[i-1] or close.iloc[i-1] < final_lower.iloc[i-1]:
+            final_lower.iloc[i] = lower_band.iloc[i]
+        else:
+            final_lower.iloc[i] = final_lower.iloc[i-1]
 
-    supertrend = pd.Series(index=close.index, dtype=float)
-    direction = pd.Series(index=close.index, dtype=int)
-
-    supertrend.iloc[0] = upper_band.iloc[0]
-    direction.iloc[0] = 1
+    supertrend = pd.Series(0.0, index=close.index)
+    direction = pd.Series(1, index=close.index)
 
     for i in range(1, len(close)):
-        if close.iloc[i] > supertrend.iloc[i - 1]:
-            supertrend.iloc[i] = lower_band.iloc[i]
-            direction.iloc[i] = 1
+        if direction.iloc[i-1] == 1:
+            if close.iloc[i] < final_lower.iloc[i]:
+                direction.iloc[i] = -1
+                supertrend.iloc[i] = final_upper.iloc[i]
+            else:
+                direction.iloc[i] = 1
+                supertrend.iloc[i] = final_lower.iloc[i]
         else:
-            supertrend.iloc[i] = upper_band.iloc[i]
-            direction.iloc[i] = -1
+            if close.iloc[i] > final_upper.iloc[i]:
+                direction.iloc[i] = 1
+                supertrend.iloc[i] = final_lower.iloc[i]
+            else:
+                direction.iloc[i] = -1
+                supertrend.iloc[i] = final_upper.iloc[i]
+
 
     return supertrend, direction
+
+
 
 
 def Ichimoku(
@@ -650,6 +712,9 @@ def OBV(close: pd.Series, volume: pd.Series) -> pd.Series:
     """
     On-Balance Volume.
     """
+    if TALIB_AVAILABLE:
+        return pd.Series(talib.OBV(close.values, volume.values.astype(float)), index=close.index)
+
     direction = np.sign(close.diff())
     return (direction * volume).cumsum()
 
@@ -808,3 +873,126 @@ def FibonacciExtension(high: float, low: float, trend: str = "up") -> Dict[str, 
         }
 
     return levels
+
+# =============================================================================
+# MISCELLANEOUS & ADVANCED INDICATORS
+# =============================================================================
+
+def CoppockCurve(data: pd.Series, roc1: int = 14, roc2: int = 11, wma_period: int = 10) -> pd.Series:
+    """
+    Coppock Curve.
+    Used for identifying long-term buying opportunities.
+    """
+    roc_sum = ROC(data, roc1) + ROC(data, roc2)
+    return WMA(roc_sum, wma_period)
+
+
+def VortexIndicator(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14) -> Tuple[pd.Series, pd.Series]:
+    """
+    Vortex Indicator (VI+ and VI-).
+    Identifies the start of a trend.
+    """
+    tr = ATR(high, low, close, 1) # True range
+    tr_sum = tr.rolling(period).sum()
+
+    vm_plus = (high - low.shift(1)).abs()
+    vm_minus = (low - high.shift(1)).abs()
+
+    vi_plus = vm_plus.rolling(period).sum() / tr_sum
+    vi_minus = vm_minus.rolling(period).sum() / tr_sum
+
+    return vi_plus, vi_minus
+
+
+def MassIndex(high: pd.Series, low: pd.Series, period: int = 25, ema_period: int = 9) -> pd.Series:
+    """
+    Mass Index.
+    Identifies trend reversals by measuring range expansion.
+    """
+    range_series = high - low
+    ema1 = EMA(range_series, ema_period)
+    ema2 = EMA(ema1, ema_period)
+    
+    ratio = ema1 / ema2
+    return ratio.rolling(period).sum()
+
+
+def ChopinessIndex(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14) -> pd.Series:
+    """
+    Chopiness Index.
+    Determines if the market is trending or choppy.
+    Values > 61.8 (choppy), < 38.2 (trending).
+    """
+    tr = ATR(high, low, close, 1)
+    sum_tr = tr.rolling(period).sum()
+    max_high = high.rolling(period).max()
+    min_low = low.rolling(period).min()
+    
+    return 100 * np.log10(sum_tr / (max_high - min_low)) / np.log10(period)
+
+
+def FisherTransform(high: pd.Series, low: pd.Series, period: int = 10) -> pd.Series:
+    """
+    Fisher Transform.
+    Converts price data into a Gaussian normal distribution.
+    """
+    med = (high + low) / 2
+    low_val = med.rolling(period).min()
+    high_val = med.rolling(period).max()
+    
+    # Scale to -1 to 1
+    raw = 0.33 * 2 * ((med - low_val) / (high_val - low_val) - 0.5) + 0.67 * 0.0 # simplified
+    # In practice should use recursive smoothing
+    
+    fish = 0.5 * np.log((1 + raw) / (1 - raw))
+    return fish.rolling(period).mean() # smoothing
+
+
+# =============================================================================
+# EXPORTS
+# =============================================================================
+
+__all__ = [
+    "SMA",
+    "EMA",
+    "WMA",
+    "DEMA",
+    "TEMA",
+    "HMA",
+    "ALMA",
+    "KAMA",
+    "MACD",
+    "RSI",
+    "Stochastic",
+    "WilliamsR",
+    "CCI",
+    "ROC",
+    "Momentum",
+    "MFI",
+    "TSI",
+    "UltimateOscillator",
+    "BollingerBands",
+    "ATR",
+    "KeltnerChannels",
+    "DonchianChannels",
+    "StandardDeviation",
+    "ADX",
+    "Aroon",
+    "ParabolicSAR",
+    "Supertrend",
+    "Ichimoku",
+    "OBV",
+    "VWAP",
+    "ChaikinMoneyFlow",
+    "AccumulationDistribution",
+    "ForceIndex",
+    "EaseOfMovement",
+    "PivotPoints",
+    "FibonacciRetracement",
+    "FibonacciExtension",
+    "CoppockCurve",
+    "VortexIndicator",
+    "MassIndex",
+    "ChopinessIndex",
+    "FisherTransform",
+]

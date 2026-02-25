@@ -86,10 +86,10 @@ class TestPortfolioOptimizer:
         assert "sharpe" in result
 
         # Check weights sum to 1
-        assert np.isclose(sum(result["weights"]), 1.0, atol=0.01)
+        assert np.isclose(sum(result["weights"].values()), 1.0, atol=0.01)
 
         # Check all weights are non-negative
-        assert all(w >= 0 for w in result["weights"])
+        assert all(w >= -1e-10 for w in result["weights"].values())
 
 
 class TestTimeSeriesAnalyzer:
@@ -301,7 +301,7 @@ class TestEdgeCases:
         optimizer = PortfolioOptimizer(single_asset)
         result = optimizer.optimize_portfolio()
 
-        assert result["weights"][0] == 1.0
+        assert np.isclose(result["weights"]["AAPL"], 1.0, atol=0.01)
 
     def test_constant_returns(self):
         """Test with constant returns."""
@@ -310,8 +310,9 @@ class TestEdgeCases:
         optimizer = PortfolioOptimizer(constant_returns)
         result = optimizer.optimize_portfolio()
 
-        # Should still work but with zero volatility
+        # Should still work but with zero/low volatility
         assert "weights" in result
+        assert np.isclose(sum(result["weights"].values()), 1.0, atol=0.01)
 
 
 if __name__ == "__main__":

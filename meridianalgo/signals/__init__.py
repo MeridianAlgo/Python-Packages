@@ -7,13 +7,20 @@ Comprehensive technical indicators and signal generation for trading strategies.
 from .evaluation import SignalEvaluator
 from .generator import SignalGenerator, TechnicalAnalyzer
 from .indicators import (  # Trend Indicators; Momentum Indicators; Volatility Indicators; Volume Indicators; Support/Resistance
+
     ADX,
+    ALMA,
     ATR,
     CCI,
+    ChopinessIndex,
+    CoppockCurve,
     DEMA,
     EMA,
+    FisherTransform,
+    HMA,
     KAMA,
     MACD,
+    MassIndex,
     MFI,
     OBV,
     ROC,
@@ -21,6 +28,7 @@ from .indicators import (  # Trend Indicators; Momentum Indicators; Volatility I
     SMA,
     TEMA,
     TSI,
+    VortexIndicator,
     VWAP,
     WMA,
     AccumulationDistribution,
@@ -53,6 +61,8 @@ __all__ = [
     "DEMA",
     "TEMA",
     "KAMA",
+    "HMA",
+    "ALMA",
     "MACD",
     "ADX",
     "Aroon",
@@ -69,6 +79,8 @@ __all__ = [
     "MFI",
     "TSI",
     "UltimateOscillator",
+    "FisherTransform",
+    "CoppockCurve",
     # Volatility
     "BollingerBands",
     "ATR",
@@ -76,6 +88,7 @@ __all__ = [
     "DonchianChannels",
     "StandardDeviation",
     "AverageTrueRange",
+    "ChopinessIndex",
     # Volume
     "OBV",
     "VWAP",
@@ -83,6 +96,8 @@ __all__ = [
     "AccumulationDistribution",
     "ForceIndex",
     "EaseOfMovement",
+    "VortexIndicator",
+    "MassIndex",
     # S/R
     "PivotPoints",
     "FibonacciRetracement",
@@ -92,3 +107,4 @@ __all__ = [
     "TechnicalAnalyzer",
     "SignalEvaluator",
 ]
+

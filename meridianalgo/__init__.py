@@ -1,5 +1,5 @@
 """
-MeridianAlgo v6.2.1 - The Complete Quantitative Finance Platform
+MeridianAlgo v6.2.2 - The Complete Quantitative Finance Platform
 
 A comprehensive, institutional-grade Python library for quantitative finance
 covering everything from trading research to portfolio analytics to derivatives.

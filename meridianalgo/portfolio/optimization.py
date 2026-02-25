@@ -213,30 +213,19 @@ class PortfolioOptimizer(BaseOptimizer):
         Sigma = covariance_matrix.values
 
         if objective == "max_sharpe":
-            # Maximize Sharpe ratio (equivalent to maximizing return/risk)
-            portfolio_return = mu.T @ w
-            portfolio_risk = cp.quad_form(w, Sigma)
-            # Use auxiliary variable for Sharpe ratio maximization
-            kappa = cp.Variable()
+            # Maximize Sharpe ratio (equivalent to maximizing excess return subject to risk = 1)
+            # w = y / sum(y)
             y = cp.Variable(n_assets)
-
-            constraints_list = [
-                cp.sum(y) == 1,
-                mu.T @ y - risk_free_rate * kappa == 1,
-                cp.quad_form(y, Sigma) <= kappa**2,
-                kappa >= 0,
-            ]
-
-            if bounds:
-                constraints_list.extend(
-                    [y >= bounds[0] * kappa, y <= bounds[1] * kappa]
-                )
-
-            prob = cp.Problem(cp.Maximize(kappa), constraints_list)
+            excess_returns = mu - risk_free_rate
+            
+            prob = cp.Problem(
+                cp.Maximize(excess_returns @ y),
+                [cp.quad_form(y, Sigma) <= 1, y >= 0]
+            )
             prob.solve()
 
             if prob.status == cp.OPTIMAL:
-                weights = pd.Series(y.value / kappa.value, index=expected_returns.index)
+                weights = pd.Series(y.value / np.sum(y.value), index=expected_returns.index)
             else:
                 return OptimizationResult(
                     weights=pd.Series(np.zeros(n_assets), index=expected_returns.index),
@@ -308,7 +297,7 @@ class PortfolioOptimizer(BaseOptimizer):
         elif objective == "target_volatility" and target_volatility is not None:
             portfolio_return = mu.T @ w
             portfolio_risk = cp.quad_form(w, Sigma)
-            constraints_list.append(portfolio_risk <= target_volatility**2)
+            constraints_list.append(cp.quad_form(w, Sigma) <= cp.square(target_volatility))
 
             prob = cp.Problem(cp.Maximize(portfolio_return), constraints_list)
             prob.solve()
@@ -840,7 +829,114 @@ class HierarchicalRiskParityOptimizer(BaseOptimizer):
         return np.dot(w, np.dot(cov_slice.values, w))
 
 
+
+class NestedClusteredOptimizer(BaseOptimizer):
+    """
+    Nested Clustered Optimization (NCO).
+    Addresses instability in Markowitz optimization by clustering assets and 
+    optimizing intra-cluster and inter-cluster weights.
+    """
+
+    def __init__(
+        self,
+        base_optimizer: BaseOptimizer = None,
+        linkage_method: str = "ward",
+        n_clusters: Optional[int] = None,
+    ):
+        super().__init__("NestedClusteredOptimization")
+        self.base_optimizer = base_optimizer or PortfolioOptimizer()
+        self.linkage_method = linkage_method
+        self.n_clusters = n_clusters
+
+    def optimize(
+        self,
+        expected_returns: pd.Series,
+        covariance_matrix: pd.DataFrame,
+        **kwargs,
+    ) -> OptimizationResult:
+        """
+        Optimize using NCO.
+
+        Args:
+            expected_returns: Expected returns
+            covariance_matrix: Covariance matrix
+            **kwargs: Arguments for base optimizer
+
+        Returns:
+            OptimizationResult with NCO optimized weights
+        """
+        self.validate_inputs(expected_returns, covariance_matrix)
+        
+        # Step 1: Cluster assets
+        corr_matrix = covariance_matrix.div(
+            np.outer(
+                np.sqrt(np.diag(covariance_matrix)),
+                np.sqrt(np.diag(covariance_matrix)),
+            )
+        )
+        dist = np.sqrt(0.5 * (1 - corr_matrix))
+        link = linkage(squareform(dist.values, checks=False), method=self.linkage_method)
+        
+        if self.n_clusters is None:
+            # Default to sqrt of number of assets
+            n_clusters = int(np.sqrt(len(expected_returns)))
+        else:
+            n_clusters = self.n_clusters
+            
+        from scipy.cluster.hierarchy import fcluster
+        clusters = fcluster(link, n_clusters, criterion='maxclust')
+        
+        cluster_map = pd.Series(clusters, index=expected_returns.index)
+        
+        # Step 2: Intra-cluster optimization
+        w_intra = pd.DataFrame(0.0, index=expected_returns.index, columns=range(1, n_clusters + 1))
+        for i in range(1, n_clusters + 1):
+            cluster_assets = cluster_map[cluster_map == i].index
+            if len(cluster_assets) == 0:
+                continue
+                
+            res = self.base_optimizer.optimize(
+                expected_returns[cluster_assets],
+                covariance_matrix.loc[cluster_assets, cluster_assets],
+                **kwargs
+            )
+            w_intra.loc[cluster_assets, i] = res.weights
+            
+        # Step 3: Inter-cluster optimization
+        # Reduced covariance matrix
+        cov_inter = w_intra.T @ covariance_matrix @ w_intra
+        mu_inter = w_intra.T @ expected_returns
+        
+        res_inter = self.base_optimizer.optimize(mu_inter, cov_inter, **kwargs)
+        w_inter = res_inter.weights
+        
+        # Step 4: Final weights
+        final_weights = (w_intra @ w_inter).rename(None)
+        final_weights.index = expected_returns.index
+        
+        # Calculate metrics
+        port_return, port_vol, sharpe = self.calculate_portfolio_metrics(
+            final_weights, expected_returns, covariance_matrix
+        )
+        
+        return OptimizationResult(
+            weights=final_weights,
+            expected_return=port_return,
+            volatility=port_vol,
+            sharpe_ratio=sharpe,
+            optimization_method=self.name,
+            success=True,
+            message="NCO optimization successful",
+            metadata={
+                "n_clusters": n_clusters,
+                "cluster_map": cluster_map.to_dict(),
+                "inter_cluster_weights": w_inter.to_dict(),
+            },
+        )
+
+
 class FactorModelOptimizer(BaseOptimizer):
+
     """Factor model optimization with Fama-French and custom factors."""
 
     def __init__(self, factor_model: str = "fama_french_3"):

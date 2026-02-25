@@ -40,7 +40,7 @@ DEFAULT_CONFIDENCE_LEVEL = 0.95
 DEFAULT_WINDOW = 21
 
 try:
-    # signals module available but not directly imported
+    from .. import signals
     TECHNICAL_AVAILABLE = True
 except ImportError:
     TECHNICAL_AVAILABLE = False
@@ -254,27 +254,46 @@ class MeridianAlgoAPI:
     def calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
         """Calculate RSI indicator."""
         if not TECHNICAL_AVAILABLE:
-            raise ImportError("Technical indicators not available")
-        delta = prices.diff()
-        gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
-        loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
-
-        rs = gain / loss
-        rsi = 100 - (100 / (1 + rs))
-        return rsi
+            raise ImportError("Technical indicators module (signals) not available")
+        from ..signals.indicators import RSI
+        return RSI(prices, period)
 
     def calculate_macd(
-        self, prices: pd.Series
+        self, prices: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9
     ) -> Tuple[pd.Series, pd.Series, pd.Series]:
         """Calculate MACD indicator."""
         if not TECHNICAL_AVAILABLE:
-            raise ImportError("Technical indicators not available")
-        fast_ema = prices.ewm(span=12, adjust=False).mean()
-        slow_ema = prices.ewm(span=26, adjust=False).mean()
-        macd = fast_ema - slow_ema
-        signal = macd.ewm(span=9, adjust=False).mean()
+            raise ImportError("Technical indicators module (signals) not available")
+        from ..signals.indicators import MACD
+        return MACD(prices, fast, slow, signal)
 
-        return macd, signal, macd - signal
+    def calculate_bollinger_bands(
+        self, prices: pd.Series, period: int = 20, std_dev: float = 2.0
+    ) -> Tuple[pd.Series, pd.Series, pd.Series]:
+        """Calculate Bollinger Bands."""
+        if not TECHNICAL_AVAILABLE:
+            raise ImportError("Technical indicators module (signals) not available")
+        from ..signals.indicators import BollingerBands
+        return BollingerBands(prices, period, std_dev)
+
+    def calculate_atr(
+        self, high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14
+    ) -> pd.Series:
+        """Calculate Average True Range."""
+        if not TECHNICAL_AVAILABLE:
+            raise ImportError("Technical indicators module (signals) not available")
+        from ..signals.indicators import ATR
+        return ATR(high, low, close, period)
+
+    def calculate_adx(
+        self, high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14
+    ) -> Tuple[pd.Series, pd.Series, pd.Series]:
+        """Calculate Average Directional Index."""
+        if not TECHNICAL_AVAILABLE:
+            raise ImportError("Technical indicators module (signals) not available")
+        from ..signals.indicators import ADX
+        return ADX(high, low, close, period)
+
 
     def get_system_info(self) -> Dict[str, Any]:
         """Get system information and capabilities."""
@@ -327,9 +346,24 @@ def calculate_rsi(prices: pd.Series, period: int = 14) -> pd.Series:
     return get_api().calculate_rsi(prices, period)
 
 
-def calculate_macd(prices: pd.Series) -> Tuple[pd.Series, pd.Series, pd.Series]:
+def calculate_macd(prices: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> Tuple[pd.Series, pd.Series, pd.Series]:
     """Calculate MACD indicator."""
-    return get_api().calculate_macd(prices)
+    return get_api().calculate_macd(prices, fast, slow, signal)
+
+
+def calculate_bollinger_bands(prices: pd.Series, period: int = 20, std_dev: float = 2.0) -> Tuple[pd.Series, pd.Series, pd.Series]:
+    """Calculate Bollinger Bands."""
+    return get_api().calculate_bollinger_bands(prices, period, std_dev)
+
+
+def calculate_atr(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14) -> pd.Series:
+    """Calculate Average True Range."""
+    return get_api().calculate_atr(high, low, close, period)
+
+
+def calculate_adx(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14) -> Tuple[pd.Series, pd.Series, pd.Series]:
+    """Calculate Average Directional Index."""
+    return get_api().calculate_adx(high, low, close, period)
 
 
 def price_option(
