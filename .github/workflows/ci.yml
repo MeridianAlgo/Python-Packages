@@ -83,7 +83,7 @@ jobs:
       run: |
         # Run specific critical tests
         python -c "import meridianalgo; print(f'MeridianAlgo {meridianalgo.__version__} loaded')"
-        pytest tests/test_core.py tests/test_ml.py -v --tb=short
+        pytest tests/test_core.py tests/test_machine_learning.py -v --tb=short
 
   build-and-release:
     needs: test
