@@ -152,8 +152,6 @@ class BacktestEngine:
         max_drawdown = drawdown.min()
 
         # Win rate from transactions
-        winning_trades = 0
-        total_trades = 0
 
         # Simple win rate approximation based on completed round trips would be better
         # but for now we look at daily returns

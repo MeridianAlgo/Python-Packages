@@ -746,6 +746,7 @@ __all__ = [
     "Strategy",
     # Quant
     "PairsTrading",
+    "MeanReversionStrategy",
     "CointegrationAnalyzer",
     "OrnsteinUhlenbeck",
     "HiddenMarkovModel",
