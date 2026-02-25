@@ -64,9 +64,7 @@ def test_feature_engineering():
     print("Testing Financial Feature Engineering...")
 
     try:
-        from meridianalgo.ml.feature_engineering import (
-            TechnicalIndicatorFeatures,
-        )
+        from meridianalgo.ml.feature_engineering import TechnicalIndicatorFeatures
 
         data = create_sample_price_data()
         generator = TechnicalIndicatorFeatures(periods=[5, 10, 20])

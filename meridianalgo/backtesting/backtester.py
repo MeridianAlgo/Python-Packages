@@ -129,7 +129,7 @@ class Portfolio:
     def process_fill(self, fill_event: FillEvent) -> float:
         """
         Process a fill event and update portfolio.
-        
+
         Returns:
             Realized P&L from the fill
         """
@@ -151,7 +151,7 @@ class Portfolio:
         realized_pnl = position.add_fill(fill_event)
         self.total_realized_pnl += realized_pnl
         self.total_commission += fill_event.commission
-        
+
         return realized_pnl
 
     def update_market_values(self, market_prices: Dict[str, float]) -> None:
@@ -495,7 +495,7 @@ class EventDrivenBacktester:
         summary = self.portfolio.get_portfolio_summary()
         summary["timestamp"] = self.current_date
         self.portfolio_history.append(summary)
-        
+
         # Record positions
         positions_snapshot = {"timestamp": self.current_date}
         for symbol, pos in self.portfolio.positions.items():
@@ -555,7 +555,7 @@ class EventDrivenBacktester:
         portfolio_df = pd.DataFrame(self.portfolio_history)
         if len(portfolio_df) > 0:
             portfolio_df.set_index("timestamp", inplace=True)
-            
+
         position_history = pd.DataFrame(self.position_history_list)
         if len(position_history) > 0:
             position_history.set_index("timestamp", inplace=True)
@@ -612,7 +612,7 @@ class EventDrivenBacktester:
         total_trades = len(trade_df)
         winning_trades = 0
         losing_trades = 0
-        
+
         if total_trades > 0 and "pnl" in trade_df.columns:
             # We count transactions with realized P&L as "trades" for win/loss stats
             winning_trades = len(trade_df[trade_df["pnl"] > 0])

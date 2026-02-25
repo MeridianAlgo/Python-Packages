@@ -14,11 +14,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import meridianalgo as ma
-    from meridianalgo.risk import (
-        RiskAnalyzer,
-        StressTesting,
-        calculate_risk_metrics,
-    )
+    from meridianalgo.risk import RiskAnalyzer
+
     # Define aliases to maintain test compatibility where possible
     VaRCalculator = RiskAnalyzer
 except ImportError as e:
@@ -103,7 +100,9 @@ class TestRiskAnalysis:
         try:
             var_calc = RiskAnalyzer(sample_returns)
 
-            var_95 = var_calc.value_at_risk(confidence=0.95, method="monte_carlo", n_simulations=1000)
+            var_95 = var_calc.value_at_risk(
+                confidence=0.95, method="monte_carlo", n_simulations=1000
+            )
 
             # VaR should be negative (loss)
             assert var_95 <= 0
@@ -328,10 +327,7 @@ class TestRiskAnalysis:
 def test_risk_analysis_import():
     """Test that risk analysis can be imported."""
     try:
-        from meridianalgo.risk import (  # noqa: F401
-            RiskAnalyzer,
-            calculate_risk_metrics,
-        )
+        from meridianalgo.risk import RiskAnalyzer, calculate_risk_metrics  # noqa: F401
 
         print(" Risk analysis import test passed")
         return True

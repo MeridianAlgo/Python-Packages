@@ -174,9 +174,9 @@ class RSIMeanReversion(BaseStrategy):
 
             # Generate signals based on RSI levels
             signals.loc[rsi < self.oversold_threshold, asset] = 1  # Buy when oversold
-            signals.loc[
-                rsi > self.overbought_threshold, asset
-            ] = -1  # Sell when overbought
+            signals.loc[rsi > self.overbought_threshold, asset] = (
+                -1
+            )  # Sell when overbought
             signals.loc[
                 (rsi >= self.exit_threshold) & (rsi <= 100 - self.exit_threshold), asset
             ] = 0  # Exit at neutral

@@ -281,8 +281,7 @@ class PortfolioOptimizer:
             "weights": dict(zip(self.asset_names, self.weights, strict=False)),
             "return": portfolio_return,
             "volatility": portfolio_volatility,
-            "sharpe": (portfolio_return - self.risk_free_rate)
-            / portfolio_volatility,
+            "sharpe": (portfolio_return - self.risk_free_rate) / portfolio_volatility,
             "status": problem.status,
         }
 

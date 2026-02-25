@@ -6,39 +6,39 @@ Includes market microstructure, high-frequency trading, and statistical arbitrag
 """
 
 from .advanced_signals import (
-    calculate_z_score,
-    fractional_difference,
-    get_half_life,
-    hurst_exponent,
-    information_coefficient,
+                               calculate_z_score,
+                               fractional_difference,
+                               get_half_life,
+                               hurst_exponent,
+                               information_coefficient,
 )
 from .high_frequency import (
-    HFTSignalGenerator,
-    LatencyArbitrage,
-    LiquidityProvision,
-    MarketMaking,
-    MicropriceEstimator,
+                               HFTSignalGenerator,
+                               LatencyArbitrage,
+                               LiquidityProvision,
+                               MarketMaking,
+                               MicropriceEstimator,
 )
 from .market_microstructure import (
-    MarketImpactModel,
-    OrderFlowImbalance,
-    RealizedVolatility,
-    TickDataAnalyzer,
-    VolumeWeightedSpread,
+                               MarketImpactModel,
+                               OrderFlowImbalance,
+                               RealizedVolatility,
+                               TickDataAnalyzer,
+                               VolumeWeightedSpread,
 )
 from .regime_detection import (
-    HiddenMarkovModel,
-    MarketStateClassifier,
-    RegimeSwitchingModel,
-    StructuralBreakDetection,
-    VolatilityRegimeDetector,
+                               HiddenMarkovModel,
+                               MarketStateClassifier,
+                               RegimeSwitchingModel,
+                               StructuralBreakDetection,
+                               VolatilityRegimeDetector,
 )
 from .statistical_arbitrage import (
-    CointegrationAnalyzer,
-    MeanReversionTester,
-    OrnsteinUhlenbeck,
-    PairsTrading,
-    SpreadAnalyzer,
+                               CointegrationAnalyzer,
+                               MeanReversionTester,
+                               OrnsteinUhlenbeck,
+                               PairsTrading,
+                               SpreadAnalyzer,
 )
 
 __all__ = [
