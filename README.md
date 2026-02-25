@@ -132,4 +132,4 @@ Visit [docs.meridianalgo.com](https://meridianalgo.readthedocs.io) for full API 
 
 ---
 
-**Built with pride by the Meridian Algorithmic Research Team.**
+**Built with Love by the Meridian Algorithmic Research Team.**
