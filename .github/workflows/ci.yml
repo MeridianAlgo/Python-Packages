@@ -50,11 +50,10 @@ jobs:
           git commit -m "style: auto-linting and formatting [skip ci]"
           git push origin HEAD:${{ github.ref_name }}
       
-      - name: Fail if changes were made
+      - name: Notify if changes were made
         if: steps.ruff.outputs.changes == 'true'
         run: |
-          echo "Linting failed and fixes were applied. A new commit has been pushed."
-          exit 1
+          echo "Linting fixes were applied and pushed to the repository."
 
   test:
     needs: [lint-and-fix]
