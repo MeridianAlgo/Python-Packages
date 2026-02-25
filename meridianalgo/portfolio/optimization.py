@@ -380,8 +380,9 @@ class PortfolioOptimizer(BaseOptimizer):
             constraints_list.append(
                 {
                     "type": "eq",
-                    "fun": lambda x: np.sqrt(np.dot(x, np.dot(Sigma, x)))
-                    - target_volatility,
+                    "fun": lambda x: (
+                        np.sqrt(np.dot(x, np.dot(Sigma, x))) - target_volatility
+                    ),
                 }
             )
 
@@ -1112,8 +1113,9 @@ class RebalancingOptimizer:
         # Find optimal frequency (minimize cost + tracking error)
         optimal_freq = min(
             results.keys(),
-            key=lambda f: results[f]["cost_percentage"]
-            + results[f]["avg_tracking_error"] * 100,
+            key=lambda f: (
+                results[f]["cost_percentage"] + results[f]["avg_tracking_error"] * 100
+            ),
         )
 
         return {

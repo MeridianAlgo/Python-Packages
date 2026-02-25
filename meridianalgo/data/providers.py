@@ -77,7 +77,9 @@ class DataProvider(ABC):
             if e.response.status_code == 429:
                 raise RateLimitError(f"Rate limit exceeded for {self.name}") from e
             elif e.response.status_code == 401:
-                raise AuthenticationError(f"Authentication failed for {self.name}") from e
+                raise AuthenticationError(
+                    f"Authentication failed for {self.name}"
+                ) from e
             else:
                 raise ProviderError(f"HTTP error {e.response.status_code}: {e}") from e
         except requests.exceptions.RequestException as e:

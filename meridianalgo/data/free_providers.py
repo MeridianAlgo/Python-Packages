@@ -242,7 +242,9 @@ class YahooFinanceFreeProvider(DataProvider):
             )
 
         except ImportError:
-            raise ProviderError("yfinance package required for free real-time data") from None
+            raise ProviderError(
+                "yfinance package required for free real-time data"
+            ) from None
         except Exception as e:
             raise ProviderError(f"Yahoo Finance Free real-time error: {str(e)}") from e
 
@@ -277,7 +279,9 @@ class YahooFinanceFreeProvider(DataProvider):
             return fundamentals
 
         except ImportError:
-            raise ProviderError("yfinance package required for free fundamental data") from None
+            raise ProviderError(
+                "yfinance package required for free fundamental data"
+            ) from None
 
 
 class FREDFreeProvider(DataProvider):
