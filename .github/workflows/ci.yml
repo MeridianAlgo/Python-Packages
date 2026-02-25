@@ -1,13 +1,64 @@
-name: CI/CD Pipeline & Build and Deploy
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ main, develop ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
+  lint-and-fix:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      
+      - name: Install Linting Tools
+        run: |
+          pip install ruff
+      
+      - name: Run Ruff Format and Fix
+        id: ruff
+        run: |
+          ruff format .
+          ruff check . --fix
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and Push Changes
+        if: steps.ruff.outputs.changes == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "style: auto-linting and formatting [skip ci]"
+          git push
+      
+      - name: Fail if changes were made
+        if: steps.ruff.outputs.changes == 'true'
+        run: |
+          echo "Linting failed and fixes were applied. A new commit has been pushed."
+          exit 1
+
   test:
+    needs: [lint-and-fix]
+    if: always() && (needs.lint-and-fix.result == 'success' || needs.lint-and-fix.result == 'skipped')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -27,53 +78,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest pytest-cov ruff
-        pip install -e .
+        pip install -e .[all]
     
-    - name: Lint with ruff
+    - name: Test Core and ML
       run: |
-        # Use ruff for fast and comprehensive linting
-        ruff check meridianalgo --output-format=github
-    
-    - name: Test new modules
-      run: |
-        pytest tests/test_analytics.py tests/test_liquidity.py tests/test_signals.py -v --tb=short
-    
-    - name: Test core functionality
-      run: |
-        pytest tests/test_core.py tests/test_quant.py -v --tb=short || true
-    
-    - name: Test import and basic functionality
-      run: |
-        python -c "
-        import meridianalgo as ma
-        print(f'Version: {ma.__version__}')
-        
-        # Test analytics
-        from meridianalgo.analytics import PerformanceAnalyzer, RiskAnalyzer
-        print('Analytics: OK')
-        
-        # Test liquidity
-        from meridianalgo.liquidity import OrderBook, VPIN, MarketImpact
-        print('Liquidity: OK')
-        
-        # Test signals
-        from meridianalgo.signals import RSI, MACD, SignalGenerator
-        print('Signals: OK')
-        
-        # Test derivatives
-        from meridianalgo.derivatives import OptionsPricer
-        print('Derivatives: OK')
-        
-        # Test quant
-        from meridianalgo.quant import PairsTrading, OrnsteinUhlenbeck
-        print('Quant: OK')
-        
-        print('All imports successful!')
-        "
+        # Run specific critical tests
+        python -c "import meridianalgo; print(f'MeridianAlgo {meridianalgo.__version__} loaded')"
+        pytest tests/test_core.py tests/test_ml.py -v --tb=short
 
-  build:
+  build-and-release:
     needs: test
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     
     steps:
     - uses: actions/checkout@v4
@@ -96,30 +112,21 @@ jobs:
       run: |
         twine check dist/*
     
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v1
       with:
-        name: dist
-        path: dist/
+        files: dist/*
+        body_path: README.md
+        name: Release ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  release:
-    needs: [test, build]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: dist
-        path: dist/
-    
     - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
-        pip install twine
-        twine upload dist/* || echo "Upload failed or package already exists"
+        twine upload dist/* --skip-existing

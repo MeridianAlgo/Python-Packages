@@ -1528,6 +1528,36 @@ def calculate_calmar_ratio(returns: pd.Series) -> float:
     return annualized_return / abs(max_drawdown)
 
 
+# Additional stubs for easy access
+def calculate_returns(data: pd.DataFrame, log_returns: bool = False) -> pd.DataFrame:
+    """Top-level stub for TimeSeriesAnalyzer.calculate_returns."""
+    analyzer = TimeSeriesAnalyzer(data)
+    return analyzer.calculate_returns(log_returns)
+
+
+def calculate_rsi(data: pd.Series, window: int = 14) -> pd.Series:
+    """Top-level stub for TimeSeriesAnalyzer.calculate_rsi."""
+    if isinstance(data, pd.Series):
+        df = data.to_frame()
+        analyzer = TimeSeriesAnalyzer(df)
+        return analyzer.calculate_rsi(window).iloc[:, 0]
+    analyzer = TimeSeriesAnalyzer(data)
+    return analyzer.calculate_rsi(window)
+
+
+def calculate_macd(
+    data: pd.Series, fast_period: int = 12, slow_period: int = 26, signal_period: int = 9
+) -> Dict[str, pd.Series]:
+    """Top-level stub for TimeSeriesAnalyzer.calculate_macd."""
+    if isinstance(data, pd.Series):
+        df = data.to_frame()
+        analyzer = TimeSeriesAnalyzer(df)
+        result = analyzer.calculate_macd(fast_period, slow_period, signal_period)
+        return {k: v.iloc[:, 0] for k, v in result.items()}
+    analyzer = TimeSeriesAnalyzer(data)
+    return analyzer.calculate_macd(fast_period, slow_period, signal_period)
+
+
 # Export main classes and functions
 __all__ = [
     "PortfolioOptimizer",
@@ -1539,4 +1569,7 @@ __all__ = [
     "calculate_expected_shortfall",
     "calculate_sortino_ratio",
     "calculate_calmar_ratio",
+    "calculate_returns",
+    "calculate_rsi",
+    "calculate_macd",
 ]

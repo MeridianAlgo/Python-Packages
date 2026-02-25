@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "meridianalgo"
-version = "6.2.1"
+version = "6.2.2"
 description = "MeridianAlgo Quant Packages - The Complete Quantitative Finance Platform for Professional Developers"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -142,3 +142,12 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 exclude = ["tests*", "docs*", "examples*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+select = ["E", "F", "B", "I"]
+ignore = ["B008", "E501"]
+
+[tool.ruff.isort]
+known-first-party = ["meridianalgo"]

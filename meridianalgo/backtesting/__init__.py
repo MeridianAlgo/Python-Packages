@@ -7,6 +7,8 @@ order management, and performance analytics.
 
 from .backtester import Portfolio, Position
 from .engine import BacktestEngine
+# Alias
+Backtest = BacktestEngine
 from .event_driven import BacktestEngine as EventDrivenBacktestEngine
 from .event_driven import (DataHandler, EventQueue, EventType, Fill, FillEvent,
                            HistoricalDataHandler, MarketDataEvent,
@@ -39,6 +41,7 @@ from .performance_analytics import (PerformanceAnalyzer, PerformanceMetrics,
 __all__ = [
     # Main engine
     "BacktestEngine",
+    "Backtest",
     "EventDrivenBacktestEngine",
     # Events
     "Event",

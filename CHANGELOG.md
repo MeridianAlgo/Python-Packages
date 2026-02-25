@@ -5,6 +5,27 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.2.2] - 2026-02-24 "Institutional Stability Release"
+
+### Added
+- **Production-Grade CI/CD**: Comprehensive GitHub Actions workflow with automated `ruff` linting/fixing, parallel matrix testing, and automated GitHub & PyPI releases.
+- **Unified ML Architecture**: Reorganized `meridianalgo.ml` for modular model development. `ModelTrainer`, `LSTMModel`, and `GRUModel` are now first-class exports.
+- **Enhanced API Discovery**: Major overhaul of `__init__.py` files across all sub-packages (Core, Risk, Strategies, Execution) for seamless institutional-grade imports.
+- **Detailed Technical Documentation**: Updated README/Changelog with high-fidelity performance benchmarks and mathematical foundations.
+
+### Fixed
+- **Critical Import Paths**: Resolved systemic `ImportError` across ML, Strategies, and Core modules.
+- **Execution Analytics**: Fixed `ExecutionAnalyzer` integration and `NameError` in typing.
+- **Standardized Exports**: Ensured all `__all__` lists in sub-modules accurately reflect available functionality.
+
+### Changed
+- **Version Alignment**: Unified package version to **6.2.2** across `pyproject.toml`, `setup.py`, and package metadata.
+- **API Aliasing**: Formalized professional aliases for core quant components (e.g., `VaRCalculator`, `BacktestEngine`).
+
+## [6.2.1] - 2026-02-24 "Maintenance Release"
+- Internal module reorganization.
+- Bug fixes for portfolio optimization.
+
 ## [5.0.0] - 2024-11-29 "Advanced Quantitative Development Edition"
 
 ### Added

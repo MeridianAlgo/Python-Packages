@@ -12,6 +12,13 @@ from .optimization import (BlackLittermanOptimizer, FactorModelOptimizer,
                            HierarchicalRiskParityOptimizer, OptimizationResult,
                            PortfolioOptimizer, RiskParityOptimizer)
 
+# Aliases for package-wide consistency
+BlackLitterman = BlackLittermanOptimizer
+RiskParity = RiskParityOptimizer
+HierarchicalRiskParity = HierarchicalRiskParityOptimizer
+MeanVariance = PortfolioOptimizer
+EfficientFrontier = PortfolioOptimizer
+
 __all__ = [
     # Optimization
     "PortfolioOptimizer",
@@ -20,6 +27,11 @@ __all__ = [
     "HierarchicalRiskParityOptimizer",
     "FactorModelOptimizer",
     "OptimizationResult",
+    "BlackLitterman",
+    "RiskParity",
+    "HierarchicalRiskParity",
+    "MeanVariance",
+    "EfficientFrontier",
 ]
 
 # Risk Management

@@ -6,7 +6,7 @@ Implementation Shortfall, and advanced optimal execution strategies.
 """
 
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -645,6 +645,35 @@ class AdaptiveExecution:
         return execution
 
 
+class ExecutionAnalyzer:
+    """
+    Analyzes execution performance against benchmarks.
+    """
+
+    @staticmethod
+    def calculate_slippage(executed_price: float, benchmark_price: float) -> float:
+        """Calculate slippage in basis points."""
+        if benchmark_price == 0:
+            return 0.0
+        return (executed_price - benchmark_price) / benchmark_price * 10000
+
+    @staticmethod
+    def calculate_metrics(executions: List[Dict]) -> Dict[str, float]:
+        """Calculate aggregate execution metrics."""
+        if not executions:
+            return {}
+
+        df = pd.DataFrame(executions)
+        avg_price = (df["price"] * df["quantity"]).sum() / df["quantity"].sum()
+        total_qty = df["quantity"].sum()
+
+        return {
+            "average_price": avg_price,
+            "total_quantity": total_qty,
+            "count": len(df)
+        }
+
+
 __all__ = [
     "VWAP",
     "TWAP",
@@ -652,4 +681,5 @@ __all__ = [
     "ImplementationShortfall",
     "AdaptiveExecution",
     "ExecutionState",
+    "ExecutionAnalyzer",
 ]

@@ -2,16 +2,12 @@
 MeridianAlgo Quantitative Algorithms Module
 
 Advanced quantitative algorithms for institutional-grade trading and research.
-Includes market microstructure, high-frequency trading, statistical arbitrage,
-and advanced execution algorithms.
+Includes market microstructure, high-frequency trading, and statistical arbitrage.
 """
 
 from .advanced_signals import (calculate_z_score, fractional_difference,
                                get_half_life, hurst_exponent,
                                information_coefficient)
-from .execution_algorithms import POV, TWAP, VWAP, ImplementationShortfall
-from .factor_models import (AlphaCapture, APTModel, CustomFactorModel,
-                            FactorRiskDecomposition, FamaFrenchModel)
 from .high_frequency import (HFTSignalGenerator, LatencyArbitrage,
                              LiquidityProvision, MarketMaking,
                              MicropriceEstimator)
@@ -38,23 +34,12 @@ __all__ = [
     "OrnsteinUhlenbeck",
     "MeanReversionTester",
     "SpreadAnalyzer",
-    # Execution Algorithms
-    "VWAP",
-    "TWAP",
-    "POV",
-    "ImplementationShortfall",
     # High Frequency
     "LatencyArbitrage",
     "MarketMaking",
     "LiquidityProvision",
     "HFTSignalGenerator",
     "MicropriceEstimator",
-    # Factor Models
-    "FamaFrenchModel",
-    "APTModel",
-    "CustomFactorModel",
-    "FactorRiskDecomposition",
-    "AlphaCapture",
     # Regime Detection
     "HiddenMarkovModel",
     "RegimeSwitchingModel",
