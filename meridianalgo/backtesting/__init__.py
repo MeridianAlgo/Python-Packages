@@ -9,31 +9,31 @@ from .backtester import Portfolio, Position
 from .engine import BacktestEngine
 from .event_driven import BacktestEngine as EventDrivenBacktestEngine
 from .event_driven import (
-                           DataHandler,
-                           EventQueue,
-                           EventType,
-                           Fill,
-                           FillEvent,
-                           HistoricalDataHandler,
-                           MarketDataEvent,
-                           MarketSimulator,
-                           Order,
-                           OrderEvent,
-                           OrderStatus,
-                           OrderType,
-                           SignalEvent,
-                           SimpleMovingAverageStrategy,
-                           Strategy,
+    DataHandler,
+    EventQueue,
+    EventType,
+    Fill,
+    FillEvent,
+    HistoricalDataHandler,
+    MarketDataEvent,
+    MarketSimulator,
+    Order,
+    OrderEvent,
+    OrderStatus,
+    OrderType,
+    SignalEvent,
+    SimpleMovingAverageStrategy,
+    Strategy,
 )
 from .event_driven import Portfolio as EventDrivenPortfolio
 from .events import (
-                           Event,
-                           EventDispatcher,
-                           EventHandler,
-                           FillStatus,
-                           MarketEvent,
-                           OrderSide,
-                           SignalType,
+    Event,
+    EventDispatcher,
+    EventHandler,
+    FillStatus,
+    MarketEvent,
+    OrderSide,
+    SignalType,
 )
 from .events import EventQueue as EventQueueV2
 from .events import EventType as EventTypeV2
@@ -42,26 +42,26 @@ from .events import OrderEvent as OrderEventV2
 from .events import OrderType as OrderTypeV2
 from .events import SignalEvent as SignalEventV2
 from .market_simulator import (
-                           AssetClassCostModel,
-                           LinearSlippageModel,
-                           MarketState,
-                           SlippageModel,
-                           SquareRootSlippageModel,
+    AssetClassCostModel,
+    LinearSlippageModel,
+    MarketState,
+    SlippageModel,
+    SquareRootSlippageModel,
 )
 from .market_simulator import MarketSimulator as MarketSimulatorV2
 from .order_management import (
-                           BracketOrderBuilder,
-                           OrderManager,
-                           OrderValidator,
-                           PositionTracker,
-                           TimeInForce,
+    BracketOrderBuilder,
+    OrderManager,
+    OrderValidator,
+    PositionTracker,
+    TimeInForce,
 )
 from .order_management import Order as OrderV2
 from .order_management import OrderStatus as OrderStatusV2
 from .performance_analytics import (
-                           PerformanceAnalyzer,
-                           PerformanceMetrics,
-                           RollingPerformanceAnalyzer,
+    PerformanceAnalyzer,
+    PerformanceMetrics,
+    RollingPerformanceAnalyzer,
 )
 
 # Alias

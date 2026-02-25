@@ -5,13 +5,13 @@ This module provides various trading strategies for algorithmic trading.
 """
 
 from .momentum import (
-                       BaseStrategy,
-                       BollingerBandsStrategy,
-                       MACDCrossover,
-                       MomentumStrategy,
-                       PairsTrading,
-                       RSIMeanReversion,
-                       create_strategy,
+    BaseStrategy,
+    BollingerBandsStrategy,
+    MACDCrossover,
+    MomentumStrategy,
+    PairsTrading,
+    RSIMeanReversion,
+    create_strategy,
 )
 
 __all__ = [
