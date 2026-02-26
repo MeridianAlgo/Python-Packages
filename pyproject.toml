@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "meridianalgo"
-version = "6.2.2"
+version = "6.2.4"
 description = "MeridianAlgo Quant Packages - The Complete Quantitative Finance Platform for Professional Developers"
 readme = "README.md"
 requires-python = ">=3.10"
