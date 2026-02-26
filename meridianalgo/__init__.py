@@ -5,7 +5,7 @@ A comprehensive, institutional-grade Python library for quantitative finance
 covering everything from trading research to portfolio analytics to derivatives.
 """
 
-__version__ = "6.2.2"
+__version__ = "6.2.3"
 
 import os
 import warnings
