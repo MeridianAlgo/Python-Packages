@@ -28,7 +28,7 @@ def read_requirements(filename):
 
 setup(
     name="meridianalgo",
-    version="6.2.2",
+    version="6.2.3",
     author="Meridian Algorithmic Research Team",
     author_email="support@meridianalgo.com",
     description="MeridianAlgo - The Complete Quantitative Finance Platform for Professional Developers",
