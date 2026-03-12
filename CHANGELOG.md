@@ -5,6 +5,31 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.2.5] - 2026-03-12 "Organization & Automation Release"
+
+### Changed
+- Consolidated all documentation into single docs folder
+- Removed duplicate documentation files (DEPLOYMENT.md, RELEASE_NOTES.md, duplicate CHANGELOGs)
+- Removed emoji usage throughout codebase for professional appearance
+- Humanized and professionalized README content
+- Cleaned up unnecessary comments in setup.py
+- Improved code organization and structure
+
+### Added
+- New GitHub Action workflow for automatic PyPI publishing on tag push
+- Automated release creation using README as release notes
+- Separate CI/CD pipeline for testing and publishing
+
+### Removed
+- Duplicate Sphinx documentation in meridianalgo/docs folder
+- .agent workflow folder
+- Unnecessary summary and duplicate documentation files
+- All emoji characters from documentation
+
+### Fixed
+- Linted entire codebase with Ruff formatter
+- Cleaned up code comments and documentation
+
 ## [6.2.2] - 2026-02-24 "Institutional Stability Release"
 
 ### Added

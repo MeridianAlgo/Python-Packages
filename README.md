@@ -1,31 +1,31 @@
 # MeridianAlgo
-## A Powerful Python Library for Quantitative Finance
+
+A comprehensive Python library for quantitative finance, algorithmic trading, and financial machine learning. Built for traders, researchers, and financial analysts who need professional-grade tools for market analysis, strategy development, and risk management.
 
 [![PyPI version](https://img.shields.io/pypi/v/meridianalgo.svg?style=flat-square&color=blue)](https://pypi.org/project/meridianalgo/)
 [![Python versions](https://img.shields.io/pypi/pyversions/meridianalgo.svg?style=flat-square)](https://pypi.org/project/meridianalgo/)
 [![License](https://img.shields.io/github/license/MeridianAlgo/Python-Packages.svg?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/github/actions/workflow/status/MeridianAlgo/Python-Packages/ci.yml?branch=main&style=flat-square&label=tests)](https://github.com/MeridianAlgo/Python-Packages/actions)
 
-**MeridianAlgo** is a comprehensive Python library for quantitative finance, algorithmic trading, and financial machine learning. Whether you're a retail trader, quant researcher, or financial analyst, this library provides the tools you need to analyze markets, build strategies, and manage risk.
-
----
+**MeridianAlgo** is a comprehensive Python library for quantitative finance, algorithmic trading, and financial machine learning. Whether you're a retail trader, quant researcher, or financial analyst, this library provides professional tools to analyze markets, build strategies, and manage risk effectively.
 
 ## Installation
+
+Install the latest version:
 
 ```bash
 pip install meridianalgo
 ```
 
-For full functionality with all optional dependencies:
+For complete functionality with all optional dependencies:
+
 ```bash
 pip install meridianalgo[all]
 ```
 
----
-
 ## Quick Examples
 
-### 🚀 Market Data & Basic Analysis
+### Market Data & Basic Analysis
 
 ```python
 import meridianalgo as ma
@@ -45,7 +45,7 @@ print(f"AAPL Sharpe Ratio: {ma.calculate_sharpe_ratio(returns['AAPL']):.2f}")
 print(f"MSFT Max Drawdown: {ma.calculate_max_drawdown(returns['MSFT']):.2%}")
 ```
 
-### 📊 Portfolio Optimization
+### Portfolio Optimization
 
 ```python
 from meridianalgo.portfolio import PortfolioOptimizer
@@ -71,7 +71,7 @@ print(f"Portfolio Annual Volatility: {portfolio_vol:.2%}")
 print(f"Portfolio Sharpe Ratio: {sharpe_ratio:.2f}")
 ```
 
-### ⚡ Risk Management
+### Risk Management
 
 ```python
 from meridianalgo.risk import RiskMetrics
@@ -95,7 +95,7 @@ print(f"95% CVaR: {cvar_95['AAPL']:.2%}")
 print(f"95% Cornish-Fisher VaR: {cf_var['AAPL']:.2%}")
 ```
 
-### 🤖 Machine Learning for Finance
+### Machine Learning for Finance
 
 ```python
 from meridianalgo.ml import FeatureEngineer, ModelValidator
@@ -123,7 +123,7 @@ print(f"Average Precision: {results['precision'].mean():.2%}")
 print(f"Average F1 Score: {results['f1_score'].mean():.2%}")
 ```
 
-### 📈 Statistical Arbitrage
+### Statistical Arbitrage
 
 ```python
 from meridianalgo.quant import StatisticalArbitrage
@@ -148,7 +148,7 @@ if pairs:
     print(f"Generated {len(signals)} trading signals")
 ```
 
-### 💰 Options Pricing & Greeks
+### Options Pricing & Greeks
 
 ```python
 from meridianalgo.derivatives import BlackScholes, GreeksCalculator, ImpliedVolatility
@@ -176,7 +176,7 @@ implied_vol = ImpliedVolatility.calculate('call', S=100, K=105, T=0.25, r=0.05, 
 print(f"Implied Volatility: {implied_vol:.2%}")
 ```
 
-### ⚡ Backtesting Engine
+### Backtesting Engine
 
 ```python
 from meridianalgo.backtesting import Backtester, Strategy
@@ -211,7 +211,7 @@ print(f"Max Drawdown: {results['max_drawdown']:.2%}")
 print(f"Win Rate: {results['win_rate']:.2%}")
 ```
 
-### 📊 Advanced Technical Analysis
+### Advanced Technical Analysis
 
 ```python
 # Advanced indicators
@@ -334,32 +334,23 @@ pip install meridianalgo[distributed]
 pip install meridianalgo[all]
 ```
 
----
-
 ## Documentation
 
-- **Full API Documentation**: [meridianalgo.readthedocs.io](https://meridianalgo.readthedocs.io)
-- **Examples Gallery**: [github.com/MeridianAlgo/Python-Packages/tree/main/examples](https://github.com/MeridianAlgo/Python-Packages/tree/main/examples)
-- **Research Papers**: [github.com/MeridianAlgo/Python-Packages/tree/main/docs/research](https://github.com/MeridianAlgo/Python-Packages/tree/main/docs/research)
-
----
+- Full API Documentation: [meridianalgo.readthedocs.io](https://meridianalgo.readthedocs.io)
+- Examples Gallery: [github.com/MeridianAlgo/Python-Packages/tree/main/examples](https://github.com/MeridianAlgo/Python-Packages/tree/main/examples)
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
----
+We welcome contributions from the community. Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Disclaimer
 
-This software is for educational and research purposes. Trading financial instruments involves substantial risk of loss. The authors are not responsible for any financial losses incurred through the use of this software. Always do your own research and consider consulting with a financial advisor before making investment decisions.
+This software is for educational and research purposes only. Trading financial instruments involves substantial risk of loss. The authors are not responsible for any financial losses incurred through the use of this software. Always conduct your own research and consider consulting with a financial advisor before making investment decisions.
 
 ---
 
-**Built with ❤️ by the Quantitative Finance Community**
+Built by the Quantitative Finance Community

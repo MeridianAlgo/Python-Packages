@@ -1,12 +1,8 @@
-# Byte-compiled / optimized / DLL files
+
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
+*$py.clas
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -23,16 +19,11 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# PyInstaller
+MANIFEST
 *.manifest
 *.spec
-
-# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
-# Unit test / coverage reports
 htmlcov/
 .tox/
 .coverage
@@ -43,18 +34,17 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
-
-# Jupyter Notebook
+test-results/
+.mypy_cache/
+.ruff_cache/
 .ipynb_checkpoints
-
-# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
+.vs/
 
-# Environment variables
 .env
 .venv
 env/
@@ -62,8 +52,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Project specific
 *.csv
 *.pkl
 *.h5
@@ -72,12 +60,9 @@ venv.bak/
 *.npz
 *.parquet
 *.feather
-
-# Logs
 logs/
 *.log
 
-# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -85,3 +70,21 @@ logs/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-wheel-metadata/
+docs/_build/
+docs/_static/
+docs/_templates/
+site/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local_settings.py
+*.db
+*.sqlite
+*.sqlite3
+
