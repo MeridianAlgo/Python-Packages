@@ -40,8 +40,8 @@ except ImportError:
 # Import specialized components if they exist
 try:
     from .portfolio.optimization import (
-        PortfolioOptimizer as BaseOptimizer,  # noqa: F401
-    )
+        PortfolioOptimizer as BaseOptimizer,
+    )  # noqa: F401
     from .risk.metrics import calculate_metrics as BaseMetrics  # noqa: F401
 except ImportError:
     pass

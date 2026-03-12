@@ -231,7 +231,7 @@ class TestDataValidation:
         """Test infinite value detection."""
         series_with_inf = pd.Series([1, 2, np.inf, 4, 5])
         has_inf = np.isinf(series_with_inf).any()
-        assert has_inf == True  # Use == instead of is for numpy bool
+        assert has_inf
 
 
 class TestMathematicalOperations:
