@@ -65,9 +65,9 @@ def test_performance_analytics():
         # Basic checks
         assert metrics.total_return != 0, "Total return should not be zero"
         assert metrics.volatility > 0, "Volatility should be positive"
-        assert metrics.trading_days == len(
-            returns
-        ), "Trading days should match data length"
+        assert metrics.trading_days == len(returns), (
+            "Trading days should match data length"
+        )
 
         print(" Performance analytics working correctly")
         print(f"  Total Return: {metrics.total_return:.2%}")
@@ -102,14 +102,14 @@ def test_portfolio_optimization():
         )
         weights = result.weights
 
-        assert len(weights) == len(
-            returns_data.columns
-        ), "Weights should match number of assets"
+        assert len(weights) == len(returns_data.columns), (
+            "Weights should match number of assets"
+        )
         assert result.success, f"Optimization failed: {result.message}"
         assert abs(weights.sum() - 1.0) < 1e-6, "Weights should sum to 1"
-        assert all(
-            w >= -1e-10 for w in weights.values
-        ), "Weights should be non-negative"
+        assert all(w >= -1e-10 for w in weights.values), (
+            "Weights should be non-negative"
+        )
 
         print(" Portfolio optimization working correctly")
         print(f"  Optimized weights: {dict(weights)}")
