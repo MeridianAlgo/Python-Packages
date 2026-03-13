@@ -5,12 +5,12 @@ Provides optimal execution algorithms including VWAP, TWAP, POV, and IS.
 """
 
 from .core import (
-                   POV,
-                   TWAP,
-                   VWAP,
-                   AdaptiveExecution,
-                   ExecutionAnalyzer,
-                   ImplementationShortfall,
+    POV,
+    TWAP,
+    VWAP,
+    AdaptiveExecution,
+    ExecutionAnalyzer,
+    ImplementationShortfall,
 )
 
 __all__ = [

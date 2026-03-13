@@ -3,11 +3,11 @@ Factor modeling module for MeridianAlgo.
 """
 
 from .core import (
-                   AlphaCapture,
-                   APTModel,
-                   CustomFactorModel,
-                   FactorRiskDecomposition,
-                   FamaFrenchModel,
+    AlphaCapture,
+    APTModel,
+    CustomFactorModel,
+    FactorRiskDecomposition,
+    FamaFrenchModel,
 )
 
 # Aliases
