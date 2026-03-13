@@ -61,7 +61,7 @@ for ticker in tickers:
 # ============================================================================
 # Step 3: Risk Analysis
 # ============================================================================
-print("\n⚠️  Step 3: Risk Analysis")
+print("\nStep 3: Risk Analysis")
 print("-" * 60)
 
 # Volatility tells us how much the price bounces around
