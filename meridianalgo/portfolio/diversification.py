@@ -14,7 +14,8 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 # Suppress warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 class DiversificationAnalyzer:

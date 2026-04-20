@@ -1,14 +1,14 @@
 """
-MeridianAlgo v6.2.2 - The Complete Quantitative Finance Platform
+MeridianAlgo v6.3.0 - The Complete Quantitative Finance Platform
 
-A comprehensive, institutional-grade Python library for quantitative finance
-covering everything from trading research to portfolio analytics to derivatives.
+Institutional-grade Python library for quantitative finance covering portfolio
+optimization, risk management, derivatives pricing, backtesting, machine learning,
+statistical arbitrage, execution algorithms, and fixed income analytics.
 """
 
-__version__ = "6.2.6"
+__version__ = "6.3.0"
 
 import os
-import warnings
 from typing import Any, Dict
 
 # Configure logging
@@ -16,8 +16,6 @@ from .utils.logging import setup_logger
 
 logger = setup_logger("meridianalgo")
 
-# Suppress warnings
-warnings.filterwarnings("ignore")
 
 # ============================================================================
 # MODULE REGISTRY
@@ -36,6 +34,10 @@ class ModuleRegistry:
     @classmethod
     def is_available(cls, name: str) -> bool:
         return cls._modules.get(name, {}).get("available", False)
+
+    @classmethod
+    def status(cls) -> Dict[str, bool]:
+        return {k: v["available"] for k, v in cls._modules.items()}
 
 
 # ============================================================================
@@ -59,6 +61,35 @@ try:
 except ImportError as e:
     ModuleRegistry.register("core", False, str(e))
 
+# Core Financial Functions
+try:
+    from .core.base import (
+        calculate_calmar_ratio,
+        calculate_expected_shortfall,
+        calculate_max_drawdown,
+        calculate_sortino_ratio,
+    )
+
+    ModuleRegistry.register("core_functions", True)
+except ImportError as e:
+    ModuleRegistry.register("core_functions", False, str(e))
+
+# Technical Indicators
+try:
+    from .signals.indicators import BollingerBands as calculate_bollinger_bands
+
+    ModuleRegistry.register("indicators", True)
+except ImportError as e:
+    ModuleRegistry.register("indicators", False, str(e))
+
+# Sharpe Ratio
+try:
+    from .strategies.algorithmic import calculate_sharpe_ratio
+
+    ModuleRegistry.register("sharpe", True)
+except ImportError as e:
+    ModuleRegistry.register("sharpe", False, str(e))
+
 # Portfolio Management
 try:
     from .portfolio import (
@@ -71,6 +102,14 @@ try:
     ModuleRegistry.register("portfolio", True)
 except ImportError as e:
     ModuleRegistry.register("portfolio", False, str(e))
+
+# Kelly Criterion
+try:
+    from .portfolio.kelly import KellyCriterion
+
+    ModuleRegistry.register("kelly", True)
+except ImportError as e:
+    ModuleRegistry.register("kelly", False, str(e))
 
 # Risk Management
 try:
@@ -94,6 +133,7 @@ try:
         ModelTrainer,
         TimeSeriesCV,
         WalkForwardOptimizer,
+        WalkForwardValidator,
         prepare_data_for_lstm,
     )
 
@@ -122,6 +162,7 @@ try:
     from .derivatives import (
         BlackScholes,
         GreeksCalculator,
+        ImpliedVolatility,
         MonteCarloPricer,
         OptionChain,
     )
@@ -154,18 +195,36 @@ except ImportError as e:
 
 # Backtesting
 try:
-    from .backtesting import Backtest, BacktestEngine
+    from .backtesting import Backtest, BacktestEngine, Strategy
 
     ModuleRegistry.register("backtesting", True)
 except ImportError as e:
     ModuleRegistry.register("backtesting", False, str(e))
 
-# Welcome Message
-if not os.getenv("MERIDIANALGO_QUIET", "0") == "1":
-    print(f"MeridianAlgo v{__version__} INITIALIZED")
-    print("Institutional Edition - Made with love by MeridianAlgo")
+# ============================================================================
+# ALIASES — backward-compatible and README-documented shortcuts
+# ============================================================================
+
+# Risk aliases
+try:
+    RiskMetrics = RiskAnalyzer  # type: ignore[name-defined]
+except NameError:
+    pass
+
+# Backtesting aliases
+try:
+    Backtester = BacktestEngine  # type: ignore[name-defined]
+except NameError:
+    pass
+
+# ML aliases
+try:
+    ModelValidator = WalkForwardValidator  # type: ignore[name-defined]
+except NameError:
+    pass
 
 __all__ = [
+    # Core primitives
     "PortfolioOptimizer",
     "TimeSeriesAnalyzer",
     "StatisticalArbitrage",
@@ -174,38 +233,63 @@ __all__ = [
     "calculate_macd",
     "calculate_returns",
     "calculate_rsi",
+    # Financial functions
+    "calculate_sharpe_ratio",
+    "calculate_sortino_ratio",
+    "calculate_calmar_ratio",
+    "calculate_max_drawdown",
+    "calculate_expected_shortfall",
+    "calculate_bollinger_bands",
+    # Portfolio
     "BlackLitterman",
     "RiskParity",
     "MeanVariance",
     "HierarchicalRiskParity",
+    "KellyCriterion",
+    # Risk
     "RiskAnalyzer",
+    "RiskMetrics",
     "VaRCalculator",
     "CVaRCalculator",
     "StressTesting",
     "RiskBudgeting",
+    # Machine learning
     "LSTMPredictor",
     "ModelTrainer",
     "ModelSelector",
     "TimeSeriesCV",
     "WalkForwardOptimizer",
+    "WalkForwardValidator",
+    "ModelValidator",
     "prepare_data_for_lstm",
+    # Analytics
     "PerformanceAnalyzer",
+    # Fixed income
     "BondPricer",
     "YieldCurve",
     "CreditSpreadAnalyzer",
+    # Derivatives
     "BlackScholes",
     "GreeksCalculator",
+    "ImpliedVolatility",
     "OptionChain",
     "MonteCarloPricer",
+    # Execution
     "VWAP",
     "TWAP",
     "POV",
     "ImplementationShortfall",
+    # Strategies
     "MomentumStrategy",
     "RSIMeanReversion",
     "MACDCrossover",
     "PairsTrading",
     "BollingerBandsStrategy",
+    # Backtesting
     "BacktestEngine",
     "Backtest",
+    "Backtester",
+    "Strategy",
+    # Registry
+    "ModuleRegistry",
 ]

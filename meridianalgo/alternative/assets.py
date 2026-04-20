@@ -12,7 +12,8 @@ import numpy as np
 import pandas as pd
 
 # Suppress warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 class AlternativeAssetsAnalyzer:

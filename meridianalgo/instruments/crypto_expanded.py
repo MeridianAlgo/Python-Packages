@@ -13,7 +13,8 @@ from typing import Any, Dict, List
 import numpy as np
 
 # Suppress warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Check for optional dependencies
 try:

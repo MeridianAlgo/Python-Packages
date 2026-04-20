@@ -16,7 +16,8 @@ from scipy.stats import norm
 from scipy.stats import t as t_dist
 
 # Suppress warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Check for optional dependencies
 try:

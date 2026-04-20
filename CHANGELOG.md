@@ -5,6 +5,29 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.3.0] - 2026-04-19 "Completeness Release"
+
+### Added
+- **KellyCriterion** — full, fractional, and multi-asset Kelly position sizing
+  (`single_asset`, `optimize`, `from_moments`, `growth_rate`)
+- **CLI** — `meridianalgo` command with `version`, `info`, `demo`, `metrics` subcommands
+- Top-level functions: `calculate_sharpe_ratio`, `calculate_sortino_ratio`,
+  `calculate_calmar_ratio`, `calculate_max_drawdown`, `calculate_expected_shortfall`,
+  `calculate_bollinger_bands`
+- `ModuleRegistry.status()` method returns module availability dict
+- Aliases: `Backtester`, `RiskMetrics`, `ModelValidator`, `Strategy` at top-level
+- 63 new tests: `test_kelly_criterion.py`, `test_cli.py`, `test_top_level_api.py`
+- Example: `07_derivatives_and_options.py`
+
+### Fixed
+- Removed stdout print on import (previously required `MERIDIANALGO_QUIET=1`)
+- Replaced global `warnings.filterwarnings("ignore")` across 14 modules with targeted suppression
+- Python classifiers now match `requires-python >= 3.10` (removed 3.8, 3.9)
+- Stale docstring version mismatch corrected
+
+### Changed
+- Version bump: 6.2.6 -> 6.3.0
+
 ## [6.2.6] - 2026-03-12 "CI/CD Fix Release"
 
 ### Fixed

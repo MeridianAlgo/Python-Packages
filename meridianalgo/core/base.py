@@ -15,7 +15,8 @@ from scipy import stats
 from scipy.spatial.distance import squareform
 
 # Suppress warnings for cleaner output
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Check for optional dependencies
 try:

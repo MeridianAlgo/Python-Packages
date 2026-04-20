@@ -14,7 +14,8 @@ import numpy as np
 from scipy import interpolate, optimize
 
 # Suppress warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Check for optional dependencies
 try:
