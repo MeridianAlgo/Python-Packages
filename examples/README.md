@@ -1,121 +1,71 @@
 # MeridianAlgo Examples
 
-This directory contains comprehensive examples demonstrating the capabilities of MeridianAlgo for quantitative finance and algorithmic trading.
+Comprehensive runnable examples covering every major module. Each file is
+self-contained and executable with `pip install meridianalgo`.
 
-## Getting Started
+---
 
-Run the examples in order to learn MeridianAlgo progressively:
+## Index
 
-### 01. Getting Started
-**File:** `01_getting_started.py`
+| File | Topic | Key Concepts |
+|------|-------|-------------|
+| `01_getting_started.py` | First steps | Market data, returns, correlation, basic risk |
+| `02_basic_usage.py` | Core functionality | Portfolio optimization, VaR, stat arb, ML |
+| `03_advanced_trading_strategy.py` | Strategy building | Mean reversion, backtesting, performance eval |
+| `04_comprehensive_examples.py` | Feature showcase | Analytics, liquidity, microstructure, factors |
+| `05_quant_examples.py` | Professional quant | HFT, execution algorithms, Fama-French, HMM |
+| `06_transaction_cost_optimization.py` | Transaction costs | VWAP/TWAP/POV, market impact, rebalancing |
+| `07_derivatives_and_options.py` | Derivatives | Black-Scholes, Greeks, implied vol, exotic options |
+| `08_credit_risk.py` | Credit risk | Merton model, CDS, Z-spread, portfolio EL/UL |
+| `09_volatility_models.py` | Volatility | GARCH, realized vol, HAR-RV, regimes |
+| `10_monte_carlo.py` | Monte Carlo | GBM, Heston, jump-diffusion, CIR, option pricing |
+| `11_portfolio_insurance.py` | CPPI / TIPP | Floor protection, multiplier sensitivity |
+| `12_benchmark_analytics.py` | Attribution | Active share, information ratio, BHB attribution |
+| `13_scenario_analysis.py` | Stress testing | Historical scenarios, reverse stress, correlation stress |
 
-Your first steps with MeridianAlgo. Learn how to:
-- Fetch market data
-- Calculate returns and basic statistics
-- Analyze risk metrics
-- Understand correlation between assets
-- Build a simple portfolio
+---
 
-Perfect for beginners who are new to quantitative finance.
-
-### 02. Basic Usage
-**File:** `02_basic_usage.py`
-
-Core functionality for everyday quantitative analysis:
-- Portfolio optimization using Modern Portfolio Theory
-- Time series analysis and performance metrics
-- Advanced risk measurement (VaR, Expected Shortfall, Hurst exponent)
-- Statistical arbitrage and pairs trading
-- Machine learning for price prediction
-
-### 03. Advanced Trading Strategy
-**File:** `03_advanced_trading_strategy.py`
-
-Build and backtest a complete trading strategy:
-- Mean-reversion strategy implementation
-- Signal generation using z-scores
-- Backtesting framework
-- Performance evaluation
-- Risk analysis of strategies
-
-### 04. Comprehensive Examples
-**File:** `04_comprehensive_examples.py`
-
-Showcase of all major features:
-- Portfolio analytics (Pyfolio-style)
-- Liquidity analysis and market microstructure
-- Technical indicators and signals
-- Derivatives pricing (Black-Scholes, Greeks)
-- Factor models and attribution
-- Drawdown analysis
-
-### 05. Quantitative Strategies
-**File:** `05_quant_examples.py`
-
-Professional quantitative finance algorithms:
-- Market microstructure analysis
-- Statistical arbitrage and pairs trading
-- Optimal execution algorithms (TWAP, VWAP, Implementation Shortfall)
-- High-frequency trading strategies
-- Factor models (Fama-French)
-- Regime detection with Hidden Markov Models
-
-### 06. Transaction Cost Optimization
-**File:** `06_transaction_cost_optimization.py`
-
-Advanced portfolio management with transaction costs:
-- Execution algorithms comparison
-- Market impact models
-- Tax-loss harvesting
-- Transaction-cost-aware portfolio optimization
-- Rebalancing frequency optimization
-
-## Running the Examples
-
-Each example is self-contained and can be run independently:
+## Running
 
 ```bash
 python examples/01_getting_started.py
-python examples/02_basic_usage.py
-python examples/03_advanced_trading_strategy.py
-python examples/04_comprehensive_examples.py
-python examples/05_quant_examples.py
-python examples/06_transaction_cost_optimization.py
+python examples/08_credit_risk.py
+python examples/09_volatility_models.py
+python examples/10_monte_carlo.py
+python examples/11_portfolio_insurance.py
+python examples/12_benchmark_analytics.py
+python examples/13_scenario_analysis.py
 ```
 
-## Requirements
-
-All examples require the base MeridianAlgo installation:
+Base installation covers all examples except those requiring optional extras:
 
 ```bash
-pip install meridianalgo
+pip install meridianalgo            # covers examples 01-08, 11-13
+pip install meridianalgo[ml]        # examples 02, 04, 05 (LSTM, HMM)
+pip install meridianalgo[volatility]# example 09 (GARCH MLE via arch)
+pip install meridianalgo[all]       # everything
 ```
 
-Some examples may require additional dependencies:
-
-```bash
-pip install meridianalgo[all]  # Install all optional dependencies
-```
+---
 
 ## Learning Path
 
-1. Start with `01_getting_started.py` to understand the basics
-2. Move to `02_basic_usage.py` for core functionality
-3. Try `03_advanced_trading_strategy.py` to build your first strategy
-4. Explore `04_comprehensive_examples.py` to see all features
-5. Study `05_quant_examples.py` for professional techniques
-6. Master `06_transaction_cost_optimization.py` for real-world trading
+**Beginner** — start here:
+1. `01_getting_started.py` — load data, calculate returns, basic stats
+2. `02_basic_usage.py` — portfolio optimization, VaR
 
-## Support
+**Intermediate** — build intuition:
+3. `03_advanced_trading_strategy.py` — strategy construction and backtesting
+4. `07_derivatives_and_options.py` — Black-Scholes, Greeks, implied vol
+5. `08_credit_risk.py` — Merton model, default probability, CDS
 
-For questions or issues:
-- Documentation: See the `docs/` folder
-- GitHub Issues: Report bugs or request features
-- Examples: All examples include detailed comments explaining each step
+**Advanced** — institutional techniques:
+6. `09_volatility_models.py` — GARCH family, realized vol estimators, HAR-RV
+7. `10_monte_carlo.py` — GBM, Heston, jump-diffusion, CIR, option pricing
+8. `11_portfolio_insurance.py` — CPPI and TIPP floor protection
+9. `12_benchmark_analytics.py` — active share, information ratio, BHB attribution
+10. `13_scenario_analysis.py` — historical scenarios, reverse stress testing
 
-## Contributing
-
-Found a bug or want to add an example? Contributions are welcome! Please ensure:
-- Code is well-commented
-- Examples are self-contained
-- All code passes linting (ruff, isort, black)
+**Execution and microstructure:**
+11. `05_quant_examples.py` — optimal execution, pairs trading, regime detection
+12. `06_transaction_cost_optimization.py` — market impact, tax-loss harvesting
