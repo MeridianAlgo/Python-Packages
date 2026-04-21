@@ -1,12 +1,13 @@
 """
-MeridianAlgo v6.3.0 - The Complete Quantitative Finance Platform
+MeridianAlgo v7.0.0 - The Complete Quantitative Finance Platform
 
 Institutional-grade Python library for quantitative finance covering portfolio
 optimization, risk management, derivatives pricing, backtesting, machine learning,
-statistical arbitrage, execution algorithms, and fixed income analytics.
+statistical arbitrage, execution algorithms, fixed income analytics, credit risk,
+volatility modeling, Monte Carlo simulation, and portfolio insurance.
 """
 
-__version__ = "6.3.0"
+__version__ = "7.0.0"
 
 import os
 from typing import Any, Dict
@@ -201,6 +202,79 @@ try:
 except ImportError as e:
     ModuleRegistry.register("backtesting", False, str(e))
 
+# Credit Risk
+try:
+    from .credit import (
+        CreditDefaultSwap,
+        CreditRiskAnalyzer,
+        MertonModel,
+        ZSpreadCalculator,
+    )
+
+    ModuleRegistry.register("credit", True)
+except ImportError as e:
+    ModuleRegistry.register("credit", False, str(e))
+
+# Volatility Models
+try:
+    from .volatility import (
+        GARCHModel,
+        RealizedVolatility,
+        VolatilityForecaster,
+        VolatilityRegimeDetector,
+        VolatilityTermStructure,
+    )
+
+    ModuleRegistry.register("volatility", True)
+except ImportError as e:
+    ModuleRegistry.register("volatility", False, str(e))
+
+# Monte Carlo Simulation
+try:
+    from .monte_carlo import (
+        CIRModel,
+        GeometricBrownianMotion,
+        HestonModel,
+        JumpDiffusionModel,
+        MonteCarloEngine,
+        QuasiRandomSampler,
+    )
+
+    ModuleRegistry.register("monte_carlo", True)
+except ImportError as e:
+    ModuleRegistry.register("monte_carlo", False, str(e))
+
+# Portfolio Insurance
+try:
+    from .portfolio.insurance import CPPI, TimeInvariantCPPI
+
+    ModuleRegistry.register("portfolio_insurance", True)
+except ImportError as e:
+    ModuleRegistry.register("portfolio_insurance", False, str(e))
+
+# Benchmark Analytics
+try:
+    from .analytics.benchmark import (
+        ActiveShare,
+        BenchmarkAnalytics,
+        BrinsonAttribution,
+    )
+
+    ModuleRegistry.register("benchmark_analytics", True)
+except ImportError as e:
+    ModuleRegistry.register("benchmark_analytics", False, str(e))
+
+# Scenario Analysis
+try:
+    from .risk.scenario import (
+        CorrelationScenario,
+        ScenarioAnalyzer,
+    )
+
+    ModuleRegistry.register("scenario_analysis", True)
+except ImportError as e:
+    ModuleRegistry.register("scenario_analysis", False, str(e))
+
 # ============================================================================
 # ALIASES — backward-compatible and README-documented shortcuts
 # ============================================================================
@@ -290,6 +364,34 @@ __all__ = [
     "Backtest",
     "Backtester",
     "Strategy",
+    # Credit risk
+    "MertonModel",
+    "CreditDefaultSwap",
+    "CreditRiskAnalyzer",
+    "ZSpreadCalculator",
+    # Volatility models
+    "GARCHModel",
+    "RealizedVolatility",
+    "VolatilityForecaster",
+    "VolatilityTermStructure",
+    "VolatilityRegimeDetector",
+    # Monte Carlo
+    "GeometricBrownianMotion",
+    "HestonModel",
+    "JumpDiffusionModel",
+    "CIRModel",
+    "MonteCarloEngine",
+    "QuasiRandomSampler",
+    # Portfolio insurance
+    "CPPI",
+    "TimeInvariantCPPI",
+    # Benchmark analytics
+    "BenchmarkAnalytics",
+    "ActiveShare",
+    "BrinsonAttribution",
+    # Scenario analysis
+    "ScenarioAnalyzer",
+    "CorrelationScenario",
     # Registry
     "ModuleRegistry",
 ]

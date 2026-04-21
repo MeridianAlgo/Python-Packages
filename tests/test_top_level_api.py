@@ -42,7 +42,7 @@ class TestTopLevelImports:
     def test_version(self) -> None:
         import meridianalgo as ma
 
-        assert ma.__version__ == "6.3.0"
+        assert ma.__version__ == "7.0.0"
 
     def test_no_stdout_on_import(self, capsys: pytest.CaptureFixture) -> None:
         import importlib

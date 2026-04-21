@@ -5,6 +5,40 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0] - 2026-04-20
+
+### Added
+
+- **Credit Risk** (`meridianalgo.credit`): MertonModel (structural default probability,
+  distance-to-default, asset calibration), CreditDefaultSwap (CDS pricing, hazard rate
+  bootstrap), CreditRiskAnalyzer (EL/UL/credit VaR, portfolio concentration),
+  ZSpreadCalculator (z-spread, DV01)
+- **Volatility Models** (`meridianalgo.volatility`): RealizedVolatility (5 OHLCV estimators:
+  close-to-close, Parkinson, Garman-Klass, Rogers-Satchell, Yang-Zhang), GARCHModel
+  (GARCH/EGARCH/GJR-GARCH via arch + NumPy fallback, multi-step forecast), VolatilityTermStructure
+  (term structure, VIX-style index, vol-of-vol), VolatilityRegimeDetector (3-regime
+  classification), VolatilityForecaster (HAR-RV model)
+- **Monte Carlo** (`meridianalgo.monte_carlo`): GeometricBrownianMotion (antithetic variates,
+  correlated multi-asset, European option pricing), HestonModel (stochastic vol),
+  JumpDiffusionModel (Merton 1976), CIRModel (interest rates + analytical bond pricing),
+  MonteCarloEngine (unified interface), QuasiRandomSampler (Halton sequences)
+- **Portfolio Insurance** (`meridianalgo.portfolio.insurance`): CPPI (multiplier, floor,
+  rebalance frequency, sensitivity analysis), TimeInvariantCPPI (TIPP ratcheting floor)
+- **Benchmark Analytics** (`meridianalgo.analytics.benchmark`): BenchmarkAnalytics (tracking
+  error, IR, up/down capture, batting average, beta/alpha, rolling metrics), ActiveShare
+  (Cremers-Petajisto 2009, style classification), BrinsonAttribution (BHB allocation/selection/
+  interaction effects)
+- **Scenario Analysis** (`meridianalgo.risk.scenario`): ScenarioAnalyzer (9 historical
+  scenarios, custom shocks, reverse stress testing), CorrelationScenario (correlated
+  MC scenarios, stress correlation)
+- 25 new top-level exports; 6 new ModuleRegistry entries
+- 150 new tests (427 passing total, up from 277)
+
+### Changed
+- Version: 6.3.0 -> 7.0.0
+
+---
+
 ## [6.3.0] - 2026-04-19 "Completeness Release"
 
 ### Added

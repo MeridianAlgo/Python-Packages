@@ -68,7 +68,7 @@ class TestCLICommands:
 
         cmd_version(Namespace())
         captured = capsys.readouterr()
-        assert "6.3.0" in captured.out
+        assert "7.0.0" in captured.out
 
     def test_cmd_info_prints_modules(self, capsys: pytest.CaptureFixture) -> None:
         from argparse import Namespace
@@ -96,4 +96,4 @@ class TestCLIMain:
         monkeypatch.setattr(sys, "argv", ["meridianalgo", "version"])
         main()
         captured = capsys.readouterr()
-        assert "6.3.0" in captured.out
+        assert "7.0.0" in captured.out
