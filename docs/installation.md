@@ -35,12 +35,20 @@ python -c "import meridianalgo; print(meridianalgo.__version__)"
 
 ```bash
 # Install with all optional dependencies
-pip install meridianalgo[all]
+pip install "meridianalgo[all]"
 
-# Install with specific modules
-pip install meridianalgo[ml]      # Machine learning features
-pip install meridianalgo[dev]     # Development dependencies
+# Install with specific groups
+pip install "meridianalgo[ml]"            # scikit-learn, torch, statsmodels, hmmlearn
+pip install "meridianalgo[optimization]"  # cvxpy, cvxopt
+pip install "meridianalgo[volatility]"    # arch (GARCH)
+pip install "meridianalgo[data]"          # lxml, beautifulsoup4, polygon-api-client
+pip install "meridianalgo[distributed]"   # ray, dask
+pip install "meridianalgo[dev]"           # test and lint tooling
 ```
+
+The core install imports cleanly without any of these extras; modules that need
+an optional dependency report as unavailable via `meridianalgo.ModuleRegistry`
+until the matching group is installed.
 
 ##  Detailed Installation
 
@@ -60,19 +68,12 @@ source meridianalgo_env/bin/activate
 ### 2. Install Dependencies
 
 ```bash
-# Install core dependencies
-pip install numpy>=1.21.0
-pip install pandas>=1.5.0
-pip install scipy>=1.7.0
-pip install scikit-learn>=1.0.0
-pip install yfinance>=0.2.0
-pip install matplotlib>=3.5.0
-pip install seaborn>=0.11.0
+# Core dependencies
+pip install "numpy>=2.0.0" "pandas>=2.2.0" "scipy>=1.12.0"
+pip install "yfinance>=0.2.40" "matplotlib>=3.8.0" "seaborn>=0.13.0" "ta>=0.11.0"
 
-# Install optional ML dependencies
-pip install torch>=2.0.0
-pip install statsmodels>=0.13.0
-pip install ta>=0.11.0
+# Optional ML dependencies
+pip install "scikit-learn>=1.4.0" "torch>=2.2.0" "statsmodels>=0.14.1"
 ```
 
 ### 3. Install MeridianAlgo
@@ -104,9 +105,6 @@ pip install -r dev-requirements.txt
 
 # Run tests
 pytest tests/
-
-# Run demo
-python demo.py
 ```
 
 ##  Conda Installation
@@ -115,7 +113,7 @@ If you prefer using Conda:
 
 ```bash
 # Create conda environment
-conda create -n meridianalgo python=3.9
+conda create -n meridianalgo python=3.12
 
 # Activate environment
 conda activate meridianalgo
@@ -133,7 +131,7 @@ For containerized deployment:
 
 ```dockerfile
 # Dockerfile
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -171,16 +169,17 @@ data = ma.get_market_data(['AAPL'], start_date='2023-01-01', end_date='2023-01-3
 print(f"Data shape: {data.shape}")
 
 # Test technical indicators
-rsi = ma.RSI(data['AAPL'], period=14)
+from meridianalgo.signals.indicators import RSI
+rsi = RSI(data['AAPL'], period=14)
 print(f"RSI calculated: {len(rsi.dropna())} values")
 
 # Test portfolio optimization
 returns = data.pct_change().dropna()
 optimizer = ma.PortfolioOptimizer(returns)
-optimal = optimizer.optimize_portfolio(objective='sharpe')
-print(f"Portfolio optimization successful: {optimal['sharpe_ratio']:.2f}")
+result = optimizer.optimize_portfolio(method='sharpe')
+print(f"Portfolio optimization successful: {result['sharpe_ratio']:.2f}")
 
-print(" All tests passed! MeridianAlgo is working correctly.")
+print("All checks passed! MeridianAlgo is working correctly.")
 ```
 
 ##  Troubleshooting

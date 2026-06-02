@@ -1,6 +1,5 @@
 """Tests for scenario analysis and stress testing."""
 
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -42,7 +41,9 @@ class TestScenarioAnalyzer:
     def test_bond_rally_positive_return(self, simple_portfolio):
         weights = pd.Series({"bonds": 1.0})
         sensitivities = pd.DataFrame({"bonds": [1.0]}, index=["bonds"])
-        bond_portfolio = ScenarioAnalyzer(weights, sensitivities, portfolio_value=100_000)
+        bond_portfolio = ScenarioAnalyzer(
+            weights, sensitivities, portfolio_value=100_000
+        )
         result = bond_portfolio.apply_scenario({"bonds": 0.10})
         assert result.portfolio_return > 0
 
@@ -63,7 +64,7 @@ class TestScenarioAnalyzer:
 
     def test_all_historical_scenarios_have_results(self, simple_portfolio):
         results = simple_portfolio.run_all_historical()
-        for name, r in results.items():
+        for _name, r in results.items():
             assert isinstance(r.portfolio_return, float)
 
     def test_gfc_scenario_negative(self, simple_portfolio):
@@ -138,7 +139,9 @@ class TestCorrelationScenario:
         assert result["cvar_95"] <= result["var_95"]
 
     def test_stressed_correlation_increases_tail_risk(self, correlation_setup):
-        normal = correlation_setup.generate(n_scenarios=20_000, stress_correlation=False)
+        normal = correlation_setup.generate(
+            n_scenarios=20_000, stress_correlation=False
+        )
         stressed = correlation_setup.generate(
             n_scenarios=20_000, stress_correlation=True, stress_factor=0.8
         )

@@ -7,7 +7,7 @@ for optimal bet sizing given expected returns and risk estimates.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Union
+from typing import Optional
 
 import numpy as np
 import pandas as pd

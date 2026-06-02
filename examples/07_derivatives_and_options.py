@@ -13,19 +13,14 @@ Covers:
 import os
 
 import numpy as np
-import pandas as pd
 
 os.environ["MERIDIANALGO_QUIET"] = "1"
 
 from meridianalgo.derivatives import (
     BlackScholes,
-    ExoticOptions,
-    GreeksCalculator,
     ImpliedVolatility,
     MonteCarloPricer,
-    OptionChain,
     OptionsPricer,
-    VolatilitySurface,
 )
 
 # ============================================================================
@@ -41,7 +36,9 @@ S, K, T, r, sigma = 100.0, 105.0, 0.25, 0.05, 0.20
 call_result = BlackScholes(S=S, K=K, T=T, r=r, sigma=sigma, option_type="call")
 put_result = BlackScholes(S=S, K=K, T=T, r=r, sigma=sigma, option_type="put")
 
-print(f"\nUnderlying: ${S:.0f}, Strike: ${K:.0f}, T: {T:.2f}yr, r: {r:.0%}, σ: {sigma:.0%}")
+print(
+    f"\nUnderlying: ${S:.0f}, Strike: ${K:.0f}, T: {T:.2f}yr, r: {r:.0%}, σ: {sigma:.0%}"
+)
 print(f"\nCall:  price=${call_result['price']:.4f}  delta={call_result['delta']:.4f}")
 print(f"Put:   price={put_result['price']:.4f}   delta={put_result['delta']:.4f}")
 
@@ -83,7 +80,7 @@ strikes = [110, 107, 105, 103, 100]
 
 print(f"\n{'Strike':>8} {'Market':>8} {'IV':>8}")
 print("-" * 28)
-for strike, price in zip(strikes, market_prices):
+for strike, price in zip(strikes, market_prices, strict=False):
     try:
         iv = ImpliedVolatility(
             market_price=price, S=S, K=strike, T=T, r=r, option_type="call"

@@ -12,7 +12,7 @@ References:
 
 import logging
 from dataclasses import dataclass
-from typing import Dict, Optional, Tuple
+from typing import Tuple
 
 import numpy as np
 import pandas as pd
@@ -263,8 +263,8 @@ class BenchmarkAnalytics:
 
         betas = pd.Series(np.nan, index=self.portfolio.index, name="rolling_beta")
         for i in range(window, len(self.portfolio) + 1):
-            p = port_ex.iloc[i - window: i].values
-            b = bench_ex.iloc[i - window: i].values
+            p = port_ex.iloc[i - window : i].values
+            b = bench_ex.iloc[i - window : i].values
             cov = np.cov(p, b)
             betas.iloc[i - 1] = cov[0, 1] / cov[1, 1] if cov[1, 1] > 0 else np.nan
 
@@ -369,8 +369,7 @@ class BrinsonAttribution:
             Benchmark return per sector/asset
         """
         all_assets = (
-            portfolio_weights.index
-            .union(benchmark_weights.index)
+            portfolio_weights.index.union(benchmark_weights.index)
             .union(portfolio_returns.index)
             .union(benchmark_returns.index)
         )

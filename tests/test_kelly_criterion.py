@@ -133,7 +133,9 @@ class TestMultiAssetKelly:
 
     def test_fraction_scales_weights(self) -> None:
         np.random.seed(1)
-        returns = pd.DataFrame(np.random.randn(200, 2) * 0.01 + 0.001, columns=["X", "Y"])
+        returns = pd.DataFrame(
+            np.random.randn(200, 2) * 0.01 + 0.001, columns=["X", "Y"]
+        )
         kc_full = KellyCriterion(fraction=1.0, max_position=10.0)
         kc_half = KellyCriterion(fraction=0.5, max_position=10.0)
         w_full = kc_full.optimize(returns)

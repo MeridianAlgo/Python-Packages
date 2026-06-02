@@ -42,7 +42,7 @@ class TestTopLevelImports:
     def test_version(self) -> None:
         import meridianalgo as ma
 
-        assert ma.__version__ == "7.0.0"
+        assert ma.__version__ == "7.1.0"
 
     def test_no_stdout_on_import(self, capsys: pytest.CaptureFixture) -> None:
         import importlib
@@ -120,28 +120,28 @@ class TestTopLevelImports:
             RiskParity,
         )
 
-        assert all(x is not None for x in [BlackLitterman, HierarchicalRiskParity, KellyCriterion, MeanVariance, RiskParity])
+        assert all(
+            x is not None
+            for x in [
+                BlackLitterman,
+                HierarchicalRiskParity,
+                KellyCriterion,
+                MeanVariance,
+                RiskParity,
+            ]
+        )
 
     def test_risk_exports_and_aliases(self) -> None:
         from meridianalgo import (
-            CVaRCalculator,
             RiskAnalyzer,
-            RiskBudgeting,
             RiskMetrics,
-            StressTesting,
-            VaRCalculator,
         )
 
         assert RiskMetrics is RiskAnalyzer
 
     def test_ml_exports_and_aliases(self) -> None:
         from meridianalgo import (
-            LSTMPredictor,
-            ModelSelector,
-            ModelTrainer,
             ModelValidator,
-            TimeSeriesCV,
-            WalkForwardOptimizer,
             WalkForwardValidator,
         )
 
@@ -156,7 +156,16 @@ class TestTopLevelImports:
             OptionChain,
         )
 
-        assert all(x is not None for x in [BlackScholes, GreeksCalculator, ImpliedVolatility, MonteCarloPricer, OptionChain])
+        assert all(
+            x is not None
+            for x in [
+                BlackScholes,
+                GreeksCalculator,
+                ImpliedVolatility,
+                MonteCarloPricer,
+                OptionChain,
+            ]
+        )
 
     def test_execution_exports(self) -> None:
         from meridianalgo import POV, TWAP, VWAP, ImplementationShortfall
@@ -165,15 +174,8 @@ class TestTopLevelImports:
 
     def test_strategy_exports(self) -> None:
         from meridianalgo import (
-            Backtest,
-            Backtester,
             BacktestEngine,
-            BollingerBandsStrategy,
-            MACDCrossover,
-            MomentumStrategy,
-            PairsTrading,
-            RSIMeanReversion,
-            Strategy,
+            Backtester,
         )
 
         assert Backtester is BacktestEngine
@@ -181,7 +183,9 @@ class TestTopLevelImports:
     def test_fixed_income_exports(self) -> None:
         from meridianalgo import BondPricer, CreditSpreadAnalyzer, YieldCurve
 
-        assert all(x is not None for x in [BondPricer, CreditSpreadAnalyzer, YieldCurve])
+        assert all(
+            x is not None for x in [BondPricer, CreditSpreadAnalyzer, YieldCurve]
+        )
 
 
 # ============================================================================
@@ -257,7 +261,9 @@ class TestDerivativesAPI:
     def test_blackscholes_call(self) -> None:
         from meridianalgo import BlackScholes
 
-        result = BlackScholes(S=100, K=105, T=0.25, r=0.05, sigma=0.2, option_type="call")
+        result = BlackScholes(
+            S=100, K=105, T=0.25, r=0.05, sigma=0.2, option_type="call"
+        )
         assert isinstance(result, dict)
         assert "price" in result
         assert result["price"] > 0
@@ -273,7 +279,9 @@ class TestDerivativesAPI:
         from meridianalgo import BlackScholes
 
         S, K, T, r, sigma = 100.0, 100.0, 1.0, 0.05, 0.2
-        call = BlackScholes(S=S, K=K, T=T, r=r, sigma=sigma, option_type="call")["price"]
+        call = BlackScholes(S=S, K=K, T=T, r=r, sigma=sigma, option_type="call")[
+            "price"
+        ]
         put = BlackScholes(S=S, K=K, T=T, r=r, sigma=sigma, option_type="put")["price"]
         # Put-call parity: C - P = S - K*exp(-rT)
         lhs = call - put

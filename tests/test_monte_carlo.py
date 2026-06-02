@@ -1,7 +1,6 @@
 """Tests for Monte Carlo simulation engine."""
 
 import numpy as np
-import pandas as pd
 import pytest
 
 from meridianalgo.monte_carlo import (
@@ -50,11 +49,13 @@ class TestGeometricBrownianMotion:
         assert (result.terminal_values > 0).all()
 
     def test_antithetic_doubles_paths(self):
-        result = self.gbm.simulate(S0=100, T=1.0, n_paths=1000, n_steps=252, antithetic=True)
+        result = self.gbm.simulate(
+            S0=100, T=1.0, n_paths=1000, n_steps=252, antithetic=True
+        )
         assert result.n_paths == 1000
 
     def test_mean_close_to_expected(self):
-        S0, mu, sigma, T = 100, 0.08, 0.20, 1.0
+        S0, mu, _sigma, T = 100, 0.08, 0.20, 1.0
         result = self.gbm.simulate(S0=S0, T=T, n_paths=50_000, n_steps=252)
         expected_mean = S0 * np.exp(mu * T)
         assert abs(result.mean - expected_mean) / expected_mean < 0.02
@@ -110,7 +111,9 @@ class TestHestonModel:
         assert result.n_paths == 1000
 
     def test_mean_approximately_risk_neutral(self):
-        heston = HestonModel(mu=0.05, v0=0.04, kappa=2.0, theta=0.04, xi=0.20, rho=-0.50, seed=0)
+        heston = HestonModel(
+            mu=0.05, v0=0.04, kappa=2.0, theta=0.04, xi=0.20, rho=-0.50, seed=0
+        )
         result = heston.simulate(S0=100, T=1.0, n_paths=30_000, n_steps=252)
         expected = 100 * np.exp(0.05 * 1.0)
         assert abs(result.mean - expected) / expected < 0.05
@@ -131,8 +134,12 @@ class TestJumpDiffusionModel:
         assert (result.terminal_values > 0).all()
 
     def test_higher_jump_intensity_increases_vol(self):
-        low = JumpDiffusionModel(mu=0.05, sigma=0.15, lam=0.01, mu_jump=-0.05, sigma_jump=0.1)
-        high = JumpDiffusionModel(mu=0.05, sigma=0.15, lam=1.0, mu_jump=-0.05, sigma_jump=0.1)
+        low = JumpDiffusionModel(
+            mu=0.05, sigma=0.15, lam=0.01, mu_jump=-0.05, sigma_jump=0.1
+        )
+        high = JumpDiffusionModel(
+            mu=0.05, sigma=0.15, lam=1.0, mu_jump=-0.05, sigma_jump=0.1
+        )
         r_low = low.simulate(S0=100, T=1.0, n_paths=20_000, n_steps=252)
         r_high = high.simulate(S0=100, T=1.0, n_paths=20_000, n_steps=252)
         assert r_high.std > r_low.std

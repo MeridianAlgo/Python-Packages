@@ -60,9 +60,11 @@ docs/
 ├── api/
 │   ├── portfolio_management.md # Portfolio API docs
 │   └── technical_indicators.md # Technical analysis API docs
-├── examples/                   # Example code snippets
 └── requirements.txt            # Documentation dependencies
 ```
+
+Runnable example scripts live in the top-level [`examples/`](../examples)
+directory of the repository.
 
 ## Contributing to Documentation
 

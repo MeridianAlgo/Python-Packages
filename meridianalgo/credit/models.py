@@ -11,7 +11,7 @@ References:
 
 import logging
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -115,11 +115,7 @@ class MertonModel:
         """Black-Scholes d1 parameter for asset option."""
         return (
             np.log(asset_value / self.debt_face_value)
-            + (
-                self.risk_free_rate
-                - self.dividend_yield
-                + 0.5 * asset_volatility**2
-            )
+            + (self.risk_free_rate - self.dividend_yield + 0.5 * asset_volatility**2)
             * self.time_to_maturity
         ) / (asset_volatility * np.sqrt(self.time_to_maturity))
 
@@ -133,9 +129,9 @@ class MertonModel:
         d1 = self._d1(asset_value, asset_volatility)
         d2 = d1 - asset_volatility * np.sqrt(self.time_to_maturity)
         discount = np.exp(-self.risk_free_rate * self.time_to_maturity)
-        return asset_value * np.exp(-self.dividend_yield * self.time_to_maturity) * norm.cdf(
-            d1
-        ) - self.debt_face_value * discount * norm.cdf(d2)
+        return asset_value * np.exp(
+            -self.dividend_yield * self.time_to_maturity
+        ) * norm.cdf(d1) - self.debt_face_value * discount * norm.cdf(d2)
 
     def _equity_vol_from_assets(
         self, asset_value: float, asset_volatility: float
@@ -159,7 +155,9 @@ class MertonModel:
             default_probability, expected_recovery_rate, leverage_ratio
         """
         initial_asset_value = self.equity_value + self.debt_face_value
-        initial_asset_vol = self.equity_volatility * self.equity_value / initial_asset_value
+        initial_asset_vol = (
+            self.equity_volatility * self.equity_value / initial_asset_value
+        )
 
         def equations(params: np.ndarray) -> np.ndarray:
             Va, sigma_a = params
@@ -210,9 +208,7 @@ class MertonModel:
             "d2": d2,
         }
 
-    def default_probability_term_structure(
-        self, horizons: List[float]
-    ) -> pd.Series:
+    def default_probability_term_structure(self, horizons: List[float]) -> pd.Series:
         """
         Compute default probability at multiple horizons.
 
@@ -339,7 +335,9 @@ class CreditDefaultSwap:
             dt_int = integration_times[i + 1] - integration_times[i]
             q = self.survival_probability(t_mid)
             df = self.discount_factor(t_mid)
-            protection_leg += (1 - self.recovery_rate) * self.hazard_rate * q * df * dt_int
+            protection_leg += (
+                (1 - self.recovery_rate) * self.hazard_rate * q * df * dt_int
+            )
 
         fair_spread = protection_leg / risky_annuity if risky_annuity > 0 else 0.0
 
@@ -373,6 +371,7 @@ class CreditDefaultSwap:
         -------
         CreditDefaultSwap
         """
+
         def objective(h: float) -> float:
             cds = cls(h, recovery_rate, risk_free_rate, maturity, payment_frequency)
             return cds.price().fair_spread - spread
@@ -382,7 +381,9 @@ class CreditDefaultSwap:
         except ValueError:
             hazard_rate = spread / (1 - recovery_rate)
 
-        return cls(hazard_rate, recovery_rate, risk_free_rate, maturity, payment_frequency)
+        return cls(
+            hazard_rate, recovery_rate, risk_free_rate, maturity, payment_frequency
+        )
 
     @staticmethod
     def bootstrap_hazard_curve(
@@ -407,7 +408,7 @@ class CreditDefaultSwap:
             Hazard rates indexed by maturity
         """
         hazard_rates = {}
-        for maturity, spread in zip(sorted(maturities), spreads):
+        for maturity, spread in zip(sorted(maturities), spreads, strict=False):
             cds = CreditDefaultSwap.from_spread(
                 spread, recovery_rate, risk_free_rate, maturity
             )
@@ -483,9 +484,7 @@ class CreditRiskAnalyzer:
         """
         n_pd = norm.ppf(pd)
         n_conf = norm.ppf(confidence)
-        conditional_pd = norm.cdf(
-            (n_pd + np.sqrt(rho) * n_conf) / np.sqrt(1 - rho)
-        )
+        conditional_pd = norm.cdf((n_pd + np.sqrt(rho) * n_conf) / np.sqrt(1 - rho))
         wcdr = conditional_pd
         return ead * lgd * (wcdr - pd)
 
@@ -518,7 +517,9 @@ class CreditRiskAnalyzer:
         )
 
         total_ead = exposures["ead"].sum()
-        weights = exposures["ead"] / total_ead if total_ead > 0 else exposures["ead"] * 0
+        weights = (
+            exposures["ead"] / total_ead if total_ead > 0 else exposures["ead"] * 0
+        )
 
         herfindahl = (weights**2).sum()
         top10 = weights.nlargest(10).sum()
@@ -567,7 +568,9 @@ class ZSpreadCalculator:
             Spot risk-free rates at each cash flow time
         """
         if len(cash_flows) != len(times) or len(times) != len(risk_free_rates):
-            raise ValueError("cash_flows, times, and risk_free_rates must have equal length")
+            raise ValueError(
+                "cash_flows, times, and risk_free_rates must have equal length"
+            )
 
         self.cash_flows = np.array(cash_flows)
         self.times = np.array(times)
@@ -593,6 +596,7 @@ class ZSpreadCalculator:
         float
             Z-spread in decimal (divide by 0.0001 for basis points)
         """
+
         def objective(spread: float) -> float:
             return self.theoretical_price(spread) - market_price
 
@@ -601,9 +605,12 @@ class ZSpreadCalculator:
         except ValueError:
             price_at_zero = self.theoretical_price(0.0)
             z = (price_at_zero - market_price) / (
-                sum(t * cf * np.exp(-r * t) for cf, t, r in zip(
-                    self.cash_flows, self.times, self.risk_free_rates
-                ))
+                sum(
+                    t * cf * np.exp(-r * t)
+                    for cf, t, r in zip(
+                        self.cash_flows, self.times, self.risk_free_rates, strict=False
+                    )
+                )
             )
         return z
 

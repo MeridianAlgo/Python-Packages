@@ -8,7 +8,6 @@ from typing import Dict, Union
 
 import numpy as np
 import pandas as pd
-import statsmodels.api as sm
 from scipy import stats  # noqa: F401
 
 
@@ -99,11 +98,10 @@ def calculate_half_life(price_series: pd.Series) -> float:
         delta_p = delta_p.iloc[-min_len:]
         lag_p = lag_p.iloc[-min_len:]
 
-    X = sm.add_constant(lag_p)
-    model = sm.OLS(delta_p, X)
-    results = model.fit()
-    # Access the slope parameter (second parameter after const)
-    slope = results.params.iloc[1] if len(results.params) > 1 else results.params[1]
+    # Native OLS slope via least squares (no statsmodels dependency).
+    x = np.column_stack([np.ones(len(lag_p)), lag_p.to_numpy()])
+    coeffs, *_ = np.linalg.lstsq(x, delta_p.to_numpy(), rcond=None)
+    slope = coeffs[1]
     return -np.log(2) / slope
 
 

@@ -11,7 +11,7 @@ References:
 
 import logging
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional
 
 import numpy as np
 import pandas as pd
@@ -154,10 +154,12 @@ class CPPI:
 
         floor_breaches = 0
 
-        for t, (r_ret, s_ret) in enumerate(zip(returns.values, safe_ret.values)):
+        for t, (r_ret, s_ret) in enumerate(
+            zip(returns.values, safe_ret.values, strict=False)
+        ):
             risky_alloc = risky_allocs[t]
             safe_alloc = safe_allocs[t]
-            portfolio_val = portfolio_values[t]
+            portfolio_values[t]
 
             risky_alloc_new = risky_alloc * (1 + r_ret)
             safe_alloc_new = safe_alloc * (1 + s_ret)
@@ -186,7 +188,9 @@ class CPPI:
 
             risky_allocs[t + 1] = risky_alloc
             safe_allocs[t + 1] = safe_alloc
-            risky_weights[t + 1] = risky_alloc / new_portfolio if new_portfolio > 0 else 0
+            risky_weights[t + 1] = (
+                risky_alloc / new_portfolio if new_portfolio > 0 else 0
+            )
 
         index_full = pd.Index([returns.index[0]] + list(returns.index))
         pv = pd.Series(portfolio_values, index=index_full, name="portfolio_value")
@@ -249,7 +253,9 @@ class CPPI:
         for m in multipliers:
             for f in floor_pcts:
                 cppi = CPPI(multiplier=m, floor_pct=f, safe_rate=self.safe_rate)
-                result = cppi.run(risky_returns, initial_value, trading_days=trading_days)
+                result = cppi.run(
+                    risky_returns, initial_value, trading_days=trading_days
+                )
                 rows.append(
                     {
                         "multiplier": m,
@@ -351,7 +357,9 @@ class TimeInvariantCPPI:
             safe_alloc = new_portfolio - risky_alloc
             risky_allocs[t + 1] = risky_alloc
             safe_allocs[t + 1] = safe_alloc
-            risky_weights[t + 1] = risky_alloc / new_portfolio if new_portfolio > 0 else 0
+            risky_weights[t + 1] = (
+                risky_alloc / new_portfolio if new_portfolio > 0 else 0
+            )
 
         index_full = pd.Index([returns.index[0]] + list(returns.index))
         pv = pd.Series(portfolio_values, index=index_full, name="portfolio_value")

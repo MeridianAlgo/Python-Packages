@@ -16,8 +16,7 @@ References:
 """
 
 import logging
-import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -162,11 +161,10 @@ class RealizedVolatility:
         log_oc = np.log(self.data["Open"] / self.data["Close"].shift(1))
         log_co = np.log(self.data["Close"] / self.data["Open"])
 
-        rs_var = (
-            np.log(self.data["High"] / self.data["Open"])
-            * np.log(self.data["High"] / self.data["Close"])
-            + np.log(self.data["Low"] / self.data["Open"])
-            * np.log(self.data["Low"] / self.data["Close"])
+        rs_var = np.log(self.data["High"] / self.data["Open"]) * np.log(
+            self.data["High"] / self.data["Close"]
+        ) + np.log(self.data["Low"] / self.data["Open"]) * np.log(
+            self.data["Low"] / self.data["Close"]
         )
 
         k = 0.34 / (1.34 + (window + 1) / (window - 1))
@@ -181,9 +179,7 @@ class RealizedVolatility:
             vol = vol * np.sqrt(self.trading_days)
         return vol.rename("yang_zhang_vol")
 
-    def realized_variance(
-        self, returns: pd.Series, window: int = 21
-    ) -> pd.Series:
+    def realized_variance(self, returns: pd.Series, window: int = 21) -> pd.Series:
         """
         Realized variance as sum of squared returns over a rolling window.
 
@@ -291,22 +287,20 @@ class GARCHModel:
 
         params = res.params
         omega = float(params.get("omega", params.iloc[1]))
-        alpha = [float(params.get(f"alpha[{i+1}]", 0)) for i in range(self.p)]
-        beta = [float(params.get(f"beta[{i+1}]", 0)) for i in range(self.q)]
+        alpha = [float(params.get(f"alpha[{i + 1}]", 0)) for i in range(self.p)]
+        beta = [float(params.get(f"beta[{i + 1}]", 0)) for i in range(self.q)]
         gamma = float(params.get("gamma[1]", 0)) if self.model_type == "gjr" else None
 
         persistence = sum(alpha) + sum(beta) + (0.5 * gamma if gamma else 0)
         half_life = (
-            np.log(0.5) / np.log(persistence)
-            if 0 < persistence < 1
-            else float("inf")
+            np.log(0.5) / np.log(persistence) if 0 < persistence < 1 else float("inf")
         )
 
         cond_vol = res.conditional_volatility / 100
         std_resid = res.std_resid
 
-        n = len(self.returns)
-        k = len(params)
+        len(self.returns)
+        len(params)
 
         return GARCHResult(
             model_type=self.model_type.upper(),
@@ -413,7 +407,7 @@ class GARCHModel:
             last_var = float(self._result.conditional_volatility.iloc[-1] * 100) ** 2
 
             persistence = alpha1 + beta1
-            long_run_var = omega / (1 - persistence) if persistence < 1 else last_var
+            omega / (1 - persistence) if persistence < 1 else last_var
 
             vol_forecast = np.zeros(horizon)
             current_var = last_var
@@ -528,10 +522,7 @@ class VolatilityRegimeDetector:
 
     def rolling_volatility(self) -> pd.Series:
         """Compute rolling annualized volatility."""
-        return (
-            self.returns.rolling(self.window).std()
-            * np.sqrt(self.trading_days)
-        )
+        return self.returns.rolling(self.window).std() * np.sqrt(self.trading_days)
 
     def classify(
         self,
@@ -637,12 +628,14 @@ class VolatilityForecaster:
         rv_m = pd.Series(rv).rolling(22).mean().values
 
         start = 22
-        X = np.column_stack([
-            np.ones(n - start),
-            rv_d[start - 1: -1],
-            rv_w[start - 1: -1],
-            rv_m[start - 1: -1],
-        ])
+        X = np.column_stack(
+            [
+                np.ones(n - start),
+                rv_d[start - 1 : -1],
+                rv_w[start - 1 : -1],
+                rv_m[start - 1 : -1],
+            ]
+        )
         y = rv[start:]
         return X, y
 

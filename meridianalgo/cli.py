@@ -56,7 +56,7 @@ def cmd_demo(args: argparse.Namespace) -> None:
     weights = hrp.optimize(returns)
     portfolio_returns = (returns * weights).sum(axis=1)
 
-    print(f"\nHRP Weights:")
+    print("\nHRP Weights:")
     for asset, w in weights.items():
         print(f"  {asset}: {w:.1%}")
 
@@ -64,7 +64,7 @@ def cmd_demo(args: argparse.Namespace) -> None:
     sortino = calculate_sortino_ratio(portfolio_returns)
     max_dd = calculate_max_drawdown(portfolio_returns)
 
-    print(f"\nPortfolio Metrics (annualized):")
+    print("\nPortfolio Metrics (annualized):")
     print(f"  Sharpe Ratio:  {sharpe:.3f}")
     print(f"  Sortino Ratio: {sortino:.3f}")
     print(f"  Max Drawdown:  {max_dd:.2%}")
@@ -124,17 +124,15 @@ def build_parser() -> argparse.ArgumentParser:
         prog="meridianalgo",
         description="MeridianAlgo — Quantitative Finance Toolkit",
     )
-    parser.add_argument(
-        "--version", action="version", version=f"%(prog)s"
-    )
+    parser.add_argument("--version", action="version", version="%(prog)s")
     subparsers = parser.add_subparsers(dest="command", metavar="COMMAND")
 
     subparsers.add_parser("version", help="Print version and exit").set_defaults(
         func=cmd_version
     )
-    subparsers.add_parser(
-        "info", help="Show module availability"
-    ).set_defaults(func=cmd_info)
+    subparsers.add_parser("info", help="Show module availability").set_defaults(
+        func=cmd_info
+    )
     subparsers.add_parser(
         "demo", help="Run a quick portfolio optimization demo"
     ).set_defaults(func=cmd_demo)

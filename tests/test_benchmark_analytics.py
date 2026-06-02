@@ -47,7 +47,9 @@ class TestBenchmarkAnalytics:
         te = analytics.tracking_error()
         assert te > 0
 
-    def test_information_ratio_sign_reflects_alpha(self, returns_pair, negative_alpha_pair):
+    def test_information_ratio_sign_reflects_alpha(
+        self, returns_pair, negative_alpha_pair
+    ):
         port_pos, bench_pos = returns_pair
         a_pos = BenchmarkAnalytics(port_pos, bench_pos)
         ir_pos = a_pos.information_ratio()
@@ -155,7 +157,9 @@ class TestBrinsonAttribution:
     def test_attribution_sums_match_total(self):
         attr = BrinsonAttribution(self.pw, self.bw, self.pr, self.br)
         result = attr.compute()
-        total = result.total_allocation + result.total_selection + result.total_interaction
+        total = (
+            result.total_allocation + result.total_selection + result.total_interaction
+        )
         assert abs(total - result.total_active_return) < 1e-10
 
     def test_allocation_effect_series(self):

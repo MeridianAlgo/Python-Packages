@@ -5,6 +5,27 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.1.0] - 2026-06-01
+
+### Added
+- **Metrics helpers** (`meridianalgo.metrics`): top-level `summary_stats()` and `tearsheet()`
+  for a one-call performance/risk summary (~28 metrics) and a formatted text report
+- 2 new top-level exports; 1 new ModuleRegistry entry (`metrics`)
+
+### Changed
+- Dependency floors updated to current stable releases (numpy>=2.0, pandas>=2.2, scipy>=1.12,
+  scikit-learn>=1.4, statsmodels>=0.14.1, arch>=7.0, and others)
+- `setup.py` reduced to a shim; `pyproject.toml` is now the single source of project metadata
+- Added Python 3.13 classifier; docs standardized for API accuracy and consistency
+
+### Fixed
+- `meridianalgo.core.statistics` no longer hard-imports `statsmodels` at module load,
+  so `core`, `sharpe`, and `strategies` load without optional dependencies installed
+  (`calculate_half_life` now uses a native NumPy least-squares fit)
+
+### Removed
+- Stray `meridianalgo-6.3.0/` build leftover directory
+
 ## [7.0.0] - 2026-04-20
 
 ### Added

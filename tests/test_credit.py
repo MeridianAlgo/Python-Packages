@@ -1,6 +1,5 @@
 """Tests for credit risk module."""
 
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -156,12 +155,18 @@ class TestCreditRiskAnalyzer:
 
     def test_credit_var_higher_at_higher_confidence(self):
         cvar_99 = self.analyzer.credit_var(pd=0.02, lgd=0.45, ead=1e6, confidence=0.99)
-        cvar_999 = self.analyzer.credit_var(pd=0.02, lgd=0.45, ead=1e6, confidence=0.999)
+        cvar_999 = self.analyzer.credit_var(
+            pd=0.02, lgd=0.45, ead=1e6, confidence=0.999
+        )
         assert cvar_999 > cvar_99
 
     def test_portfolio_expected_loss(self):
         exposures = pd.DataFrame(
-            {"pd": [0.01, 0.02, 0.05], "lgd": [0.45, 0.40, 0.60], "ead": [1e6, 2e6, 0.5e6]}
+            {
+                "pd": [0.01, 0.02, 0.05],
+                "lgd": [0.45, 0.40, 0.60],
+                "ead": [1e6, 2e6, 0.5e6],
+            }
         )
         result = self.analyzer.portfolio_expected_loss(exposures)
         assert result["total_el"] > 0

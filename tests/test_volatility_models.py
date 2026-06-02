@@ -88,7 +88,9 @@ class TestRealizedVolatility:
 
     def test_realized_variance_shape(self, sample_ohlcv):
         rv = RealizedVolatility(sample_ohlcv)
-        returns = np.log(sample_ohlcv["Close"] / sample_ohlcv["Close"].shift(1)).dropna()
+        returns = np.log(
+            sample_ohlcv["Close"] / sample_ohlcv["Close"].shift(1)
+        ).dropna()
         rvar = rv.realized_variance(returns, window=21)
         assert len(rvar) == len(returns)
 

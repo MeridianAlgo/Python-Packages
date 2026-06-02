@@ -45,7 +45,7 @@ pip install meridianalgo[all]          # all optional dependencies
 | `execution` | `VWAP`, `TWAP`, `POV`, `ImplementationShortfall` |
 | `analytics` | `PerformanceAnalyzer`, `BenchmarkAnalytics`, `ActiveShare`, `BrinsonAttribution` |
 | `quant` | `StatisticalArbitrage`, `RegimeDetector`, `MarketMicrostructure` |
-| `signals` | `RSI`, `MACD`, `BollingerBands`, 50+ indicators |
+| `signals` | `RSI`, `MACD`, `BollingerBands`, 40+ indicators |
 | `liquidity` | `OrderBook`, `SpreadAnalyzer`, `MarketImpact` |
 | `factors` | `FamaFrenchModel`, `FactorExposure` |
 
@@ -117,6 +117,10 @@ print(f"Sortino:      {sortino:.3f}")
 print(f"Calmar:       {calmar:.3f}")
 print(f"Max Drawdown: {max_dd:.2%}")
 print(f"95% CVaR:     {cvar_95:.2%}")
+
+# One-call summary of ~28 metrics, plus a formatted text report
+stats = ma.summary_stats(returns["AAPL"])
+print(ma.tearsheet(returns["AAPL"]))
 
 # Full performance report
 from meridianalgo import PerformanceAnalyzer

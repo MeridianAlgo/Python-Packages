@@ -1,5 +1,5 @@
 """
-MeridianAlgo v7.0.0 - The Complete Quantitative Finance Platform
+MeridianAlgo v7.1.0 - The Complete Quantitative Finance Platform
 
 Institutional-grade Python library for quantitative finance covering portfolio
 optimization, risk management, derivatives pricing, backtesting, machine learning,
@@ -7,9 +7,8 @@ statistical arbitrage, execution algorithms, fixed income analytics, credit risk
 volatility modeling, Monte Carlo simulation, and portfolio insurance.
 """
 
-__version__ = "7.0.0"
+__version__ = "7.1.0"
 
-import os
 from typing import Any, Dict
 
 # Configure logging
@@ -275,6 +274,14 @@ try:
 except ImportError as e:
     ModuleRegistry.register("scenario_analysis", False, str(e))
 
+# Top-level metrics helpers
+try:
+    from .metrics import summary_stats, tearsheet
+
+    ModuleRegistry.register("metrics", True)
+except ImportError as e:
+    ModuleRegistry.register("metrics", False, str(e))
+
 # ============================================================================
 # ALIASES — backward-compatible and README-documented shortcuts
 # ============================================================================
@@ -392,6 +399,9 @@ __all__ = [
     # Scenario analysis
     "ScenarioAnalyzer",
     "CorrelationScenario",
+    # Metrics helpers
+    "summary_stats",
+    "tearsheet",
     # Registry
     "ModuleRegistry",
 ]

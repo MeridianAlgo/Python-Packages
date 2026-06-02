@@ -11,8 +11,8 @@ References:
 """
 
 import logging
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Dict, Optional
 
 import numpy as np
 import pandas as pd
@@ -183,9 +183,12 @@ class ScenarioAnalyzer:
             asset_returns = pd.Series(0.0, index=self.weights.index)
         else:
             shock_vector = np.array([factor_shocks[f] for f in available_factors])
-            sens_matrix = self.sensitivities[available_factors].reindex(
-                self.weights.index
-            ).fillna(0).values
+            sens_matrix = (
+                self.sensitivities[available_factors]
+                .reindex(self.weights.index)
+                .fillna(0)
+                .values
+            )
             asset_returns = pd.Series(
                 sens_matrix @ shock_vector,
                 index=self.weights.index,
@@ -231,7 +234,8 @@ class ScenarioAnalyzer:
         results = {}
         for name, shocks in HISTORICAL_SCENARIOS.items():
             decimal_shocks = {
-                k: v for k, v in shocks.items()
+                k: v
+                for k, v in shocks.items()
                 if not k.endswith("_bps") and not k.endswith("_change")
             }
             results[name] = self.apply_scenario(decimal_shocks, name)
@@ -345,7 +349,7 @@ class ScenarioAnalyzer:
             required_shock = brentq(objective, -1.0, 1.0, xtol=1e-6)
         except ValueError:
             result_at_min = self.apply_scenario({**base_shocks, factor: -1.0}, "test")
-            result_at_max = self.apply_scenario({**base_shocks, factor: 1.0}, "test")
+            self.apply_scenario({**base_shocks, factor: 1.0}, "test")
             if result_at_min.portfolio_return > target_loss:
                 required_shock = -1.0
                 logger.warning(
@@ -353,9 +357,7 @@ class ScenarioAnalyzer:
                 )
             else:
                 required_shock = 1.0
-                logger.warning(
-                    "Target loss requires positive factor shock"
-                )
+                logger.warning("Target loss requires positive factor shock")
 
         return required_shock
 
@@ -460,7 +462,9 @@ class CorrelationScenario:
             "var_95": float(np.percentile(portfolio_returns, 5)),
             "var_99": float(np.percentile(portfolio_returns, 1)),
             "cvar_95": float(
-                portfolio_returns[portfolio_returns <= np.percentile(portfolio_returns, 5)].mean()
+                portfolio_returns[
+                    portfolio_returns <= np.percentile(portfolio_returns, 5)
+                ].mean()
             ),
             "mean": float(np.mean(portfolio_returns)),
             "std": float(np.std(portfolio_returns)),

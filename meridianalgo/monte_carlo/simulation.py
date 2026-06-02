@@ -15,10 +15,9 @@ References:
 
 import logging
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -90,16 +89,16 @@ class QuasiRandomSampler:
 
     def uniform(self, n_samples: int) -> np.ndarray:
         """Generate quasi-random uniform samples in [0,1]^d."""
-        samples = np.column_stack([
-            self._halton(n_samples, p, self._n_generated)
-            for p in self._primes
-        ])
+        samples = np.column_stack(
+            [self._halton(n_samples, p, self._n_generated) for p in self._primes]
+        )
         self._n_generated += n_samples
         return samples if self.dimensions > 1 else samples[:, 0]
 
     def normal(self, n_samples: int) -> np.ndarray:
         """Transform quasi-random uniforms to standard normals via inverse CDF."""
         from scipy.stats import norm
+
         u = self.uniform(n_samples)
         u_clipped = np.clip(u, 1e-10, 1 - 1e-10)
         return norm.ppf(u_clipped)
@@ -359,6 +358,7 @@ class HestonModel:
         """
         if not 2 * kappa * theta > xi**2:
             import warnings
+
             warnings.warn(
                 "Feller condition 2*kappa*theta > xi^2 not satisfied; "
                 "variance may become negative",
@@ -415,9 +415,7 @@ class HestonModel:
         for t in range(n_steps):
             v_plus = np.maximum(v, 0)
             sqrt_v = np.sqrt(v_plus)
-            S = S * np.exp(
-                (self.mu - 0.5 * v_plus) * dt + sqrt_v * sqrt_dt * Z1[:, t]
-            )
+            S = S * np.exp((self.mu - 0.5 * v_plus) * dt + sqrt_v * sqrt_dt * Z1[:, t])
             v = (
                 v
                 + self.kappa * (self.theta - v_plus) * dt
@@ -521,8 +519,8 @@ class JumpDiffusionModel:
             idx = 0
             flat_log = jump_log_sizes.ravel()
             nz_flat = np.where(nonzero.ravel())[0]
-            for pos, count in zip(nz_flat, counts):
-                flat_log[pos] = jump_sizes[idx: idx + count].sum()
+            for pos, count in zip(nz_flat, counts, strict=False):
+                flat_log[pos] = jump_sizes[idx : idx + count].sum()
                 idx += count
             jump_log_sizes = flat_log.reshape(n_paths, n_steps)
 
@@ -585,6 +583,7 @@ class CIRModel:
         """
         if not 2 * kappa * theta > sigma**2:
             import warnings
+
             warnings.warn(
                 "Feller condition 2*kappa*theta > sigma^2 not satisfied; "
                 "rate may hit zero",
@@ -625,7 +624,9 @@ class CIRModel:
             if return_paths:
                 r_paths[:, t + 1] = r
 
-        stored = r_paths if return_paths else np.column_stack([np.full(n_paths, self.r0), r])
+        stored = (
+            r_paths if return_paths else np.column_stack([np.full(n_paths, self.r0), r])
+        )
 
         return SimulationResult(
             paths=stored,
@@ -665,7 +666,10 @@ class CIRModel:
 
         B = 2 * (exp_gt - 1) / denom
         log_A = (
-            2 * self.kappa * self.theta / self.sigma**2
+            2
+            * self.kappa
+            * self.theta
+            / self.sigma**2
             * np.log(2 * gamma * np.exp((self.kappa + gamma) * tau / 2) / denom)
         )
         return np.exp(log_A - B * r)
