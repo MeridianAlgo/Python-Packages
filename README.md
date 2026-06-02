@@ -549,17 +549,20 @@ print(f"Average Recall:    {results['recall'].mean():.2%}")
 ### Statistical Arbitrage
 
 ```python
-from meridianalgo.quant import StatisticalArbitrage
+import meridianalgo as ma
 
-stat_arb = StatisticalArbitrage()
-pairs = stat_arb.find_cointegrated_pairs(prices, p_value=0.05)
+stat_arb = ma.StatisticalArbitrage(prices)
 
-for (a, b), p_val in sorted(pairs.items(), key=lambda x: x[1]):
-    spread = prices[a] - prices[b]
-    half_life = stat_arb.calculate_half_life(spread)
-    signals = stat_arb.generate_pairs_signals(spread, z_entry=2.0, z_exit=0.5)
-    print(f"{a}/{b}: p={p_val:.4f}, half-life={half_life:.1f}d, signals={len(signals)}")
+# Cointegration test for a candidate pair
+result = stat_arb.calculate_cointegration(prices["KO"], prices["PEP"])
+print(f"p-value: {result['p_value']:.4f}  cointegrated: {result['is_cointegrated']}")
+
+# Rolling z-score of the spread for entry/exit signals
+zscore = stat_arb.calculate_zscore(window=21)
 ```
+
+For pairs trading, regime detection, and microstructure tools see
+`meridianalgo.quant` (`PairsTrading`, `CointegrationAnalyzer`, `MeanReversionTester`).
 
 ### Execution Algorithms
 
@@ -622,7 +625,7 @@ meridianalgo/
 ├── ml/                 LSTM/GRU/Transformer, walk-forward CV, feature engineering
 ├── execution/          VWAP, TWAP, POV, implementation shortfall
 ├── quant/              stat arb, pairs trading, regime detection, HFT
-├── signals/            RSI, MACD, Bollinger Bands, 50+ indicators
+├── signals/            RSI, MACD, Bollinger Bands, 40+ indicators
 ├── liquidity/          order book, bid-ask spread, market impact
 ├── factors/            Fama-French 3/5-factor, PCA, alpha generation
 ├── data/               yfinance, Polygon.io, streaming, storage

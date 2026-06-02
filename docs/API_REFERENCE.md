@@ -21,18 +21,13 @@ This document provides comprehensive API reference for all MeridianAlgo modules.
 
 ### `meridianalgo.data`
 
-#### DataProvider Classes
+#### Fetching Market Data
 
 ```python
-from meridianalgo.data import YahooFinanceProvider, AlphaVantageProvider
+import meridianalgo as ma
 
-# Yahoo Finance Provider
-yahoo = YahooFinanceProvider()
-data = yahoo.get_historical_data(['AAPL', 'GOOGL'], '2023-01-01', '2023-12-31')
-
-# Alpha Vantage Provider
-alpha = AlphaVantageProvider(api_key='your_key')
-data = alpha.get_intraday_data('AAPL', interval='1min')
+# Free historical data via yfinance
+data = ma.get_market_data(["AAPL", "GOOGL"], start_date="2023-01-01", end_date="2023-12-31")
 ```
 
 #### Data Processing Pipeline
@@ -78,16 +73,12 @@ upper, middle, lower = bb.calculate(price_data)
 #### Pattern Recognition
 
 ```python
-from meridianalgo.technical_analysis.patterns import CandlestickPatterns, ChartPatterns
+from meridianalgo.technical_analysis.patterns import CandlestickPatterns
 
-# Candlestick patterns
+# Candlestick patterns (ohlc_data must have Open/High/Low/Close columns)
 patterns = CandlestickPatterns()
 doji = patterns.detect_doji(ohlc_data)
 hammer = patterns.detect_hammer(ohlc_data)
-
-# Chart patterns
-chart_patterns = ChartPatterns()
-triangles = chart_patterns.detect_triangles(price_data)
 ```
 
 ---
@@ -99,30 +90,30 @@ triangles = chart_patterns.detect_triangles(price_data)
 #### Portfolio Optimization
 
 ```python
-from meridianalgo.portfolio import PortfolioOptimizer, BlackLittermanOptimizer
+import meridianalgo as ma
 
-# Mean-Variance Optimization
-optimizer = PortfolioOptimizer()
-weights = optimizer.optimize(returns_data, method='mean_variance')
+# Mean-Variance / Max-Sharpe optimization
+optimizer = ma.PortfolioOptimizer(returns_data)
+result = optimizer.optimize_portfolio(method='sharpe')
+weights = result['weights']
 
-# Black-Litterman Model
-bl_optimizer = BlackLittermanOptimizer()
-bl_weights = bl_optimizer.optimize(returns_data, views=market_views)
+# Other methods: 'min_vol', 'max_return', 'risk_parity', 'hrp', 'equal_weight'
+min_vol = optimizer.optimize_portfolio(method='min_vol')
 ```
 
 #### Risk Management
 
 ```python
-from meridianalgo.portfolio.risk_management import RiskManager
+import meridianalgo as ma
 
-risk_manager = RiskManager()
+var = ma.VaRCalculator(returns)
 
 # Value at Risk
-var_95 = risk_manager.calculate_var(returns, confidence_level=0.95)
-var_99 = risk_manager.calculate_var(returns, confidence_level=0.99)
+var_95 = var.value_at_risk(confidence=0.95)
+var_99 = var.value_at_risk(confidence=0.99)
 
-# Expected Shortfall
-es_95 = risk_manager.calculate_expected_shortfall(returns, confidence_level=0.95)
+# Conditional VaR (Expected Shortfall)
+cvar_95 = var.conditional_var(confidence=0.95)
 ```
 
 ---
@@ -134,17 +125,16 @@ es_95 = risk_manager.calculate_expected_shortfall(returns, confidence_level=0.95
 #### Event-Driven Backtesting
 
 ```python
-from meridianalgo.backtesting import EventDrivenBacktester, Strategy
+from meridianalgo.backtesting import BacktestEngine, Strategy
 
 class MyStrategy(Strategy):
-    def generate_signals(self, market_data):
-        # Your strategy logic
+    def generate_signals(self, data):
+        # Your strategy logic -> DataFrame of signals
         return signals
 
 # Run backtest
-backtester = EventDrivenBacktester(initial_capital=100000)
-backtester.set_strategy(MyStrategy())
-results = backtester.run_backtest(data)
+engine = BacktestEngine(initial_capital=100_000)
+results = engine.run(MyStrategy(), prices, returns)
 ```
 
 #### Performance Analytics
@@ -163,21 +153,21 @@ print(f"Max Drawdown: {metrics.max_drawdown:.2%}")
 
 ## Machine Learning
 
-### `meridianalgo.machine_learning`
+### `meridianalgo.ml`
 
 #### Feature Engineering
 
 ```python
-from meridianalgo.machine_learning.feature_engineering import FinancialFeatureEngineer
+from meridianalgo.ml import FeatureEngineer
 
-engineer = FinancialFeatureEngineer()
+engineer = FeatureEngineer()
 features = engineer.create_features(price_data)
 ```
 
 #### Models
 
 ```python
-from meridianalgo.machine_learning.models import LSTMPredictor, ModelFactory
+from meridianalgo.ml import LSTMPredictor, ModelFactory
 
 # LSTM Model
 lstm = LSTMPredictor(sequence_length=60, epochs=100)
@@ -185,7 +175,7 @@ lstm.fit(features, targets)
 predictions = lstm.predict(test_features)
 
 # Model Factory
-model = ModelFactory.create_model('random_forest', n_estimators=100)
+model = ModelFactory.create_model('random_forest')
 ```
 
 ---
@@ -227,51 +217,40 @@ greeks = bs.calculate_greeks(spot=100, strike=105, time_to_expiry=0.25)
 
 ## Risk Analysis
 
-### `meridianalgo.risk_analysis`
+### `meridianalgo.risk`
 
 #### Risk Metrics
 
 ```python
-from meridianalgo.risk_analysis import VaRCalculator, StressTester
+import meridianalgo as ma
 
-# VaR Calculation
-var_calc = VaRCalculator()
-historical_var = var_calc.historical_var(returns, confidence_level=0.95)
-parametric_var = var_calc.parametric_var(returns, confidence_level=0.95)
+# VaR / CVaR
+var_calc = ma.VaRCalculator(returns)
+historical_var = var_calc.value_at_risk(confidence=0.95, method="historical")
+parametric_var = var_calc.value_at_risk(confidence=0.95, method="parametric")
+cvar = var_calc.conditional_var(confidence=0.95)
 
-# Stress Testing
-stress_tester = StressTester()
-stress_results = stress_tester.run_historical_scenarios(portfolio, scenarios)
+# Stress testing
+from meridianalgo import StressTesting
+stress = StressTesting()
 ```
 
 ---
 
-##  Configuration
+## Module Availability
 
-### Global Configuration
-
-```python
-import meridianalgo as ma
-
-# Set global configuration
-ma.config.set_data_provider('yahoo')
-ma.config.set_cache_enabled(True)
-ma.config.set_parallel_processing(True)
-
-# API Keys
-ma.config.set_api_key('alpha_vantage', 'your_key')
-ma.config.set_api_key('quandl', 'your_key')
-```
-
-### Logging Configuration
+Every submodule loads behind a registry, so the package imports even when an
+optional dependency is missing. Check what is available at runtime:
 
 ```python
 import meridianalgo as ma
 
-# Enable logging
-ma.logging.set_level('INFO')
-ma.logging.enable_file_logging('meridianalgo.log')
+print(ma.ModuleRegistry.status())          # {'core': True, 'ml': True, ...}
+print(ma.ModuleRegistry.is_available("ml"))
 ```
+
+Install the matching extra (e.g. `pip install "meridianalgo[ml]"`) to enable a
+module reported as unavailable.
 
 ---
 
@@ -289,14 +268,14 @@ data = ma.get_market_data(['AAPL', 'GOOGL', 'MSFT'], '2023-01-01')
 returns = data.pct_change().dropna()
 
 # Optimize portfolio
-optimizer = ma.PortfolioOptimizer()
-weights = optimizer.optimize(returns, method='sharpe')
+optimizer = ma.PortfolioOptimizer(returns)
+result = optimizer.optimize_portfolio(method='sharpe')
 
 # Calculate risk metrics
-risk_manager = ma.RiskManager()
-var = risk_manager.calculate_var(returns)
+risk = ma.RiskAnalyzer(returns.mean(axis=1))
+var = risk.value_at_risk(confidence=0.95)
 
-print(f"Optimal weights: {weights}")
+print(f"Optimal weights: {result['weights']}")
 print(f"Portfolio VaR: {var:.4f}")
 ```
 
@@ -312,9 +291,7 @@ prices = ma.get_market_data(['AAPL'], '2023-01-01')['AAPL']
 rsi = ma.RSI(prices, period=14)
 macd_line, signal, histogram = ma.MACD(prices)
 bb_upper, bb_middle, bb_lower = ma.BollingerBands(prices)
-
-# Detect patterns
-patterns = ma.detect_candlestick_patterns(prices)
+sma_20 = ma.SMA(prices, period=20)
 ```
 
 ### Machine Learning Pipeline
@@ -323,7 +300,9 @@ patterns = ma.detect_candlestick_patterns(prices)
 import meridianalgo as ma
 
 # Feature engineering
-engineer = ma.FeatureEngineer()
+from meridianalgo.ml import FeatureEngineer
+
+engineer = FeatureEngineer()
 features = engineer.create_features(price_data)
 
 # Train model
@@ -348,12 +327,11 @@ predictions = model.predict(test_features)
 ### Memory Management
 
 ```python
-# Use chunking for large datasets
-for chunk in ma.data.read_large_dataset('data.csv', chunksize=10000):
-    process_chunk(chunk)
+import pandas as pd
 
-# Enable memory mapping
-ma.config.enable_memory_mapping(True)
+# Process large CSVs in chunks to bound memory use
+for chunk in pd.read_csv("data.csv", chunksize=10_000):
+    process_chunk(chunk)
 ```
 
 ---
@@ -363,8 +341,8 @@ ma.config.enable_memory_mapping(True)
 ### Exception Types
 
 ```python
-from meridianalgo.exceptions import (
-    DataError, CalculationError, ValidationError, BacktestError
+from meridianalgo.data.exceptions import (
+    DataError, ValidationError, NetworkError, RateLimitError
 )
 
 try:

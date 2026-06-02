@@ -46,12 +46,18 @@ test-results/
 .vs/
 
 .env
+.env.*
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Local agent / editor config
+.claude/
+.claude/*
+*.local.json
 *.csv
 *.pkl
 *.h5

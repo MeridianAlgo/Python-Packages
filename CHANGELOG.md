@@ -5,6 +5,27 @@ All notable changes to MeridianAlgo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.2.0] - 2026-06-02
+
+### Added
+- **Object-oriented technical analysis** (`meridianalgo.technical_analysis`):
+  `BaseIndicator` framework, class-based `RSI`/`MACD`/`BollingerBands`, and
+  `CandlestickPatterns` (doji, hammer)
+- **Flat indicator import path** (`meridianalgo.technical_indicators`) and
+  top-level indicator access (`ma.RSI`, `ma.MACD`, `ma.SMA`, ...)
+- Concise dedicated PyPI README (`PYPI_README.md`)
+
+### Changed
+- Documentation overhauled for accuracy: every code reference in the README and
+  docs is now validated against the real public API
+- CI now runs the full test suite; PyPI publish workflow is tag-driven and uses
+  auto-generated release notes (`softprops/action-gh-release@v2`)
+- `.gitignore` now excludes `.claude/` and local config; removed tracked
+  `.claude/settings.local.json`
+
+### Fixed
+- Publish workflow no longer fails on branch pushes ("GitHub Releases requires a tag")
+
 ## [7.1.0] - 2026-06-01
 
 ### Added

@@ -4,10 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_run:
-    workflows: ["CI Pipeline"]
-    types:
-      - completed
 
 permissions:
   contents: write
@@ -16,46 +12,45 @@ permissions:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
-    
+        python-version: "3.11"
+
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
         pip install build twine ruff
-    
+
     - name: Lint with Ruff
       run: |
         ruff format --check .
         ruff check .
-    
+
     - name: Build package
       run: python -m build
-    
+
     - name: Check package
       run: twine check dist/*
-    
+
     - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: dist/*
-        body_path: README.md
-        name: Release ${{ github.ref_name }}
+        generate_release_notes: true
+        name: MeridianAlgo ${{ github.ref_name }}
         draft: false
         prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:

@@ -1,5 +1,5 @@
 """
-MeridianAlgo v7.1.0 - The Complete Quantitative Finance Platform
+MeridianAlgo v7.2.0 - The Complete Quantitative Finance Platform
 
 Institutional-grade Python library for quantitative finance covering portfolio
 optimization, risk management, derivatives pricing, backtesting, machine learning,
@@ -7,7 +7,7 @@ statistical arbitrage, execution algorithms, fixed income analytics, credit risk
 volatility modeling, Monte Carlo simulation, and portfolio insurance.
 """
 
-__version__ = "7.1.0"
+__version__ = "7.2.0"
 
 from typing import Any, Dict
 
@@ -282,6 +282,17 @@ try:
 except ImportError as e:
     ModuleRegistry.register("metrics", False, str(e))
 
+# Technical indicators (functional API exposed at the top level)
+try:
+    from .signals import indicators as _indicators
+    from .signals.indicators import *  # noqa: F401,F403
+
+    _INDICATOR_NAMES = list(getattr(_indicators, "__all__", []))
+    ModuleRegistry.register("technical_indicators", True)
+except ImportError as e:
+    _INDICATOR_NAMES = []
+    ModuleRegistry.register("technical_indicators", False, str(e))
+
 # ============================================================================
 # ALIASES — backward-compatible and README-documented shortcuts
 # ============================================================================
@@ -405,3 +416,6 @@ __all__ = [
     # Registry
     "ModuleRegistry",
 ]
+
+# Append technical indicator function names (RSI, MACD, SMA, ...) to the public API
+__all__ += [name for name in _INDICATOR_NAMES if name not in __all__]
